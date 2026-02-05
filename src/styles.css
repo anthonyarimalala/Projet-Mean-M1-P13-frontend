@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+small.error-message,
+small.error,
+.error-message {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #dc2626;
+}
+
+small.error-message::before,
+small.error::before,
+.error-message::before {
+  content: '•';
+  margin-right: 6px;
+}

@@ -1,0 +1,87 @@
+<div class="page">
+  <div class="card">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      MallAdmin <span>Portal</span>
+    </div>
+
+    <div>
+      <h1>Créer un compte</h1>
+      <p>Inscription boutique ou acheteur</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="field">
+          <label>Prénom</label>
+          <input type="text" placeholder="Jean" formControlName="prenom" />
+          @if(registerForm.get('prenom')?.touched && registerForm.get('prenom')?.invalid){
+          <small class="error-message"> Minimum 2 caractères </small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Nom</label>
+          <input type="text" placeholder="Dupont" formControlName="nom" />
+          @if(registerForm.get('nom')?.touched && registerForm.get('nom')?.invalid){
+          <small class="error-message"> Minimum 2 caractères </small>
+          }
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Profil</label>
+        <div class="radio-group">
+          <label><input type="radio" formControlName="profil" value="BOUTIQUE" /> Boutique</label>
+          <label><input type="radio" formControlName="profil" value="ACHETEUR" /> Acheteur</label>
+        </div>
+        @if(registerForm.get('profil')?.touched && registerForm.get('profil')?.invalid){
+        <small class="error-message"> Sélectionnez un profil </small>
+        }
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" placeholder="admin@mall.com" formControlName="email" />
+        @if(registerForm.get('email')?.touched && registerForm.get('email')?.invalid){
+        <small class="error-message"> Email invalide </small>
+        }
+      </div>
+
+      <div class="field">
+        <label>Téléphone</label>
+        <input type="tel" placeholder="0321234567" formControlName="telephone" />
+        @if(registerForm.get('telephone')?.touched && registerForm.get('telephone')?.invalid){
+        <small class="error-message"> Numéro invalide </small>
+        }
+      </div>
+
+      <div class="field">
+        <label>Mot de passe</label>
+        <input type="password" placeholder="********" formControlName="password" />
+        @if(registerForm.get('password')?.touched && registerForm.get('password')?.invalid){
+        <small class="error-message"> Minimum 6 caractères </small>
+        }
+      </div>
+
+      <div class="field">
+        <label>Confirmer le mot de passe</label>
+        <input type="password" placeholder="********" formControlName="confirmPassword" />
+        @if(registerForm.touched && registerForm.errors?.['passwordMismatch']){
+        <small class="error-message"> Les mots de passe ne correspondent pas </small>
+        }
+      </div>
+
+      @if(errorMessage()) {
+      <small class="error-message">{{ errorMessage() }}</small>
+      }
+
+      <button class="btn" type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+
+      <p class="switch">
+        Déjà  un compte ?
+        <a routerLink="/login">Se connecter</a>
+      </p>
+    </form>
+  </div>
+</div>
