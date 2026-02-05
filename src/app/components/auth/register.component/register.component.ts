@@ -9,11 +9,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from '../../../models/User';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   // templateUrl: '../login.component/login.component.html',
   // template: `<p>testttt</p>`,
   templateUrl: './register.component.html',
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage = signal('');
+  loading = signal(false);
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group(
@@ -58,20 +59,33 @@ export class RegisterComponent {
     console.log('Données inscription :', data);
 
     const user: User = data;
-    console.log('User: ', user);
+    this.loading.set(true);
+
     this.authService.register(user).subscribe({
       next: (res) => {
         this.authService.login({ email: user.email!, password: user.password! }).subscribe({
           next: () => {
-
+            this.loading.set(false);
+            const role = this.authService.getRole();
             // Redirection selon le rôle (plus tard)
-            if (this.authService.getRole() === 'ADMIN') {
-              this.router.navigate(['/dashboard']);
-            } else {
-              this.router.navigate(['/login']);
+            if (role === 'ADMIN') {
+              this.loading.set(false);
+              this.router.navigate(['/admin']);
+            }
+            else if(role === 'BOUTIQUE') {
+              this.loading.set(false);
+              this.router.navigate(['/boutique']);
+            }
+            else if(role === 'ACHETEUR') {
+              this.loading.set(false);
+              this.router.navigate(['/acheteur']);
+            }
+            else {
+              this.loading.set(false);
             }
           },
           error: (err) => {
+            this.loading.set(false);
             if (err.status === 401) {
               this.errorMessage.set(err.error.message);
             } else {
@@ -81,6 +95,7 @@ export class RegisterComponent {
         });
       },
       error: (err) => {
+        this.loading.set(false);
         if (err.status === 400) {
           this.errorMessage.set(err.error.message);
         } else {

@@ -2,7 +2,8 @@
   <div class="card">
     <div class="brand">
       <div class="brand-dot"></div>
-      MallAdmin <span>Portal</span>
+      MallAdmin
+      <!-- <span>Portal</span> -->
     </div>
 
     <div>
@@ -78,10 +79,14 @@
 
       <button class="btn" type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
 
+      @if (loading()) {
+      <div class="loader"></div>
+      }
       <p class="switch">
         Déjà  un compte ?
         <a routerLink="/login">Se connecter</a>
       </p>
+
     </form>
   </div>
 </div>

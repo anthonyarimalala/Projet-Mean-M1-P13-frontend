@@ -7,7 +7,7 @@
 
     <div>
       <h1>Connexion</h1>
-      <p>Accédez à votre espace administrateur.</p>
+      <p>Accédez à votre espace {{ role }}.</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -29,15 +29,16 @@
 
       @if(errorMessage()) {
       <small class="error-message">{{ errorMessage() }}</small>
+      } @if (loading()) {
+      <div class="loader"></div>
       }
-
 
       <div class="actions">
         <label class="checkbox">
           <input type="checkbox" formControlName="rememberMe" />
           Se souvenir de moi
         </label>
-        <a href="#">Mot de passe oublié</a>
+        <a routerLink="/register">Inscription</a>
       </div>
 
       <button class="btn" type="submit" [disabled]="loginForm.invalid">Se connecter</button>
