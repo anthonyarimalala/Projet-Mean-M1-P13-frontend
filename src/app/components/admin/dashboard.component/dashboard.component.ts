@@ -7,7 +7,7 @@ import { AcheteurComponent } from "../../acheteur/acheteur.component/acheteur.co
 
 @Component({
   selector: 'app-dashboard',
-  imports: [AdminComponent, BoutiqueComponent, AcheteurComponent],
+  imports: [],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })

@@ -7,4 +7,6 @@ export const authAcheteurGuard: CanActivateFn = (route, state) => {
   const profil = authService.getRole();
   if (profil == 'ACHETEUR') return true;
   return false;
+
+  
 };
