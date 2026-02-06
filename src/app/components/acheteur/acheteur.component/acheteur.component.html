@@ -1,2 +1,10 @@
-<p>acheteur.component works!</p>
+@if(errorMessage()){
+<div class="error">{{ errorMessage() }}</div>
+} @for(article of articles(); track article.id){
+<div>
+  <h2>{{ article.title }}</h2>
+  <p>{{ article.content }}</p>
+  <hr />
+</div>
+}
 <a (click)="logout()">Déconnexion</a>

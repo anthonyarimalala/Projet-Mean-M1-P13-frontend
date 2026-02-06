@@ -8,18 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-acheteur',
   imports: [CommonModule],
-  // templateUrl: './acheteur.component.html',
-  template: `
-    @if(errorMessage()){
-    <div class="error">{{ errorMessage() }}</div>
-    } @for(article of articles(); track article.id){
-    <div>
-      <h2>{{ article.title }}</h2>
-      <p>{{ article.content }}</p>
-      <hr />
-    </div>
-    }
-  `,
+  templateUrl: './acheteur.component.html',
   styleUrl: './acheteur.component.css',
 })
 export class AcheteurComponent {
@@ -31,7 +20,7 @@ export class AcheteurComponent {
   constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
   logout() {
     this.authService.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['login/acheteur']);
   }
 
   ngOnInit() {

@@ -12,6 +12,6 @@ export class BoutiqueComponent {
   constructor(private authService: AuthService, private router: Router) {}
   logout() {
     this.authService.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['login/boutique']);
   }
 }
