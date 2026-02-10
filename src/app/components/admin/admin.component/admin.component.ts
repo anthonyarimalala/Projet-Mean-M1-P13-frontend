@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
+import { AdminLayoutComponent } from "../admin-layout.component/admin-layout.component";
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [RouterOutlet, AdminLayoutComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })

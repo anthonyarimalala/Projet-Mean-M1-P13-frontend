@@ -1,0 +1,114 @@
+<section class="page-head">
+  <div>
+    <h1>Bibliotheque d'inputs</h1>
+    <p>Tous les types d'inputs essentiels pour les formulaires.</p>
+  </div>
+  <button class="primary">Enregistrer</button>
+</section>
+
+<section class="panel">
+  <h2>Champs textuels</h2>
+  <div class="form-grid">
+    <label class="field">
+      <span>Texte simple</span>
+      <input type="text" placeholder="Nom du projet" />
+    </label>
+    <label class="field">
+      <span>Email</span>
+      <input type="email" placeholder="contact@atlas.com" />
+    </label>
+    <label class="field">
+      <span>Mot de passe</span>
+      <input type="password" placeholder="••••••••" />
+    </label>
+    <label class="field">
+      <span>Telephone</span>
+      <input type="tel" placeholder="+261 34 00 000 00" />
+    </label>
+    <label class="field">
+      <span>Recherche</span>
+      <input type="search" placeholder="Rechercher..." />
+    </label>
+    <label class="field">
+      <span>URL</span>
+      <input type="url" placeholder="https://" />
+    </label>
+    <label class="field">
+      <span>Texte long</span>
+      <textarea rows="4" placeholder="Ajoutez une note..."></textarea>
+    </label>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Dates et heures</h2>
+  <div class="form-grid">
+    <label class="field">
+      <span>Date</span>
+      <input type="date" />
+    </label>
+    <label class="field">
+      <span>Heure</span>
+      <input type="time" />
+    </label>
+    <label class="field">
+      <span>Date et heure</span>
+      <input type="datetime-local" />
+    </label>
+    <label class="field">
+      <span>Semaine</span>
+      <input type="week" />
+    </label>
+    <label class="field">
+      <span>Mois</span>
+      <input type="month" />
+    </label>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Choix et selections</h2>
+  <div class="form-grid">
+    <label class="field">
+      <span>Nombre</span>
+      <input type="number" min="0" max="100" value="32" />
+    </label>
+    <label class="field">
+      <span>Plage</span>
+      <input type="range" min="0" max="100" value="60" />
+    </label>
+    <label class="field">
+      <span>Couleur</span>
+      <input type="color" value="#0f766e" />
+    </label>
+    <label class="field">
+      <span>Fichier</span>
+      <input type="file" />
+    </label>
+    <label class="field">
+      <span>Selection</span>
+      <select>
+        <option>Standard</option>
+        <option>Premium</option>
+        <option>Entreprise</option>
+      </select>
+    </label>
+    <fieldset class="field">
+      <legend>Radios</legend>
+      <label class="option"><input type="radio" name="role" checked /> Admin</label>
+      <label class="option"><input type="radio" name="role" /> Analyste</label>
+      <label class="option"><input type="radio" name="role" /> Invite</label>
+    </fieldset>
+    <fieldset class="field">
+      <legend>Checkboxes</legend>
+      <label class="option"><input type="checkbox" checked /> Notifications</label>
+      <label class="option"><input type="checkbox" /> Sauvegarde auto</label>
+      <label class="option"><input type="checkbox" /> Rapports mensuels</label>
+    </fieldset>
+    <label class="field switch">
+      <span>Basculer</span>
+      <input type="checkbox" checked />
+      <div class="track"></div>
+    </label>
+  </div>
+</section>
