@@ -1,0 +1,139 @@
+<section class="page-head">
+  <div>
+    <h1>Annonces</h1>
+    <p>Publiez des annonces / Voir les annonces.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <!-- LOADER OVERLAY -->
+  <div class="loading-overlay" [class.active]="isLoading()">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- MESSAGES DE NOTIFICATION GLOBAUX -->
+  @if (success()) {
+  <div class="success-message">
+    {{ success() }}
+  </div>
+  } @if (error()) {
+  <div class="error-message">
+    {{ error() }}
+  </div>
+  }
+
+  <form [formGroup]="annonceForm" (ngSubmit)="publishAnnonce()">
+    <section class="composer">
+      <div><h3>Publier une annonce</h3></div>
+      <div class="composer-body">
+        <!-- Titre -->
+        <div class="form-grid">
+          <label class="field">
+            <input
+              type="text"
+              formControlName="titre"
+              placeholder="Titre de l'annonce"
+              [class.invalid]="titre?.invalid && titre?.touched"
+            />
+            @if (titre?.invalid && titre?.touched) {
+            <div class="field-error">
+              @if (titre?.errors?.['required']) {
+              <span>Le titre est requis</span>
+              } @if (titre?.errors?.['minlength']) {
+              <span>Minimum 3 caractères</span>
+              } @if (titre?.errors?.['maxlength']) {
+              <span>Maximum 100 caractères</span>
+              }
+            </div>
+            }
+          </label>
+        </div>
+
+        <!-- Description -->
+        <label class="field">
+          <textarea
+            rows="4"
+            formControlName="description"
+            placeholder="Description..."
+            [class.invalid]="description?.invalid && description?.touched"
+          ></textarea>
+          @if (description?.invalid && description?.touched) {
+          <div class="field-error">
+            @if (description?.errors?.['required']) {
+            <span>La description est requise</span>
+            } @if (description?.errors?.['minlength']) {
+            <span>Minimum 10 caractères</span>
+            } @if (description?.errors?.['maxlength']) {
+            <span>Maximum 500 caractères</span>
+            }
+          </div>
+          }
+        </label>
+
+        <!-- Destinataires -->
+        <fieldset class="field" formGroupName="destinataires">
+          <legend>Destinataires <span class="required-star">*</span></legend>
+          <label class="option">
+            <input type="checkbox" formControlName="BOUTIQUE" /> Boutiques
+          </label>
+          <label class="option">
+            <input type="checkbox" formControlName="ACHETEUR" /> Acheteurs
+          </label>
+          @if (destinataires?.invalid && destinataires?.touched) {
+          <div class="field-error">
+            <span>Sélectionnez au moins un destinataire</span>
+          </div>
+          }
+        </fieldset>
+
+        <!-- Message d'erreur global -->
+        @if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+        }
+
+        <!-- Grille de prévisualisation des images -->
+        @if (imagePreviews().length > 0) {
+        <div class="image-preview-grid">
+          @for (preview of imagePreviews(); track preview) {
+          <div class="image-preview-item">
+            <img [src]="preview" alt="Aperçu" loading="lazy" />
+            <button
+              type="button"
+              class="remove-image"
+              (click)="removeImage($index)"
+              aria-label="Supprimer l'image"
+            >
+              ×
+            </button>
+          </div>
+          }
+        </div>
+        }
+
+        <div class="composer-actions">
+          <label class="ghost">
+            <input type="file" multiple (change)="onFileSelected($event)" accept="image/*" />
+            <span class="btn-icon">📷</span>
+            Ajouter des photos @if (imagePreviews().length > 0) {
+            <span class="badge">{{ imagePreviews().length }}</span>
+            }
+          </label>
+
+          <button type="submit" class="primary" [disabled]="!canPublish">
+            @if (imagePreviews().length > 0) {
+            <span
+              >Publier ({{ imagePreviews().length }} photo{{
+                imagePreviews().length > 1 ? 's' : ''
+              }})</span
+            >
+            } @else {
+            <span>Publier sans photo</span>
+            }
+          </button>
+        </div>
+      </div>
+    </section>
+  </form>
+</section>

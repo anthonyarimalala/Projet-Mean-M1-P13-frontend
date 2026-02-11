@@ -66,4 +66,41 @@ export class AuthService {
       return null;
     }
   }
+
+  getId(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.userId || null;
+    } catch {
+      return null;
+    }
+  }
+
+  getNom(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.nom || null;
+    } catch {
+      return null;
+    }
+  }
+
+  getPrenom(): string | null {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.prenom || null;
+    } catch {
+      return null;
+    }
+  }
+
 }

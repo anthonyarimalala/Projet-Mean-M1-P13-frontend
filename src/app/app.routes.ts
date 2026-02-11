@@ -14,6 +14,8 @@ import { AdminDashboardComponent } from './components/admin/pages/admin-dashboar
 import { AdminInputsComponent } from './components/admin/pages/admin-inputs.component/admin-inputs.component';
 import { AdminUsersComponent } from './components/admin/pages/admin-users.component/admin-users.component';
 import { AdminShopsComponent } from './components/admin/pages/admin-shops.component/admin-shops.component';
+// import { AdminAnnoncesComponent } from './components/admin/pages/admin-annonces.component/admin-annonces.component';
+import { AdminAnnoncesComponent } from './components/admin/pages/annonces/admin-annonces.component/admin-annonces.component';
 
 export const routes: Routes = [
    { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -31,7 +33,8 @@ export const routes: Routes = [
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'inputs', component: AdminInputsComponent },
       { path: 'users', component: AdminUsersComponent },
-      { path: 'shops', component: AdminShopsComponent }
+      { path: 'shops', component: AdminShopsComponent },
+      { path: 'annonces', component: AdminAnnoncesComponent },
     ]
   },
 

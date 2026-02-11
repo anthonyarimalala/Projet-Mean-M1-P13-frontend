@@ -1,0 +1,122 @@
+<section class="filters">
+  <label>
+    <span>Recherche</span>
+    <input
+      type="search"
+      placeholder="Rechercher une annonce..."
+      [value]="searchTerm()"
+      (input)="onSearchChange($event)"
+    />
+  </label>
+  <label>
+    <span>Par</span>
+    <select [value]="selectedCategory()" (change)="onCategoryChange($event)">
+      @for (category of categories; track category) {
+        <option>{{ category }}</option>
+      }
+    </select>
+  </label>
+  <label>
+    <span>Statut</span>
+    <select [value]="selectedStatus()" (change)="onStatusChange($event)">
+      <option value="Tous">Tous</option>
+      <option value="Publié">Publié</option>
+      <option value="Brouillon">Brouillon</option>
+      <option value="Archivé">Archivé</option>
+    </select>
+  </label>
+  <button class="ghost" (click)="resetFilters()">Réinitialiser</button>
+</section>
+
+@if (loading() && annonces().length === 0) {
+  <div class="loading">
+    <p>Chargement des annonces...</p>
+  </div>
+}
+
+@if (error()) {
+  <div class="error-message">
+    {{ error() }}
+  </div>
+}
+
+<section class="feed">
+  @if (filteredAnnonces().length === 0 && !loading() && !error()) {
+    <div class="no-results">
+      <p>Aucune annonce à afficher.</p>
+    </div>
+  }
+
+  @for (annonce of filteredAnnonces(); track annonce._id) {
+    <article class="post">
+      <header>
+        <div class="user">
+          <div class="avatar">{{ getInitials(annonce.emetteur.user) }}</div>
+          <div>
+            <strong>{{ annonce.emetteur.user?.prenom }} {{ annonce.emetteur.user?.nom?.toUpperCase() }}</strong>
+            <small>
+              · {{ formatDate(annonce.created_at) }} ·
+            </small>
+          </div>
+        </div>
+      </header>
+
+      <div class="post-content">
+        <h3>{{ annonce.titre }}</h3>
+        <p>{{ annonce.description }}</p>
+      </div>
+
+      @if (annonce.images && annonce.images.length > 0) {
+        <div class="media-grid">
+          @for (image of annonce.images; track image._id) {
+            <div class="media">
+              <img [src]="image.url" [alt]="image.alt || annonce.titre" />
+            </div>
+          }
+        </div>
+      }
+
+      <!-- <div class="annonce-details">
+        <small>
+          <strong>Statut:</strong>
+          @switch (annonce.statut) {
+            @case ('PUBLIEE') {
+              <span class="status-published">{{ getAnnonceStatus(annonce) }}</span>
+            }
+            @case ('BROUILLON') {
+              <span class="status-draft">{{ getAnnonceStatus(annonce) }}</span>
+            }
+            @case ('ARCHIVEE') {
+              <span class="status-archived">{{ getAnnonceStatus(annonce) }}</span>
+            }
+            @default {
+              <span>{{ getAnnonceStatus(annonce) }}</span>
+            }
+          }
+        </small>
+      </div> -->
+
+      <footer>
+        <span>0 réactions</span>
+        <span>0 commentaires</span>
+      </footer>
+    </article>
+  }
+
+  <!-- Élément sentinelle pour déclencher le chargement -->
+  <div #scrollAnchor class="scroll-anchor"></div>
+
+  <!-- Indicateur de chargement pour les pages suivantes -->
+  @if (loading() && annonces().length > 0) {
+    <div class="loading-more">
+      <p>Chargement d'annonces supplémentaires...</p>
+    </div>
+  }
+
+  <!-- Message de fin de liste -->
+  @if (!hasMore() && annonces().length > 0) {
+    <div class="end-of-list">
+      <p>Vous avez vu toutes les annonces</p>
+    </div>
+  }
+</section>

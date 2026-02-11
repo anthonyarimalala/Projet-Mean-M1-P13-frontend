@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
@@ -10,10 +10,19 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './admin-layout.component.css',
 })
 export class AdminLayoutComponent {
+
   sidebarOpen = false;
   userMenuOpen = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  user = signal<string>("");
+  role = signal<string>("");
+
+  constructor(private authService: AuthService, private router: Router) {
+    let nom = authService.getNom() ?? "";
+    let prenom = authService.getPrenom() ?? "";
+    this.user.set(prenom+" "+nom);
+    this.role.set(authService.getRole() ?? "");
+  }
 
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
