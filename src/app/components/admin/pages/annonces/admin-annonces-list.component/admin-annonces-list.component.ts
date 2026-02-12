@@ -12,11 +12,12 @@ import {
 import { Annonce, AnnoncesResponse } from '../../../../../models/Annonce';
 import { AnnonceService } from '../../../../../services/annonces/annonce.service';
 import { CommonModule } from '@angular/common';
+import { InitialsPipe } from '../../../../../pipes/initials-pipe';
 
 @Component({
   selector: 'app-admin-annonces-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, InitialsPipe],
   templateUrl: './admin-annonces-list.component.html',
   styleUrl: './admin-annonces-list.component.css',
 })
@@ -59,13 +60,7 @@ export class AdminAnnoncesListComponent
         annonce.titre.toLowerCase().includes(search) ||
         annonce.description.toLowerCase().includes(search);
 
-      const annonceCategory = this.getAnnonceCategory(annonce);
-      const matchesCategory = category === 'Toutes' || annonceCategory === category;
-
-      const annonceStatus = this.getAnnonceStatus(annonce);
-      const matchesStatus = status === 'Tous' || annonceStatus === status;
-
-      return matchesSearch && matchesCategory && matchesStatus;
+      return matchesSearch;
     });
   });
 
@@ -138,6 +133,8 @@ export class AdminAnnoncesListComponent
     this.observer.observe(this.scrollAnchor.nativeElement);
   }
 
+
+
   // -------------------------
   // Gestion des filtres (réinitialisation)
   // -------------------------
@@ -166,44 +163,5 @@ export class AdminAnnoncesListComponent
     // Les annonces déjà chargées sont filtrées localement
   }
 
-  // -------------------------
-  // Méthodes utilitaires (inchangées)
-  // -------------------------
-  getInitials(user: any): string {
-    if (user?.prenom && user?.nom) {
-      const prenomInitial = user.prenom.charAt(0).toUpperCase();
-      const nomInitial = user.nom.charAt(0).toUpperCase();
-      return `${prenomInitial}${nomInitial}`;
-    }
-    return '??';
-  }
 
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  }
-
-  getAnnonceCategory(annonce: Annonce): string {
-    if (annonce.emetteur.role === 'ADMIN') return 'RH';
-    return annonce.boutique_id ? 'Marketing' : 'Technique';
-  }
-
-  getAnnonceStatus(annonce: Annonce): string {
-    switch (annonce.statut) {
-      case 'PUBLIEE':
-        return 'Publié';
-      case 'BROUILLON':
-        return 'Brouillon';
-      case 'ARCHIVEE':
-        return 'Archivé';
-      default:
-        return annonce.statut;
-    }
-  }
 }

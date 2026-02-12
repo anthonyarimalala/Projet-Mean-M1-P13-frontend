@@ -11,8 +11,8 @@ export class AnnonceService {
 
   constructor(private http: HttpClient) {}
 
-  save(createAnnonce: CreateAnnonce) {
-    return this.http.post(`${this.apiUrl}`, createAnnonce);
+  save(data: CreateAnnonce | FormData) {
+    return this.http.post(`${this.apiUrl}`, data);
   }
   getAnnonces(page: number = 1, limit: number = 10): Observable<AnnoncesResponse> {
     let params = new HttpParams()

@@ -86,13 +86,6 @@
           }
         </fieldset>
 
-        <!-- Message d'erreur global -->
-        @if (error()) {
-        <div class="error-message">
-          {{ error() }}
-        </div>
-        }
-
         <!-- Grille de prévisualisation des images -->
         @if (imagePreviews().length > 0) {
         <div class="image-preview-grid">
@@ -132,6 +125,7 @@
             <span>Publier sans photo</span>
             }
           </button>
+
         </div>
       </div>
     </section>

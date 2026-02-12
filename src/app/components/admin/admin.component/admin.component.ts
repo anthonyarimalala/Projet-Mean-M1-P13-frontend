@@ -5,7 +5,7 @@ import { AdminLayoutComponent } from "../admin-layout.component/admin-layout.com
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterOutlet, AdminLayoutComponent],
+  imports: [AdminLayoutComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css',
 })

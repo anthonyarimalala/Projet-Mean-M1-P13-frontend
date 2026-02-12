@@ -15,7 +15,6 @@ export interface Image {
   url: string;
   alt: string;
   ordre: number;
-  _id: string;
 }
 
 export interface Annonce {

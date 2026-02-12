@@ -51,11 +51,11 @@
     <article class="post">
       <header>
         <div class="user">
-          <div class="avatar">{{ getInitials(annonce.emetteur.user) }}</div>
+          <div class="avatar">{{ annonce.emetteur | initials }}</div>
           <div>
-            <strong>{{ annonce.emetteur.user?.prenom }} {{ annonce.emetteur.user?.nom?.toUpperCase() }}</strong>
+            <strong>{{ annonce.emetteur.user.prenom }} {{ annonce.emetteur.user.nom.toUpperCase() }}</strong>
             <small>
-              · {{ formatDate(annonce.created_at) }} ·
+              · {{ annonce.created_at | date : 'dd MMMM yyyy, HH:mm' }} ·
             </small>
           </div>
         </div>
@@ -68,7 +68,7 @@
 
       @if (annonce.images && annonce.images.length > 0) {
         <div class="media-grid">
-          @for (image of annonce.images; track image._id) {
+          @for (image of annonce.images; track image.url) {
             <div class="media">
               <img [src]="image.url" [alt]="image.alt || annonce.titre" />
             </div>

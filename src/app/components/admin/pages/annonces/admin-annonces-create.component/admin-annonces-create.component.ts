@@ -1,8 +1,10 @@
 import { AnnonceService } from '../../../../../services/annonces/annonce.service';
-import { Annonce, CreateAnnonce, Emetteur } from './../../../../../models/Annonce';
+import { UploadService } from '../../../../../services/upload/upload.service';
+import { Annonce, CreateAnnonce, Emetteur, Image } from './../../../../../models/Annonce';
 import { AuthService } from './../../../../../services/auth.service';
 import { Component, signal, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { forkJoin } from 'rxjs'; // <-- AJOUT: import pour combiner les observables
 
 @Component({
   selector: 'app-admin-annonces-create',
@@ -17,14 +19,16 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
   annonceForm!: FormGroup;
   error = signal<string | null>(null);
   success = signal<string | null>(null);
-  isLoading = signal<boolean>(false); // <-- AJOUT: Signal pour le chargement
+  isLoading = signal<boolean>(false);
   private selectedFiles = signal<File[]>([]);
   imagePreviews = signal<string[]>([]);
+
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private annonceService: AnnonceService
+    private annonceService: AnnonceService,
+    private uploadService: UploadService
   ) {}
 
   ngOnInit(): void {
@@ -42,8 +46,9 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
           BOUTIQUE: [false],
           ACHETEUR: [false],
         },
-        { validators: this.atLeastOneChecked.bind(this) } // ✅ validator personnalisé
+        { validators: this.atLeastOneChecked.bind(this) }
       ),
+      images: [[]],
     });
   }
 
@@ -63,67 +68,102 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
       this.isLoading.set(true);
       this.error.set(null);
 
-      const destinatairesValue = this.annonceForm.get('destinataires')?.value;
-
-      const cibles: string[] = Object.keys(destinatairesValue).filter(
-        (key) => destinatairesValue[key]
-      );
-
-      const now = new Date().toISOString();
-      const emetteur: Emetteur = {
-        user_id: this.authService.getId() ?? '',
-        role: this.authService.getRole() ?? '',
-      };
-
-      const createAnnonce: CreateAnnonce = {
-        titre: this.annonceForm.get('titre')?.value,
-        description: this.annonceForm.get('description')?.value,
-        emetteur: emetteur,
-        boutique_id: null,
-        cibles: cibles,
-        images: [],
-        statut: 'PUBLIEE',
-        created_at: now,
-        updated_at: now,
-        __v: 0,
-      };
-
-      console.log(this.annonceForm.get('destinataires')?.value);
-
-      this.annonceService.save(createAnnonce).subscribe({
-        next: (res) => {
-          this.isLoading.set(false);
-          this.success.set('Annonce publiée avec succès !');
-          this.resetForm();
-
-          setTimeout(() => {
-            this.success.set(null);
-          }, 3000);
-        },
-        error: (err) => {
-          this.isLoading.set(false);
-          this.error.set(err.error?.message || 'Erreur lors de la publication de l\'annonce');
-          console.error("Erreur publication annonce: ", err);
-        },
-      })
-
-      // const { destinataires, ...data } = this.annonceForm.value;
-      // const annonce : Annonce = data;
-
-      // console.log(this.annonceForm.get('titre')?.value);
+      // 1️⃣ D'abord uploader les images si il y en a
+      if (this.selectedFiles().length > 0) {
+        this.uploadImagesAndPublish();
+      } else {
+        this.createAnnonce([]); // Pas d'images, créer directement l'annonce
+      }
     }
+  }
+
+  private uploadImagesAndPublish(): void {
+    const files = this.selectedFiles();
+    const images : Image[] = [];
+
+    this.uploadService.uploadImages(files).subscribe({
+      next: (responses) => {
+        // Extraire les URLs des images uploadées depuis Cloudinary
+        // Adapter cette partie selon le format de réponse de votre uploadService
+
+        for (let i = 0; i < responses.images.length; i++) {
+          const image : Image = {
+            url: responses.images[i].url,
+            alt: responses.images[i].url,
+            ordre: i+1
+          };
+          images.push(image);
+        }
+        console.log(images);
+        this.createAnnonce(images);
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        this.error.set("Erreur lors de l'upload des images");
+        console.error('Erreur upload :', err);
+      },
+    });
+  }
+
+  private createAnnonce(images: Image[]): void {
+    const destinatairesValue = this.annonceForm.get('destinataires')?.value;
+
+    const cibles: string[] = Object.keys(destinatairesValue).filter(
+      (key) => destinatairesValue[key]
+    );
+
+    const now = new Date().toISOString();
+    const emetteur: Emetteur = {
+      user_id: this.authService.getId() ?? '',
+      role: this.authService.getRole() ?? '',
+    };
+
+    const createAnnonce: CreateAnnonce = {
+      titre: this.annonceForm.get('titre')?.value,
+      description: this.annonceForm.get('description')?.value,
+      emetteur: emetteur,
+      boutique_id: null,
+      cibles: cibles,
+      images: images,
+      statut: 'PUBLIEE',
+      created_at: now,
+      updated_at: now,
+      __v: 0,
+    };
+    console.log("annonce: ", createAnnonce);
+
+    this.annonceService.save(createAnnonce).subscribe({
+      next: (res) => {
+        this.isLoading.set(false);
+        this.success.set('Annonce publiée avec succès !');
+        this.resetForm();
+
+        setTimeout(() => {
+          this.success.set(null);
+        }, 3000);
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        this.error.set(err.error?.message || "Erreur lors de la publication de l'annonce");
+        console.error('Erreur publication annonce: ', err);
+      },
+    });
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const files = Array.from(input.files);
+
+      // Stocker seulement les fichiers localement
       this.selectedFiles.set([...this.selectedFiles(), ...files]);
 
+      // Créer les aperçus
       const newPreviews = files.map((file) => URL.createObjectURL(file));
       this.imagePreviews.set([...this.imagePreviews(), ...newPreviews]);
+
+      // ❌ SUPPRIMER l'appel uploadService.uploadImages() ici
     }
-    // Reset l'input pour permettre de sélectionner le même fichier
     input.value = '';
   }
 
@@ -142,8 +182,8 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
       titre: '',
       description: '',
       destinataires: {
-        boutiques: false,
-        acheteurs: false,
+        BOUTIQUE: false,
+        ACHETEUR: false,
       },
     });
 
