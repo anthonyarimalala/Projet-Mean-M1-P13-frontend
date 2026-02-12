@@ -51,7 +51,7 @@
     <article class="post">
       <header>
         <div class="user">
-          <div class="avatar">{{ annonce.emetteur | initials }}</div>
+          <div class="avatar">{{ annonce.emetteur.user | initials }}</div>
           <div>
             <strong>{{ annonce.emetteur.user.prenom }} {{ annonce.emetteur.user.nom.toUpperCase() }}</strong>
             <small>
@@ -63,7 +63,9 @@
 
       <div class="post-content">
         <h3>{{ annonce.titre }}</h3>
-        <p>{{ annonce.description }}</p>
+        <!-- <p>{{ annonce.description | nl2br}}</p> -->
+        <p [innerHTML]="annonce.description | nl2br"></p>
+
       </div>
 
       @if (annonce.images && annonce.images.length > 0) {
@@ -97,7 +99,6 @@
       </div> -->
 
       <footer>
-        <span>0 réactions</span>
         <span>0 commentaires</span>
       </footer>
     </article>

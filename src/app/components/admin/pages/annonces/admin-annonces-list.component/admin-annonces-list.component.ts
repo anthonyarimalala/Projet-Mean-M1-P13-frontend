@@ -13,17 +13,17 @@ import { Annonce, AnnoncesResponse } from '../../../../../models/Annonce';
 import { AnnonceService } from '../../../../../services/annonces/annonce.service';
 import { CommonModule } from '@angular/common';
 import { InitialsPipe } from '../../../../../pipes/initials-pipe';
+import { Subscription } from 'rxjs';
+import { Nl2brPipe } from '../../../../../pipes/nl2br-pipe';
 
 @Component({
   selector: 'app-admin-annonces-list',
   standalone: true,
-  imports: [CommonModule, InitialsPipe],
+  imports: [CommonModule, InitialsPipe, Nl2brPipe],
   templateUrl: './admin-annonces-list.component.html',
   styleUrl: './admin-annonces-list.component.css',
 })
-export class AdminAnnoncesListComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDestroy {
   private annonceService = inject(AnnonceService);
 
   // Filtres
@@ -39,9 +39,11 @@ export class AdminAnnoncesListComponent
 
   // Pagination infinie
   currentPage = signal(1);
-  itemsPerPage = signal(10);
+  itemsPerPage = signal(5);
   totalPages = signal(0);
   hasMore = signal(true); // Y a-t-il encore des pages à charger ?
+
+  private sub!: Subscription;
 
   // Observer pour le scroll
   @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
@@ -66,6 +68,10 @@ export class AdminAnnoncesListComponent
 
   ngOnInit(): void {
     this.loadInitialAnnonces();
+    // 🔥 Ecoute des créations
+    this.sub = this.annonceService.annonceCreated$.subscribe(() => {
+      this.loadInitialAnnonces();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -74,6 +80,7 @@ export class AdminAnnoncesListComponent
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
+    this.sub?.unsubscribe();
   }
 
   // -------------------------
@@ -92,22 +99,20 @@ export class AdminAnnoncesListComponent
     this.loading.set(true);
     this.error.set(null);
 
-    this.annonceService
-      .getAnnonces(this.currentPage(), this.itemsPerPage())
-      .subscribe({
-        next: (response: AnnoncesResponse) => {
-          // Concaténer les nouvelles annonces avec les existantes
-          this.annonces.update((existing) => [...existing, ...response.items]);
-          this.totalPages.set(response.pages || Math.ceil(response.total / this.itemsPerPage()));
-          this.hasMore.set(this.currentPage() < this.totalPages());
-          this.loading.set(false);
-        },
-        error: (err) => {
-          this.error.set('Erreur de chargement des annonces');
-          this.loading.set(false);
-          console.error(err);
-        },
-      });
+    this.annonceService.getAnnonces(this.currentPage(), this.itemsPerPage()).subscribe({
+      next: (response: AnnoncesResponse) => {
+        // Concaténer les nouvelles annonces avec les existantes
+        this.annonces.update((existing) => [...existing, ...response.items]);
+        this.totalPages.set(response.pages || Math.ceil(response.total / this.itemsPerPage()));
+        this.hasMore.set(this.currentPage() < this.totalPages());
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.error.set('Erreur de chargement des annonces');
+        this.loading.set(false);
+        console.error(err);
+      },
+    });
   }
 
   // Déclenche le chargement de la page suivante
@@ -132,8 +137,6 @@ export class AdminAnnoncesListComponent
 
     this.observer.observe(this.scrollAnchor.nativeElement);
   }
-
-
 
   // -------------------------
   // Gestion des filtres (réinitialisation)
@@ -162,6 +165,4 @@ export class AdminAnnoncesListComponent
     this.selectedStatus.set('Tous');
     // Les annonces déjà chargées sont filtrées localement
   }
-
-
 }

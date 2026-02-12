@@ -39,7 +39,7 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
       ],
       description: [
         'Description de test.',
-        [Validators.required, Validators.minLength(10), Validators.maxLength(500)],
+        [Validators.required, Validators.minLength(10)],
       ],
       destinataires: this.fb.group(
         {
@@ -138,9 +138,12 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
         this.success.set('Annonce publiée avec succès !');
         this.resetForm();
 
+        this.annonceService.notifyAnnonceCreated();
+
         setTimeout(() => {
           this.success.set(null);
         }, 3000);
+
       },
       error: (err) => {
         this.isLoading.set(false);

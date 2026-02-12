@@ -255,6 +255,7 @@
   margin: 0 0 8px 0;
   font-size: 18px;
   color: var(--ink);
+  white-space: pre-line;
 }
 
 .post-content p {
@@ -402,8 +403,12 @@
 }
 
 @keyframes loading {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Mode sombre */
