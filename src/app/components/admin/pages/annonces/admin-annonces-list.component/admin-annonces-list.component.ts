@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { InitialsPipe } from '../../../../../pipes/initials-pipe';
 import { Subscription } from 'rxjs';
 import { Nl2brPipe } from '../../../../../pipes/nl2br-pipe';
+import { AuthService } from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-admin-annonces-list',
@@ -25,6 +26,9 @@ import { Nl2brPipe } from '../../../../../pipes/nl2br-pipe';
 })
 export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDestroy {
   private annonceService = inject(AnnonceService);
+  private authService = inject(AuthService);
+
+  user_id = signal('');
 
   // Filtres
   categories = ['Toutes', 'Moi'];
@@ -49,28 +53,13 @@ export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('scrollAnchor') scrollAnchor!: ElementRef;
   private observer!: IntersectionObserver;
 
-  // Computed : filtrage local sur toutes les annonces chargées
-  filteredAnnonces = computed(() => {
-    const allAnnonces = this.annonces();
-    const search = this.searchTerm().toLowerCase();
-    const category = this.selectedCategory();
-    const status = this.selectedStatus();
-
-    return allAnnonces.filter((annonce) => {
-      const matchesSearch =
-        search === '' ||
-        annonce.titre.toLowerCase().includes(search) ||
-        annonce.description.toLowerCase().includes(search);
-
-      return matchesSearch;
-    });
-  });
-
   ngOnInit(): void {
     this.loadInitialAnnonces();
+    this.user_id.set(this.authService.getId() ?? '');
     // 🔥 Ecoute des créations
     this.sub = this.annonceService.annonceCreated$.subscribe(() => {
       this.loadInitialAnnonces();
+      this.user_id.set(this.authService.getId() ?? '');
     });
   }
 
@@ -165,4 +154,17 @@ export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDest
     this.selectedStatus.set('Tous');
     // Les annonces déjà chargées sont filtrées localement
   }
+
+  deleteAnnonce(id: string) {
+    const confirmed = window.confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?');
+    if (!confirmed) {
+      return; // l'utilisateur a annulé
+    }
+
+    this.annonceService.deleteAnnonce(id).subscribe(() => {
+      console.log('Annonce supprimée');
+      this.annonceService.notifyAnnonceCreated();
+    });
+  }
+
 }

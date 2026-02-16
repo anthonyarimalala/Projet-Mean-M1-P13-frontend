@@ -511,3 +511,24 @@
     color: rgba(255, 255, 255, 0.7);
   }
 }
+
+.post-header {
+  display: flex;
+  justify-content: space-between; /* pousse le bouton à droite */
+  align-items: center;
+  gap: 12px;
+}
+.delete-btn {
+  border: none;
+  background: #dc3545;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background: #b02a37;
+}

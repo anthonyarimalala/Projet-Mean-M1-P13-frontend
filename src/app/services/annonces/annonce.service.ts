@@ -32,4 +32,8 @@ export class AnnonceService {
   notifyAnnonceCreated() {
     this.annonceCreatedSource.next();
   }
+
+  deleteAnnonce(annonceId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${annonceId}`);
+  }
 }

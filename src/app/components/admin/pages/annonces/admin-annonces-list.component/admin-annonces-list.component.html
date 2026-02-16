@@ -41,24 +41,29 @@
 }
 
 <section class="feed">
-  @if (filteredAnnonces().length === 0 && !loading() && !error()) {
+  @if (annonces().length === 0 && !loading() && !error()) {
     <div class="no-results">
       <p>Aucune annonce à afficher.</p>
     </div>
   }
 
-  @for (annonce of filteredAnnonces(); track annonce._id) {
+  @for (annonce of annonces(); track annonce._id) {
     <article class="post">
-      <header>
+      <header class="post-header">
         <div class="user">
           <div class="avatar">{{ annonce.emetteur.user | initials }}</div>
           <div>
-            <strong>{{ annonce.emetteur.user.prenom }} {{ annonce.emetteur.user.nom.toUpperCase() }}</strong>
+            @if(annonce.boutique_id == null){
+              <strong>{{ annonce.emetteur.user.prenom }} {{ annonce.emetteur.user.nom.toUpperCase() }}</strong>
+            }
             <small>
               · {{ annonce.created_at | date : 'dd MMMM yyyy, HH:mm' }} ·
             </small>
           </div>
         </div>
+        @if (user_id() == annonce.emetteur.user_id) {
+          <button class="delete-btn" (click)="deleteAnnonce(annonce._id)">Supprimer</button>
+        }
       </header>
 
       <div class="post-content">

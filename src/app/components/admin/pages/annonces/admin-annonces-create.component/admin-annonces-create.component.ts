@@ -41,13 +41,6 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
         'Description de test.',
         [Validators.required, Validators.minLength(10)],
       ],
-      destinataires: this.fb.group(
-        {
-          BOUTIQUE: [false],
-          ACHETEUR: [false],
-        },
-        { validators: this.atLeastOneChecked.bind(this) }
-      ),
       images: [[]],
     });
   }
@@ -106,11 +99,6 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
   }
 
   private createAnnonce(images: Image[]): void {
-    const destinatairesValue = this.annonceForm.get('destinataires')?.value;
-
-    const cibles: string[] = Object.keys(destinatairesValue).filter(
-      (key) => destinatairesValue[key]
-    );
 
     const now = new Date().toISOString();
     const emetteur: Emetteur = {
@@ -123,7 +111,7 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
       description: this.annonceForm.get('description')?.value,
       emetteur: emetteur,
       boutique_id: null,
-      cibles: cibles,
+      cibles: ["BOUTIQUE", "ACHETEUR"],
       images: images,
       statut: 'PUBLIEE',
       created_at: now,

@@ -70,22 +70,6 @@
           }
         </label>
 
-        <!-- Destinataires -->
-        <fieldset class="field" formGroupName="destinataires">
-          <legend>Destinataires <span class="required-star">*</span></legend>
-          <label class="option">
-            <input type="checkbox" formControlName="BOUTIQUE" /> Boutiques
-          </label>
-          <label class="option">
-            <input type="checkbox" formControlName="ACHETEUR" /> Acheteurs
-          </label>
-          @if (destinataires?.invalid && destinataires?.touched) {
-          <div class="field-error">
-            <span>Sélectionnez au moins un destinataire</span>
-          </div>
-          }
-        </fieldset>
-
         <!-- Grille de prévisualisation des images -->
         @if (imagePreviews().length > 0) {
         <div class="image-preview-grid">
