@@ -9,42 +9,59 @@ import { BoutiqueComponent } from './components/boutique/boutique.component/bout
 import { AcheteurComponent } from './components/acheteur/acheteur.component/acheteur.component';
 import { authAdminGuard } from './guards/admin/auth-admin-guard';
 import { authAcheteurGuard } from './guards/acheteur/auth-acheteur-guard';
-import { AdminLayoutComponent } from './components/admin/admin-layout.component/admin-layout.component';
-import { AdminDashboardComponent } from './components/admin/pages/admin-dashboard.component/admin-dashboard.component';
-import { AdminInputsComponent } from './components/admin/pages/admin-inputs.component/admin-inputs.component';
-import { AdminUsersComponent } from './components/admin/pages/admin-users.component/admin-users.component';
-import { AdminShopsComponent } from './components/admin/pages/admin-shops.component/admin-shops.component';
 // import { AdminAnnoncesComponent } from './components/admin/pages/admin-annonces.component/admin-annonces.component';
 import { AdminAnnoncesComponent } from './components/admin/pages/annonces/admin-annonces.component/admin-annonces.component';
+import { AdminBoutiqueLayoutComponent } from './components/templates/admin-boutique-layout.component/admin-boutique-layout.component';
+import { AdminBoutiqueDashboardComponent } from './components/templates/pages/admin-boutique-dashboard.component/admin-boutique-dashboard.component';
+import { AdminBoutiqueInputsComponent } from './components/templates/pages/admin-boutique-inputs.component/admin-boutique-inputs.component';
+import { AdminBoutiqueUsersComponent } from './components/templates/pages/admin-boutique-users.component/admin-boutique-users.component';
+import { AdminBoutiqueShopsComponent } from './components/templates/pages/admin-boutique-shops.component/admin-boutique-shops.component';
 
 export const routes: Routes = [
-   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
-   { path: 'login/:role', component: LoginComponent, canMatch: [noAuthGuard]},
-   { path: 'register', component: RegisterComponent, canMatch: [noAuthGuard]},
+  { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  { path: 'login/:role', component: LoginComponent, canMatch: [noAuthGuard] },
+  { path: 'register', component: RegisterComponent, canMatch: [noAuthGuard] },
 
-   // ADMIN
+  // ADMIN
   //  { path: 'admin', component: AdminComponent, canMatch: [authAdminGuard]},
-   {
+  {
     path: 'admin',
-    component: AdminLayoutComponent,
+    component: AdminComponent,
     canMatch: [authAdminGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: AdminDashboardComponent },
-      { path: 'inputs', component: AdminInputsComponent },
-      { path: 'users', component: AdminUsersComponent },
-      { path: 'shops', component: AdminShopsComponent },
+      { path: '', redirectTo: 'annonces', pathMatch: 'full' },
       { path: 'annonces', component: AdminAnnoncesComponent },
-    ]
+    ],
   },
 
-   // BOUTIQUE
-   { path: 'boutique', component: BoutiqueComponent, canActivate: [authBoutiqueGuard]},
+  // BOUTIQUE
+  // {
+  //   path: 'boutique',
+  //   component: BoutiqueComponent,
+  //   canMatch: [authAdminGuard],
+  //   children: [
+  //     // { path: '', redirectTo: 'boutique', pathMatch: 'full' },
+  //   ],
+  // },
 
-   // ACHETEUR
-   { path: 'acheteur', component: AcheteurComponent, canActivate: [authAcheteurGuard]},
+  { path: 'boutique', component: BoutiqueComponent, canActivate: [authBoutiqueGuard] },
 
+  // ACHETEUR
+  { path: 'acheteur', component: AcheteurComponent, canActivate: [authAcheteurGuard] },
 
-   { path: '', redirectTo: 'login/acheteur', pathMatch: 'full' },
-   { path: '**', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  // TEMPLATE
+  {
+    path: 'template',
+    component: AdminBoutiqueLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: AdminBoutiqueDashboardComponent },
+      { path: 'inputs', component: AdminBoutiqueInputsComponent },
+      { path: 'users', component: AdminBoutiqueUsersComponent },
+      { path: 'shops', component: AdminBoutiqueShopsComponent },
+    ],
+  },
+
+  { path: '', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login/acheteur', pathMatch: 'full' },
 ];

@@ -38,11 +38,13 @@
           </div>
           <span class="caret">▾</span>
         </button>
-        <div class="user-dropdown" *ngIf="userMenuOpen">
+        @if(userMenuOpen){
+        <div class="user-dropdown">
           <button type="button">Mon profil</button>
           <button type="button">Parametres</button>
           <button type="button" class="danger" (click)="logout()">Se deconnecter</button>
         </div>
+        }
       </div>
     </div>
   </header>
@@ -51,21 +53,11 @@
     <div class="sidebar-block">
       <div class="sidebar-title">Navigation</div>
       <nav class="sidebar-nav">
-        <a routerLink="/admin/dashboard" routerLinkActive="active" (click)="closeSidebar()"
-          >Tableau de bord</a
-        >
-        <a routerLink="/admin/annonces" routerLinkActive="active" (click)="closeSidebar()"
-          >Annonces</a
-        >
-        <a routerLink="/admin/inputs" routerLinkActive="active" (click)="closeSidebar()"
-          >Formulaires</a
-        >
-        <a routerLink="/admin/users" routerLinkActive="active" (click)="closeSidebar()"
-          >Utilisateurs</a
-        >
-        <a routerLink="/admin/shops" routerLinkActive="active" (click)="closeSidebar()"
-          >Boutiques</a
-        >
+        @for (item of menus(); track item.link) {
+        <a [routerLink]="item.link" routerLinkActive="active" (click)="closeSidebar()">
+          {{ item.label }}
+        </a>
+        }
       </nav>
     </div>
 

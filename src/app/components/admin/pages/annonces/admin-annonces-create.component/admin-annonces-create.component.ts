@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs'; // <-- AJOUT: import pour combiner les observab
   templateUrl: './admin-annonces-create.component.html',
   styleUrls: [
     './admin-annonces-create.component.css',
-    '../../admin-inputs.component/admin-inputs.component.css',
+    '../../../../templates/pages/admin-boutique-inputs.component/admin-boutique-inputs.component.css'
   ],
 })
 export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
