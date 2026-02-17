@@ -29,17 +29,17 @@ export class AdminBoutiqueLayoutComponent {
       { label: 'Dashboard', link: '/template/dashboard' },
       { label: 'Annonces', link: '/admin/annonces' },
       { label: 'Inputs', link: '/template/inputs' },
-      { label: 'Users', link: '/template/users' },
+      { label: 'Users', link: '/admin/users' },
       { label: 'Shops', link: '/template/shops' },
     ];
 
     const boutiqueMenu = [
       { label: 'Dashboard', link: '/template/dashboard' },
+      { label: 'Annonces', link: '/boutique/annonces' },
       { label: 'Inputs', link: '/template/inputs' },
-      { label: 'Users', link: '/template/users' },
+      // { label: 'Users', link: '/template/users' },
       { label: 'Shops', link: '/template/shops' },
     ];
-
 
     return role === 'ADMIN' ? adminMenu : boutiqueMenu;
   });
@@ -64,8 +64,7 @@ export class AdminBoutiqueLayoutComponent {
     if (this.authService.getRole() == 'ADMIN') {
       this.authService.logout();
       this.router.navigate(['login/admin']);
-    }
-    else if (this.authService.getRole() == 'BOUTIQUE') {
+    } else if (this.authService.getRole() == 'BOUTIQUE') {
       this.authService.logout();
       this.router.navigate(['login/boutique']);
     } else {

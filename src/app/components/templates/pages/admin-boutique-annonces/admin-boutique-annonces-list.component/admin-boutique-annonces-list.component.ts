@@ -8,27 +8,50 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  HostListener,
 } from '@angular/core';
 import { Annonce, AnnoncesResponse } from '../../../../../models/Annonce';
 import { AnnonceService } from '../../../../../services/annonces/annonce.service';
 import { CommonModule } from '@angular/common';
-import { InitialsPipe } from '../../../../../pipes/initials-pipe';
 import { Subscription } from 'rxjs';
-import { Nl2brPipe } from '../../../../../pipes/nl2br-pipe';
 import { AuthService } from '../../../../../services/auth.service';
+import { Nl2brPipe } from '../../../../../pipes/nl2br-pipe';
+import { InitialsPipe } from '../../../../../pipes/initials-pipe';
+import { AdminBoutiqueCommentaireComponent } from "../admin-boutique-commentaire.component/admin-boutique-commentaire.component";
 
 @Component({
-  selector: 'app-admin-annonces-list',
-  standalone: true,
-  imports: [CommonModule, InitialsPipe, Nl2brPipe],
-  templateUrl: './admin-annonces-list.component.html',
-  styleUrl: './admin-annonces-list.component.css',
+  selector: 'app-admin-boutique-annonces-list',
+  imports: [CommonModule, InitialsPipe, Nl2brPipe, AdminBoutiqueCommentaireComponent],
+  templateUrl: './admin-boutique-annonces-list.component.html',
+  styleUrl: './admin-boutique-annonces-list.component.css',
 })
-export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AdminBoutiqueAnnoncesListComponent {
   private annonceService = inject(AnnonceService);
   private authService = inject(AuthService);
+  private _openMenuId = signal<string | null>(null);
+  openMenuId = computed(() => this._openMenuId());
+  openComments: { [key: string]: boolean } = {};
 
   user_id = signal('');
+
+  toggleComments(annonceId: string) {
+    this.openComments[annonceId] = !this.openComments[annonceId];
+  }
+
+  toggleMenu(id: string, event: Event): void {
+    event.stopPropagation();
+
+    if (this._openMenuId() === id) {
+      this._openMenuId.set(null);
+    } else {
+      this._openMenuId.set(id);
+    }
+  }
+
+  @HostListener('document:click')
+  closeMenu(): void {
+    this._openMenuId.set(null);
+  }
 
   // Filtres
   categories = ['Toutes', 'Moi'];
@@ -47,6 +70,8 @@ export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDest
   totalPages = signal(0);
   hasMore = signal(true); // Y a-t-il encore des pages à charger ?
 
+
+
   private sub!: Subscription;
 
   // Observer pour le scroll
@@ -62,6 +87,8 @@ export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDest
       this.user_id.set(this.authService.getId() ?? '');
     });
   }
+
+
 
   ngAfterViewInit(): void {
     this.setupIntersectionObserver();
@@ -166,5 +193,4 @@ export class AdminAnnoncesListComponent implements OnInit, AfterViewInit, OnDest
       this.annonceService.notifyAnnonceCreated();
     });
   }
-
 }

@@ -1,0 +1,94 @@
+<!-- admin-boutique-commentaire.component.html -->
+<div class="commentaires-container">
+
+  <!-- Message d'erreur -->
+  @if (error) {
+    <div class="error-message">
+      {{ error }}
+    </div>
+  }
+
+  <!-- Formulaire d'ajout de commentaire -->
+  <div class="ajout-commentaire">
+    <div class="commentaire-input-group">
+      <textarea
+        [(ngModel)]="nouveauCommentaire"
+        placeholder="Écrire un commentaire..."
+        rows="3"
+        class="commentaire-textarea"
+        [disabled]="loadingPublication"
+      ></textarea>
+      <button
+        class="btn-commentaire"
+        (click)="ajouterCommentaire()"
+        [disabled]="!nouveauCommentaire.trim() || loading || loadingPublication"
+      >
+        @if (loadingPublication) {
+          <span>Publication...</span>
+        } @else {
+          <span>Publier</span>
+        }
+      </button>
+    </div>
+  </div>
+
+  <!-- Indicateur de chargement -->
+  @if (loading) {
+    <div class="loading-commentaires">
+      <p>Chargement des commentaires...</p>
+    </div>
+  }
+
+  <!-- Liste des commentaires -->
+  <div class="liste-commentaires">
+    @if (!loading && commentaires().length === 0) {
+      <div class="aucun-commentaire">
+        <p>Soyez le premier à commenter !</p>
+      </div>
+    }
+
+    @for (commentaire of commentaires(); track commentaire._id) {
+      <div class="commentaire-card">
+        <div class="commentaire-header">
+          <div class="commentaire-avatar">
+            {{ (commentaire.auteur) | initials }}
+          </div>
+
+          <div class="commentaire-info">
+            <strong class="commentaire-auteur">
+              {{ commentaire.auteur.prenom }} {{ commentaire.auteur.nom }}
+            </strong>
+
+            <span class="commentaire-date">
+              {{ commentaire.created_at | date : 'dd MMMM yyyy, HH:mm' }}
+            </span>
+          </div>
+
+          @if (commentaire.auteur.user_id === user_id) {
+            <button
+              class="supprimer-commentaire"
+              (click)="supprimerCommentaire(commentaire._id)"
+              title="Supprimer"
+              [disabled]="loading || loadingPublication"
+            >
+              ×
+            </button>
+          }
+        </div>
+
+        <div class="commentaire-contenu">
+          <p>{{ commentaire.contenu }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Bouton charger plus -->
+  @if (hasMore && commentaires().length > 0 && !loading && !loadingPublication) {
+    <div class="load-more">
+      <button (click)="chargerPlusDeCommentaires()" [disabled]="loading">
+        Voir plus de commentaires
+      </button>
+    </div>
+  }
+</div>

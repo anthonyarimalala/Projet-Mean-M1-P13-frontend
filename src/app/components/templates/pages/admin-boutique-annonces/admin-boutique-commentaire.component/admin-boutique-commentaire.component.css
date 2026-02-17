@@ -1,0 +1,233 @@
+/* admin-boutique-commentaire.component.css */
+.commentaires-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+/* Formulaire d'ajout */
+.ajout-commentaire {
+  margin-bottom: 30px;
+}
+
+.commentaire-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.commentaire-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.commentaire-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.btn-commentaire {
+  align-self: flex-end;
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-commentaire:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn-commentaire:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Loading */
+.loading-commentaires {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px;
+}
+
+/* Liste des commentaires */
+.liste-commentaires {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Réduit de 20px à 8px */
+}
+
+.aucun-commentaire {
+  text-align: center;
+  color: #6c757d;
+  padding: 40px;
+}
+
+/* Carte commentaire - VERSION COMPACTE */
+.commentaire-card {
+  background: white;
+  border-radius: 6px; /* Légèrement réduit */
+  padding: 8px 12px; /* Réduit de 16px à 8px 12px */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Ombre plus subtile */
+  display: flex;
+  flex-direction: row; /* Passage en ligne pour un format plus compact */
+  align-items: center; /* Centrage vertical */
+  flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+  min-height: 40px; /* Hauteur minimale mais pas trop grande */
+}
+
+.commentaire-header {
+  display: flex;
+  align-items: center; /* Changé de flex-start à center */
+  margin-bottom: 0; /* Supprimé le margin-bottom */
+  position: relative;
+  flex: 1; /* Prend l'espace disponible */
+}
+
+.commentaire-avatar {
+  width: 28px; /* Réduit de 40px à 28px */
+  height: 28px; /* Réduit de 40px à 28px */
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 11px; /* Police plus petite */
+  margin-right: 8px; /* Réduit de 12px à 8px */
+  flex-shrink: 0;
+}
+
+.commentaire-info {
+  flex: 1;
+  display: flex;
+  flex-direction: row; /* Passage en ligne */
+  align-items: center; /* Alignement vertical */
+  gap: 6px; /* Espace entre les éléments */
+  flex-wrap: wrap; /* Permet le retour à la ligne */
+}
+
+.commentaire-auteur {
+  font-size: 13px; /* Légèrement réduit */
+  color: #212529;
+  font-weight: 600; /* Un peu plus gras */
+  white-space: nowrap; /* Empêche le retour à la ligne */
+}
+
+.commentaire-date {
+  font-size: 11px; /* Réduit de 12px à 11px */
+  color: #6c757d;
+  white-space: nowrap; /* Empêche le retour à la ligne */
+}
+
+.supprimer-commentaire {
+  background: none;
+  border: none;
+  font-size: 18px; /* Réduit de 24px à 18px */
+  color: #dc3545;
+  cursor: pointer;
+  padding: 0 4px; /* Réduit le padding */
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  line-height: 1; /* Ajuste la hauteur de ligne */
+  margin-left: 4px; /* Ajoute un petit espace */
+}
+
+.supprimer-commentaire:hover {
+  opacity: 1;
+}
+
+.commentaire-contenu {
+  margin-bottom: 0; /* Supprimé */
+  padding-left: 0; /* Supprimé */
+  margin-left: 0; /* Supprimé */
+  flex: 2; /* Prend plus d'espace */
+  min-width: 200px; /* Largeur minimale pour les longs textes */
+}
+
+.commentaire-contenu p {
+  margin: 0;
+  color: #212529;
+  line-height: 1.3; /* Réduit de 1.5 à 1.3 */
+  font-size: 13px; /* Police plus petite */
+  white-space: nowrap; /* Empêche le retour à la ligne */
+  overflow: hidden; /* Cache le débordement */
+  text-overflow: ellipsis; /* Ajoute ... si le texte est trop long */
+}
+
+.commentaire-actions {
+  padding-left: 0; /* Supprimé */
+  margin-left: 8px; /* Ajoute un petit espace */
+  flex-shrink: 0;
+}
+
+.likes-btn {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  font-size: 12px; /* Réduit de 14px à 12px */
+  padding: 2px 6px; /* Réduit le padding */
+  border-radius: 4px;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.likes-btn:hover {
+  background-color: #f8f9fa;
+  color: #007bff;
+}
+
+/* Pour les écrans plus petits, on revient à l'affichage en colonne */
+@media (max-width: 768px) {
+  .commentaire-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .commentaire-contenu {
+    width: 100%;
+    min-width: auto;
+    margin-top: 4px;
+  }
+
+  .commentaire-contenu p {
+    white-space: normal; /* Retour à la ligne sur mobile */
+  }
+
+  .commentaire-info {
+    flex-wrap: wrap;
+  }
+}
+
+/* Adaptation du bouton charger plus */
+.load-more {
+  text-align: center;
+  margin-top: 16px; /* Ajout d'un peu d'espace */
+}
+
+.load-more button {
+  background: none;
+  border: 1px solid #dee2e6;
+  color: #007bff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+.load-more button:hover {
+  background-color: #f8f9fa;
+  border-color: #007bff;
+}

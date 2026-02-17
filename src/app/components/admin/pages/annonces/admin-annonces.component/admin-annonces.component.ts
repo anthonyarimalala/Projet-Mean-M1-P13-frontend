@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { AdminAnnoncesListComponent } from "../admin-annonces-list.component/admin-annonces-list.component";
-import { AdminAnnoncesCreateComponent } from "../admin-annonces-create.component/admin-annonces-create.component";
+import { AdminBoutiqueAnnonces } from "../../../../templates/pages/admin-boutique-annonces/admin-boutique-annonces";
 
 @Component({
   selector: 'app-admin-annonces',
-  imports: [AdminAnnoncesListComponent, AdminAnnoncesCreateComponent],
+  imports: [ AdminBoutiqueAnnonces],
   templateUrl: './admin-annonces.component.html',
   styleUrl: './admin-annonces.component.css',
 })

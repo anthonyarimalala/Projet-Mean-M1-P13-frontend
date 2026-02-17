@@ -1,28 +1,26 @@
 import { AnnonceService } from '../../../../../services/annonces/annonce.service';
 import { UploadService } from '../../../../../services/upload/upload.service';
-import { Annonce, CreateAnnonce, Emetteur, Image } from './../../../../../models/Annonce';
+import { CreateAnnonce, Emetteur, Image } from './../../../../../models/Annonce';
 import { AuthService } from './../../../../../services/auth.service';
-import { Component, signal, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { forkJoin } from 'rxjs'; // <-- AJOUT: import pour combiner les observables
+import { Component, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-admin-annonces-create',
-  imports: [ReactiveFormsModule],
-  templateUrl: './admin-annonces-create.component.html',
+  selector: 'app-admin-boutique-annonces-create',
+  imports: [ ReactiveFormsModule ],
+  templateUrl: './admin-boutique-annonces-create.component.html',
   styleUrls: [
-    './admin-annonces-create.component.css',
-    '../../../../templates/pages/admin-boutique-inputs.component/admin-boutique-inputs.component.css'
+    './admin-boutique-annonces-create.component.css',
+    '../../admin-boutique-inputs.component/admin-boutique-inputs.component.css',
   ],
 })
-export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
+export class AdminBoutiqueAnnoncesCreateComponent {
   annonceForm!: FormGroup;
   error = signal<string | null>(null);
   success = signal<string | null>(null);
   isLoading = signal<boolean>(false);
   private selectedFiles = signal<File[]>([]);
   imagePreviews = signal<string[]>([]);
-
 
   constructor(
     private fb: FormBuilder,
@@ -37,10 +35,7 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
         'Titre de test',
         [Validators.required, Validators.minLength(3), Validators.maxLength(100)],
       ],
-      description: [
-        'Description de test.',
-        [Validators.required, Validators.minLength(10)],
-      ],
+      description: ['Description de test.', [Validators.required, Validators.minLength(10)]],
       images: [[]],
     });
   }
@@ -72,7 +67,7 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
 
   private uploadImagesAndPublish(): void {
     const files = this.selectedFiles();
-    const images : Image[] = [];
+    const images: Image[] = [];
 
     this.uploadService.uploadImages(files).subscribe({
       next: (responses) => {
@@ -80,10 +75,10 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
         // Adapter cette partie selon le format de réponse de votre uploadService
 
         for (let i = 0; i < responses.images.length; i++) {
-          const image : Image = {
+          const image: Image = {
             url: responses.images[i].url,
             alt: responses.images[i].url,
-            ordre: i+1
+            ordre: i + 1,
           };
           images.push(image);
         }
@@ -99,7 +94,6 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
   }
 
   private createAnnonce(images: Image[]): void {
-
     const now = new Date().toISOString();
     const emetteur: Emetteur = {
       user_id: this.authService.getId() ?? '',
@@ -111,14 +105,14 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
       description: this.annonceForm.get('description')?.value,
       emetteur: emetteur,
       boutique_id: null,
-      cibles: ["BOUTIQUE", "ACHETEUR"],
+      cibles: ['BOUTIQUE', 'ACHETEUR'],
       images: images,
       statut: 'PUBLIEE',
       created_at: now,
       updated_at: now,
       __v: 0,
     };
-    console.log("annonce: ", createAnnonce);
+    console.log('annonce: ', createAnnonce);
 
     this.annonceService.save(createAnnonce).subscribe({
       next: (res) => {
@@ -131,7 +125,6 @@ export class AdminAnnoncesCreateComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.success.set(null);
         }, 3000);
-
       },
       error: (err) => {
         this.isLoading.set(false);

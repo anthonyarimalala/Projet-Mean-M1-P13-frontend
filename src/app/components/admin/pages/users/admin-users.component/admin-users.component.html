@@ -1,0 +1,141 @@
+<section class="page-head">
+  <div>
+    <h1>Utilisateurs</h1>
+    <p>Gestion des accès, rôles et activités récentes.</p>
+  </div>
+  <div class="head-actions">
+    <!-- <button class="ghost">Importer</button>
+    <button class="primary">Ajouter un utilisateur</button> -->
+  </div>
+</section>
+
+<section class="filters-section">
+  <div class="filters-bar">
+    <div class="search-wrapper">
+      <input
+        type="search"
+        class="search-input"
+        placeholder="Rechercher un utilisateur..."
+        [ngModel]="searchTerm()"
+        (ngModelChange)="onSearchChange($event)"
+      />
+      <svg
+        class="search-icon"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+
+    <div class="filters-group">
+      <select
+        class="filter-select"
+        [ngModel]="selectedRole()"
+        (ngModelChange)="onRoleChange($event)"
+      >
+        <option value="">Tous les profils</option>
+        @for(role of getUniqueRoles(); track role) {
+          <option [value]="role">{{ role }}</option>
+        }
+      </select>
+
+      <div class="date-filters">
+        <input
+          type="date"
+          class="date-input"
+          placeholder="Date début"
+          [ngModel]="dateDebut()"
+          (ngModelChange)="onDateDebutChange($event)"
+        />
+        <span class="date-separator">-</span>
+        <input
+          type="date"
+          class="date-input"
+          placeholder="Date fin"
+          [ngModel]="dateFin()"
+          (ngModelChange)="onDateFinChange($event)"
+        />
+      </div>
+
+      @if(hasActiveFilters()) {
+        <button class="clear-filters" (click)="clearFilters()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          Effacer
+        </button>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="summary">
+  <article>
+    <h3>Total utilisateurs</h3>
+    <strong>{{ totalFilteredUsers() }}</strong>
+  </article>
+  <article>
+    <h3>Nouveaux ce mois</h3>
+    <strong>{{ nouveauxCeMois() }}</strong>
+  </article>
+</section>
+
+<section class="panel">
+  <div class="table">
+    <div class="row header">
+      <span>Utilisateur</span>
+      <span>Profil</span>
+      <span>Contact</span>
+      <span>Date création</span>
+      <span>Actions</span>
+    </div>
+    @for(user of filteredUsers(); track user){
+    <div class="row">
+      <div class="user">
+        <div class="avatar">{{ user | initials }}</div>
+        <div>
+          <strong>{{ user.prenom }} {{ user.nom }}</strong>
+          <small>{{ user.email }}</small>
+        </div>
+      </div>
+      <span>
+        <span class="role-badge" [ngClass]="'role-' + user.role.toLowerCase()">
+          {{ user.role }}
+        </span>
+      </span>
+      <span>{{ user.telephone }}</span>
+      <span>{{ user.created_at | date : 'dd MMM yyyy, HH:mm' }}</span>
+      <button class="delete-btn" aria-label="Supprimer l'utilisateur" >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path
+            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+          ></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </button>
+    </div>
+    }
+
+    @if(filteredUsers().length === 0) {
+      <div class="no-results">
+        <p>Aucun utilisateur trouvé avec les filtres sélectionnés</p>
+      </div>
+    }
+  </div>
+</section>

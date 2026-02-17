@@ -2,13 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Annonce, AnnoncesResponse, CreateAnnonce } from '../../models/Annonce';
 import { Observable, Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AnnonceService {
 
-  private apiUrl = 'http://localhost:5000/api/annonces';
+  private apiUrl = `${environment.apiUrl}/annonces`;
+  // private apiUrl = 'http://localhost:5000/api/annonces';
 
   // 🔥 Event stream
   private annonceCreatedSource = new Subject<void>();

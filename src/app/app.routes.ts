@@ -14,8 +14,9 @@ import { AdminAnnoncesComponent } from './components/admin/pages/annonces/admin-
 import { AdminBoutiqueLayoutComponent } from './components/templates/admin-boutique-layout.component/admin-boutique-layout.component';
 import { AdminBoutiqueDashboardComponent } from './components/templates/pages/admin-boutique-dashboard.component/admin-boutique-dashboard.component';
 import { AdminBoutiqueInputsComponent } from './components/templates/pages/admin-boutique-inputs.component/admin-boutique-inputs.component';
-import { AdminBoutiqueUsersComponent } from './components/templates/pages/admin-boutique-users.component/admin-boutique-users.component';
 import { AdminBoutiqueShopsComponent } from './components/templates/pages/admin-boutique-shops.component/admin-boutique-shops.component';
+import { BoutiqueAnnonceComponent } from './components/boutique/pages/boutique-annonce.component/boutique-annonce.component';
+import { AdminUsersComponent } from './components/admin/pages/users/admin-users.component/admin-users.component';
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -31,20 +32,22 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'annonces', pathMatch: 'full' },
       { path: 'annonces', component: AdminAnnoncesComponent },
+      { path: 'users', component: AdminUsersComponent },
     ],
   },
 
   // BOUTIQUE
-  // {
-  //   path: 'boutique',
-  //   component: BoutiqueComponent,
-  //   canMatch: [authAdminGuard],
-  //   children: [
-  //     // { path: '', redirectTo: 'boutique', pathMatch: 'full' },
-  //   ],
-  // },
+  {
+    path: 'boutique',
+    component: BoutiqueComponent,
+    canMatch: [authBoutiqueGuard],
+    children: [
+      { path: '', redirectTo: 'annonces', pathMatch: 'full' },
+      { path: 'annonces', component: BoutiqueAnnonceComponent },
+    ],
+  },
 
-  { path: 'boutique', component: BoutiqueComponent, canActivate: [authBoutiqueGuard] },
+  // { path: 'boutique', component: BoutiqueComponent, canActivate: [authBoutiqueGuard] },
 
   // ACHETEUR
   { path: 'acheteur', component: AcheteurComponent, canActivate: [authAcheteurGuard] },
@@ -57,7 +60,6 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminBoutiqueDashboardComponent },
       { path: 'inputs', component: AdminBoutiqueInputsComponent },
-      { path: 'users', component: AdminBoutiqueUsersComponent },
       { path: 'shops', component: AdminBoutiqueShopsComponent },
     ],
   },
