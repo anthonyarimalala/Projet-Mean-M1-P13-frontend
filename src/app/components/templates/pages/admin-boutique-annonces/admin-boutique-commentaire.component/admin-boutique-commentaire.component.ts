@@ -172,17 +172,4 @@ export class AdminBoutiqueCommentaireComponent implements OnInit, OnDestroy {
       });
   }
 
-  /**
-   * Formate une date pour l'affichage
-   */
-  formatDate(date: string): string {
-    if (!date) return '';
-    return new Date(date).toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  }
 }
