@@ -111,7 +111,7 @@
       </div> -->
 
     <footer>
-      <span (click)="toggleComments(annonce._id)">0 commentaires</span>
+      <span (click)="toggleComments(annonce._id)">Voir les commentaires</span>
     </footer>
 
     <!-- Dans votre template principal, décommentez et modifiez cette partie -->
@@ -119,7 +119,6 @@
     <app-admin-boutique-commentaire [annonceId]="annonce._id" [user_id]="user_id()">
     </app-admin-boutique-commentaire>
     }
-
   </article>
   }
 
