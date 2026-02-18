@@ -1,0 +1,12 @@
+@if (open) {
+  <div class="drawer-backdrop" (click)="onBackdropClick()"></div>
+  <aside class="drawer-panel" role="dialog" aria-label="Panier">
+    <div class="drawer-header">
+      <h3>Votre panier</h3>
+      <button type="button" class="close-btn" (click)="close.emit()">Fermer</button>
+    </div>
+    <div class="drawer-body">
+      <app-cart [compact]="true"></app-cart>
+    </div>
+  </aside>
+}

@@ -1,0 +1,42 @@
+@if (!compact) {
+  <section class="page-header">
+    <h2>Panier</h2>
+    <p>Consultez vos articles et finalisez votre selection.</p>
+  </section>
+}
+
+@if (cartItems().length === 0) {
+  <div class="empty-state">
+    <p>Votre panier est vide.</p>
+  </div>
+} @else {
+  <div class="cart-grid">
+    @for (item of cartItems(); track item.articleId) {
+      @if (getArticle(item)) {
+        <div class="cart-item">
+          <div class="item-info">
+            <h3>{{ getArticle(item)?.name }}</h3>
+            <p class="category">{{ (getArticle(item)?.categories ?? []).join(', ') }}</p>
+            <p class="price">{{ (getArticle(item)?.price || 0) | number: '1.0-0' }} MGA</p>
+          </div>
+          <div class="item-actions">
+            <label>
+              Quantite
+              <input
+                type="number"
+                min="1"
+                [value]="item.quantity"
+                (input)="updateQuantity(item, $any($event.target).value)"
+              />
+            </label>
+            <button type="button" class="remove" (click)="remove(item)">Supprimer</button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+  <div class="total-card">
+    <span>Total</span>
+    <strong>{{ total | number: '1.0-0' }} MGA</strong>
+  </div>
+}

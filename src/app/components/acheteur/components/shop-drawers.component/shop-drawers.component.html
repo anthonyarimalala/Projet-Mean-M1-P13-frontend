@@ -1,0 +1,42 @@
+@if (open) {
+  <div class="drawer-backdrop" (click)="onBackdropClick()"></div>
+  <aside class="drawer-panel" role="dialog" aria-label="Boutiques">
+    <div class="drawer-header">
+      <h3>Boutiques</h3>
+      <button type="button" class="close-btn" (click)="close.emit()">Fermer</button>
+    </div>
+    <div class="drawer-body">
+      <div class="filters">
+        <input
+          type="text"
+          placeholder="Rechercher une boutique"
+          [(ngModel)]="nameFilter"
+          name="shopNameFilter"
+        />
+        <input
+          type="text"
+          placeholder="Filtrer par categorie"
+          [(ngModel)]="categoryFilter"
+          name="shopCategoryFilter"
+        />
+      </div>
+      <div class="shop-list">
+        @for (shop of filteredShops; track shop.id) {
+          <a class="shop-row" routerLink="acheteur/annonces/{{ shop.id }}" (click)="close.emit()">
+            <div class="shop-avatar">
+              @if (shop.imageUrl) {
+                <img [src]="shop.imageUrl" [alt]="shop.name" />
+              } @else {
+                <span>{{ shop.name.charAt(0) }}</span>
+              }
+            </div>
+            <div>
+              <p class="shop-name">{{ shop.name }} eee</p>
+              <p class="shop-meta">{{ shop.category }}</p>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </aside>
+}

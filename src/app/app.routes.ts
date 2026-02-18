@@ -17,6 +17,11 @@ import { AdminBoutiqueInputsComponent } from './components/templates/pages/admin
 import { AdminBoutiqueShopsComponent } from './components/templates/pages/admin-boutique-shops.component/admin-boutique-shops.component';
 import { BoutiqueAnnonceComponent } from './components/boutique/pages/boutique-annonce.component/boutique-annonce.component';
 import { AdminUsersComponent } from './components/admin/pages/users/admin-users.component/admin-users.component';
+import { AcheteurLayoutComponent } from './components/acheteur/acheteur-layout.component/acheteur-layout.component';
+import { AnnouncementsComponent } from './components/acheteur/pages/announcements.component/announcements.component';
+import { ShopsComponent } from './components/acheteur/pages/shops.component/shops.component';
+import { ShopDetailComponent } from './components/acheteur/pages/shop-detail.component/shop-detail.component';
+import { CartComponent } from './components/acheteur/pages/cart.component/cart.component';
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -47,10 +52,20 @@ export const routes: Routes = [
     ],
   },
 
-  // { path: 'boutique', component: BoutiqueComponent, canActivate: [authBoutiqueGuard] },
-
   // ACHETEUR
-  { path: 'acheteur', component: AcheteurComponent, canActivate: [authAcheteurGuard] },
+  // { path: 'acheteur', component: AcheteurComponent, canActivate: [authAcheteurGuard] },
+
+  {
+    path: 'acheteur',
+    component: AcheteurLayoutComponent,
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'annonces' },
+      { path: 'annonces', component: AnnouncementsComponent },
+      { path: 'boutiques', component: ShopsComponent },
+      { path: 'boutiques/:id', component: ShopDetailComponent },
+      { path: 'cart', component: CartComponent }
+    ]
+  },
 
   // TEMPLATE
   {

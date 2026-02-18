@@ -1,0 +1,53 @@
+<header
+  class="buyer-header"
+  [class.is-compact]="isCompact"
+  [class.is-hidden]="isHidden"
+>
+  <div class="brand">
+    <span class="brand-mark">M</span>
+    <div>
+      <h1>Market Center</h1>
+      <p>Espace acheteur</p>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a routerLink="annonces" routerLinkActive="active">Annonces</a>
+    <a routerLink="boutiques" routerLinkActive="active">Boutiques</a>
+    <button type="button" class="nav-action" (click)="openCart()">Panier</button>
+  </nav>
+  <div class="user-menu" (click)="onUserMenuClick($event)">
+    <button type="button" class="user-chip" (click)="toggleUserMenu()">
+      <span class="avatar">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</span>
+      <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+      <span class="chevron">▾</span>
+    </button>
+    @if (userMenuOpen) {
+      <div class="user-dropdown">
+        <button type="button" class="dropdown-item" (click)="onLogoutClick()">Deconnexion</button>
+      </div>
+    }
+  </div>
+</header>
+
+<main class="buyer-content" (window:scroll)="onScroll($event)">
+  <router-outlet></router-outlet>
+</main>
+
+<button type="button" class="cart-float" (click)="toggleCart()" aria-label="Voir le panier">
+  <span class="cart-icon">Cart</span>
+  @if (cartCount > 0) {
+    <span class="cart-badge">{{ cartCount }}</span>
+  }
+</button>
+
+<!-- <button type="button" class="shops-float" (click)="toggleShops()" aria-label="Voir les boutiques">
+  <span class="shops-icon">Shops</span>
+</button> -->
+
+<app-cart-drawers [open]="cartOpen" (close)="closeCart()"></app-cart-drawers>
+<app-shop-drawers [open]="shopsOpen" (close)="closeShops()"></app-shop-drawers>
+
+<footer class="buyer-footer">
+  <p>Centre commercial Market Center - Tous droits reserves.</p>
+  <p>Service client: 020 00 000 00</p>
+</footer>

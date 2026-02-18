@@ -1,0 +1,68 @@
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.drawer-panel {
+  position: fixed;
+  right: 16px;
+  top: 90px;
+  width: min(420px, calc(100vw - 32px));
+  max-height: calc(100vh - 120px);
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+  backdrop-filter: blur(16px);
+  z-index: 60;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  animation: slideIn 0.25s ease;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.drawer-header h3 {
+  margin: 0;
+}
+
+.close-btn {
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  background: transparent;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+.drawer-body {
+  padding: 12px 14px 18px;
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .drawer-panel {
+    right: 10px;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+  }
+}

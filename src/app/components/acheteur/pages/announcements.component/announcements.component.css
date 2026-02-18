@@ -1,0 +1,265 @@
+.page-header {
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.title-block h2 {
+  margin: 6px 0;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+}
+
+.title-block p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.15);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #0b1020;
+}
+
+.header-chip {
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(11, 16, 32, 0.9);
+  color: #ffffff;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.announcements-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.announcements {
+  display: grid;
+  gap: 22px;
+}
+
+.announcement-card {
+  background: var(--card);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow);
+  backdrop-filter: var(--blur);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.announcement-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.2);
+}
+
+.announcement-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.18);
+  color: #b45309;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.announcement-card .date {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.content {
+  margin: 12px 0 18px;
+  color: #1f2937;
+}
+
+.announcement-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.announcement-gallery img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+}
+
+.announcement-gallery img:hover {
+  transform: scale(1.03);
+}
+
+.comments h4 {
+  margin: 0 0 12px;
+}
+
+.comment-list {
+  display: grid;
+  gap: 10px;
+}
+
+.comment-item {
+  padding: 12px;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.comment-item p {
+  margin: 6px 0 0;
+}
+
+.empty {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.comment-form {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.comment-form button {
+  justify-self: start;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: #0b1020;
+  color: #ffffff;
+}
+
+.shops-panel {
+  position: sticky;
+  top: 90px;
+  background: rgba(11, 16, 32, 0.9);
+  color: #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.panel-header h3 {
+  margin: 0;
+}
+
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.2);
+  color: #22d3ee;
+  font-weight: 700;
+}
+
+.shop-list {
+  display: grid;
+  gap: 12px;
+}
+
+.shop-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(248, 250, 252, 0.08);
+  padding: 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.shop-row:hover {
+  transform: translateY(-2px);
+  background: rgba(248, 250, 252, 0.16);
+}
+
+.shop-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(34, 211, 238, 0.18);
+  display: grid;
+  place-items: center;
+  color: #22d3ee;
+  font-weight: 700;
+}
+
+.shop-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shop-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.shop-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.panel-footer {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+@media (max-width: 980px) {
+  .announcements-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .shops-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .title-block h2 {
+    font-size: 28px;
+  }
+}
