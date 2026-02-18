@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { User } from '../models/User';
@@ -8,6 +8,7 @@ import { User } from '../models/User';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5000/api/auth';
+  private boutiqueUrl = 'http://localhost:5000/api/boutiques'; // URL pour envoyer les boutiques
 
   constructor(private http: HttpClient) {}
 
@@ -32,9 +33,8 @@ export class AuthService {
   }
 
   isConnected(): boolean {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (!token) return false;
-
     return !this.isTokenExpired(token);
   }
 
@@ -44,9 +44,7 @@ export class AuthService {
       const exp = payload.exp * 1000;
       const expired = Date.now() > exp;
 
-      if (expired) {
-        this.logout();
-      }
+      if (expired) this.logout();
 
       return expired;
     } catch (e) {
@@ -56,7 +54,7 @@ export class AuthService {
   }
 
   getRole(): string | null {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (!token) return null;
 
     try {
@@ -68,7 +66,7 @@ export class AuthService {
   }
 
   getId(): string | null {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (!token) return null;
 
     try {
@@ -80,7 +78,7 @@ export class AuthService {
   }
 
   getNom(): string | null {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (!token) return null;
 
     try {
@@ -92,7 +90,7 @@ export class AuthService {
   }
 
   getPrenom(): string | null {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (!token) return null;
 
     try {
@@ -103,4 +101,38 @@ export class AuthService {
     }
   }
 
+  // ============================
+  // Nouvelle méthode : envoyer les données d'une boutique
+  // ============================
+  sendBoutique(data: any) {
+    const token = this.getToken();
+    if (!token) {
+      console.error('❌ Pas de token trouvé');
+      return;
+    }
+  
+    // On s'assure que categories est un tableau
+    if (typeof data.categories === 'string') {
+      data.categories = data.categories.split(',').map((c: string) => c.trim());
+    }
+  
+    console.log('Token utilisé pour l’envoi :', token);
+    console.log('Données envoyées :', data);
+    const boutiqueId = data._id;
+    console.log(boutiqueId)
+    if (!boutiqueId) {
+      console.error('❌ L\'ID de la boutique est requis pour la mise à jour');
+      return;
+    }
+
+    return this.http.put(`${this.boutiqueUrl}/${boutiqueId}`, data, {
+      headers: { 
+        'Authorization': `Bearer ${token}`, 
+        'Content-Type': 'application/json' // important pour Express
+      }
+    });
+    
+  }
+  
+  
 }

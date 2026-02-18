@@ -1,0 +1,98 @@
+<div class="admin-shell">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="menu-btn" type="button" (click)="toggleSidebar()" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="brand">
+          <span class="brand-mark">AO</span>
+          <div class="brand-text">
+            <strong>Akoor Office</strong>
+            <small>Back-office</small>
+          </div>
+        </div>
+      </div>
+  
+      <div class="header-center">
+        <label class="search">
+          <span class="search-icon">⌕</span>
+          <input type="search" placeholder="Rechercher un rapport, un client..." />
+        </label>
+      </div>
+  
+      <div class="header-right">
+        <!-- <button class="ghost-btn" type="button">Nouveau rapport</button> -->
+        <div class="user-menu" [class.open]="userMenuOpen">
+          <button
+            class="user-btn"
+            type="button"
+            (click)="toggleUserMenu()"
+            aria-label="Menu utilisateur"
+          >
+            <span class="avatar">MR</span>
+            <div class="user-text">
+              <strong>{{ user() }}</strong>
+              <small>{{ role() }}</small>
+            </div>
+            <span class="caret">▾</span>
+          </button>
+          @if(userMenuOpen){
+          <div class="user-dropdown">
+            <button type="button">Mon profil</button>
+            <button type="button">Parametres</button>
+            <button type="button" class="danger" (click)="logout()">Se deconnecter</button>
+          </div>
+          }
+        </div>
+      </div>
+    </header>
+  
+    <aside class="app-sidebar" [class.open]="sidebarOpen">
+      <div class="sidebar-block">
+        <div class="sidebar-title">Navigation</div>
+        <nav class="sidebar-nav">
+          @for (item of menus(); track item.link) {
+          <a [routerLink]="item.link" routerLinkActive="active" (click)="closeSidebar()">
+            {{ item.label }}
+          </a>
+          }
+        </nav>
+      </div>
+  
+      <div class="sidebar-block">
+        <div class="sidebar-title">Equipe</div>
+        <div class="member">
+          <div class="dot"></div>
+          <div>
+            <strong>Anthony</strong>
+            <small>Ops Lead</small>
+          </div>
+        </div>
+        <div class="member">
+          <div class="dot orange"></div>
+          <div>
+            <strong>Fetra</strong>
+            <small>Finance</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+  
+    <main class="app-main" (click)="closeUserMenu()">
+      <router-outlet></router-outlet>
+    </main>
+  
+    <footer class="app-footer">
+      <div>Developpé par Anthony. et Fetra.</div>
+      <div class="footer-links">
+        <span>Support</span>
+        <span>Statut</span>
+        <span>Mentions</span>
+      </div>
+    </footer>
+  
+    <div class="sidebar-overlay" [class.show]="sidebarOpen" (click)="closeSidebar()"></div>
+  </div>
+  

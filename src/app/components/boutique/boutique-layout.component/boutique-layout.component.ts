@@ -3,12 +3,12 @@ import { AuthService } from '../../../services/auth.service';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-admin-boutique-layout',
+  selector: 'app-boutique-layout',
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './admin-boutique-layout.component.html',
-  styleUrl: './admin-boutique-layout.component.css',
+  templateUrl: './boutique-layout.component.html',
+  styleUrl: './boutique-layout.component.css',
 })
-export class AdminBoutiqueLayoutComponent {
+export class BoutiqueLayoutComponent {
   sidebarOpen = false;
   userMenuOpen = false;
 
@@ -35,11 +35,11 @@ export class AdminBoutiqueLayoutComponent {
     ];
 
     const boutiqueMenu = [
-      { label: 'Dashboard', link: '/template/dashboard' },
-      { label: 'Inputs', link: '/template/inputs' },
-      { label: 'Users', link: '/template/users' },
-      { label: 'Shops', link: '/template/shops' },
-      { label: 'Forms' , link: '/template/test'},
+      { label: 'Dashboard', link: '/boutique-layout/dashboard' },
+      { label: 'Inputs', link: '/boutique-layout/inputs' },
+      { label: 'Users', link: '/boutique-layout/users' },
+      { label: 'Shops', link: '/boutique-layout/shops' },
+      { label: 'Forms' , link: '/boutique-layout/forms'},
     ];
 
 

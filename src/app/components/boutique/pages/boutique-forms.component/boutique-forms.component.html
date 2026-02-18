@@ -1,0 +1,107 @@
+<form [formGroup]="boutiqueForm" (ngSubmit)="onSubmit()">
+
+  <section class="page-head">
+    <div>
+      <h1>Formulaire Boutique prrrrrrrr</h1>
+      <p>Remplissez les informations de la boutique</p>
+    </div>
+  </section>
+
+  <div class="panels-container">
+
+    <!-- Informations générales -->
+    <section class="panel">
+      <h2>Informations générales</h2>
+
+      <div class="form-grid">
+
+        <label class="field">
+          <span>ID Boutique</span>
+          <input type="text" placeholder="BOUTIQUE_001" formControlName="_id" />
+        </label>
+
+        <label class="field">
+          <span>Numéro</span>
+          <input type="text" placeholder="A12" formControlName="numero" />
+        </label>
+
+        <label class="field">
+          <span>Étage</span>
+          <input type="number" formControlName="etage" min="0" />
+        </label>
+
+        <label class="field">
+          <span>Disponible</span>
+          <input type="checkbox" formControlName="is_disponible" />
+        </label>
+
+        <label class="field">
+          <span>Prix</span>
+          <input type="number" formControlName="prix" min="0" />
+        </label>
+
+        <!-- Sous-groupe promotion -->
+        <div formGroupName="promotion">
+
+          <label class="field">
+            <span>Promotion active</span>
+            <input type="checkbox" formControlName="active" />
+          </label>
+
+          <label class="field">
+            <span>Taux de promotion (%)</span>
+            <input type="number" formControlName="taux" min="0" max="100" />
+          </label>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Détails Boutique -->
+    <section class="panel">
+      <h2>Détails Boutique</h2>
+
+      <div class="form-grid">
+
+        <label class="field">
+          <span>Nom de la boutique</span>
+          <input type="text" placeholder="Tech World" formControlName="nom_boutique" />
+        </label>
+
+        <label class="field">
+          <span>Lien site web</span>
+          <input type="url" placeholder="https://tech-world.com" formControlName="lien_site_web" />
+        </label>
+
+        <label class="field">
+          <span>Locataire ID</span>
+          <input type="text" placeholder="USR_045" formControlName="locataire_id" />
+        </label>
+
+        <label class="field">
+          <span>Date prochain paiement</span>
+          <input type="date" formControlName="date_prochain_paiement" />
+        </label>
+
+        <label class="field">
+          <span>Catégories</span>
+          <input type="text" placeholder="CAT_01,CAT_03" formControlName="categories" />
+        </label>
+
+        <label class="field">
+          <span>Supprimé ?</span>
+          <input type="checkbox" formControlName="is_deleted" />
+        </label>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bouton submit -->
+  <div style="text-align: right; margin-top: 20px;">
+    <button type="submit" class="primary">Enregistrer</button>
+  </div>
+
+</form>
