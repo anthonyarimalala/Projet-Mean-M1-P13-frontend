@@ -17,8 +17,8 @@
   </nav>
   <div class="user-menu" (click)="onUserMenuClick($event)">
     <button type="button" class="user-chip" (click)="toggleUserMenu()">
-      <span class="avatar">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</span>
-      <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+      <span class="avatar">{{ user()?.firstName?.charAt(0) }}{{ user()?.lastName?.charAt(0) }}</span>
+      <span class="user-name">{{ user()?.firstName }} {{ user()?.lastName }}</span>
       <span class="chevron">▾</span>
     </button>
     @if (userMenuOpen) {

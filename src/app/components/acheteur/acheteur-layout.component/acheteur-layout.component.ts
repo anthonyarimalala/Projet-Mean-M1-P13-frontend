@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CartDrawersComponent } from '../components/cart-drawers.component/cart-drawers.component';
 import { ShopDrawersComponent } from '../components/shop-drawers.component/shop-drawers.component';
@@ -22,7 +22,7 @@ import { AuthService } from '../../../services/auth.service';
 export class AcheteurLayoutComponent {
   private shopsDrawerOpen = false;
   userMenuOpen = false;
-  readonly user = { firstName: 'Rina', lastName: 'Andry' };
+  user = signal<{ firstName: string; lastName: string } | null>(null);
   isCompact = false;
   isHidden = false;
   private lastScrollTop = 0;
@@ -31,7 +31,11 @@ export class AcheteurLayoutComponent {
     private readonly cartService: CartService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    const firstName = authService.getPrenom() ?? '';
+    const lastName = authService.getNom() ?? '';
+    this.user.set({ firstName, lastName });
+  }
 
   get cartCount() {
     return this.cartService.cartItems().reduce((total, item) => total + item.quantity, 0);
