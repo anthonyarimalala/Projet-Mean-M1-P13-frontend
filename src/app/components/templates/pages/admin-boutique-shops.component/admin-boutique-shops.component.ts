@@ -25,7 +25,7 @@ export class AdminBoutiqueShopsComponent {
   }
 
   onNouvelleBoutique() {
-    this.router.navigate(['/admin/boutiques/nouveau']);
+    // this.router.navigate(['/admin/boutiques/nouveau']);
   }
 
   toggleDemandeLocation(shopId: string) {

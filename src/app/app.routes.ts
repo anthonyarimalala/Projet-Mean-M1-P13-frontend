@@ -45,10 +45,10 @@ export const routes: Routes = [
       { path: '', redirectTo: 'annonces', pathMatch: 'full' },
       { path: 'annonces', component: AdminAnnoncesComponent },
       { path: 'boutiques', component: AdminBoutiqueComponent },
+      { path: 'boutique/nouveau', component: NouvelleBoutiqueComponent },
       { path: 'boutiques/:id', component: DetailBoutiqueComponent },
       { path: 'users', component: AdminUsersComponent },
       { path: 'demande-location', component: DemandeLocationComponent },
-      { path: 'boutiques/nouveau', component: NouvelleBoutiqueComponent },
     ],
   },
 
@@ -93,6 +93,6 @@ export const routes: Routes = [
     ],
   },
 
-  // { path: '', redirectTo: 'login/acheteur', pathMatch: 'full' },
-  // { path: '**', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  { path: '', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login/acheteur', pathMatch: 'full' },
 ];
