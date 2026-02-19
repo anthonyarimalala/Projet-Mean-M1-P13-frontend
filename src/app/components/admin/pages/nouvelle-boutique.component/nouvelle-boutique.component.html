@@ -1,0 +1,103 @@
+<section class="page-head">
+  <div>
+    <h1>Nouvelle boutique</h1>
+    <p>Créez un nouveau local commercial</p>
+  </div>
+  <div class="actions">
+    <button class="primary" (click)="onSubmit()">Enregistrer</button>
+  </div>
+</section>
+
+<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+  <section class="panel">
+    <h2>Informations générales</h2>
+    <div class="form-grid">
+      <label class="field">
+        <span>Numéro du local</span>
+        <input type="text" formControlName="numero" placeholder="Ex: A12" />
+      </label>
+
+      <label class="field">
+        <span>Étage</span>
+        <input type="number" formControlName="etage" min="0" max="10" />
+      </label>
+
+      <label class="field switch">
+        <span>Disponible</span>
+        <input type="checkbox" formControlName="is_disponible" />
+        <div class="track"></div>
+      </label>
+
+      <label class="field">
+        <span>Prix (Ar)</span>
+        <input type="number" formControlName="prix" min="0" step="1000" placeholder="8 900 000" />
+      </label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Promotion</h2>
+    <div class="form-grid">
+      <label class="field switch">
+        <span>Promotion active</span>
+        <input type="checkbox" formControlName="promotionActive" />
+        <div class="track"></div>
+      </label>
+
+      <label class="field">
+        <span>Taux de promotion (%)</span>
+        <input type="number" formControlName="promotionTaux" min="0" max="100" step="1" />
+      </label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Informations boutique</h2>
+    <div class="form-grid">
+      <label class="field">
+        <span>Nom de la boutique</span>
+        <input type="text" formControlName="nom_boutique" placeholder="Tech World" />
+      </label>
+
+      <label class="field">
+        <span>Lien site web</span>
+        <input type="url" formControlName="lien_site_web" placeholder="https://" />
+      </label>
+
+      <label class="field">
+        <span>ID Locataire</span>
+        <input type="text" formControlName="locataire_id" placeholder="USR_045" />
+      </label>
+
+      <label class="field">
+        <span>Date prochain paiement</span>
+        <input type="datetime-local" formControlName="date_prochain_paiement" />
+      </label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Catégories</h2>
+    <fieldset class="field">
+      <legend>Sélectionnez les catégories</legend>
+      <div class="checkbox-group">
+        <label class="option">
+          <input type="checkbox" [checked]="isCategorySelected('CAT_01')" (change)="toggleCategory('CAT_01')" />
+          CAT_01 - Électronique
+        </label>
+        <label class="option">
+          <input type="checkbox" [checked]="isCategorySelected('CAT_02')" (change)="toggleCategory('CAT_02')" />
+          CAT_02 - Informatique
+        </label>
+        <label class="option">
+          <input type="checkbox" [checked]="isCategorySelected('CAT_03')" (change)="toggleCategory('CAT_03')" />
+          CAT_03 - Téléphonie
+        </label>
+        <label class="option">
+          <input type="checkbox" [checked]="isCategorySelected('CAT_04')" (change)="toggleCategory('CAT_04')" />
+          CAT_04 - Accessoires
+        </label>
+      </div>
+    </fieldset>
+  </section>
+</form>

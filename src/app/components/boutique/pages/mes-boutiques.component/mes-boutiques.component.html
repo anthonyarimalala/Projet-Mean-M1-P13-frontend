@@ -1,0 +1,152 @@
+<section class="page-head">
+  <div>
+    <h1>Mes boutiques</h1>
+    <p>Gérez vos boutiques et suivez leurs performances.</p>
+  </div>
+</section>
+
+<!-- Section des cartes -->
+<section class="shops-grid">
+  <!-- Boutique 1 - Active -->
+  <article class="shop-card">
+    <div class="card-header">
+      <div class="shop-icon">🛍️</div>
+      <div class="shop-title">
+        <h3>A12 : Tech World</h3>
+        <span class="shop-type">Boutique électronique</span>
+      </div>
+      <button class="menu-btn" title="Plus d'options">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="1"></circle>
+          <circle cx="12" cy="5" r="1"></circle>
+          <circle cx="12" cy="19" r="1"></circle>
+        </svg>
+      </button>
+    </div>
+
+    <div class="shop-details">
+      <div class="detail-item">
+        <span class="detail-label">Étage</span>
+        <span class="detail-value floor">1er étage</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Catégories</span>
+        <span class="detail-value">Électronique, Informatique</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Prix mensuel</span>
+        <span class="detail-value price">8.9M AR</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Location depuis</span>
+        <span class="detail-value">15 Jan 2026</span>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="status-container">
+        <span class="status-badge status-active">Active</span>
+      </div>
+      <button class="manage-btn" [routerLink]="['/boutique/mes-boutiques/A12']">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="3"></circle>
+          <path
+            d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"
+          ></path>
+        </svg>
+
+        Gérer
+      </button>
+    </div>
+  </article>
+
+  <!-- Boutique 4 - En attente -->
+  <article class="shop-card pending">
+    <div class="card-header">
+      <div class="shop-icon pending">⏳</div>
+      <div class="shop-title">
+        <h3>E2 : Sport Plus</h3>
+        <span class="shop-type">Équipement sportif</span>
+      </div>
+      <button class="menu-btn" title="Plus d'options">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="1"></circle>
+          <circle cx="12" cy="5" r="1"></circle>
+          <circle cx="12" cy="19" r="1"></circle>
+        </svg>
+      </button>
+    </div>
+
+    <div class="shop-details">
+      <div class="detail-item">
+        <span class="detail-label">Étage</span>
+        <span class="detail-value floor">3ème étage</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Catégories</span>
+        <span class="detail-value">Sport, Fitness, Vêtements sport</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Prix mensuel</span>
+        <span class="detail-value price">6.8M AR</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Demande le</span>
+        <span class="detail-value">08 Fév 2026</span>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <div class="status-container">
+        <span class="status-badge status-pending">En attente</span>
+      </div>
+      <button class="manage-btn pending" disabled>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="3"></circle>
+          <path
+            d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"
+          ></path>
+        </svg>
+        En attente
+      </button>
+    </div>
+  </article>
+
+  <!-- État vide (si pas de boutique) -->
+  <!-- <div class="empty-state">
+    <div class="empty-icon">🏪</div>
+    <h3>Aucune boutique</h3>
+    <p>Vous n'avez pas encore de boutique. Faites une demande de location pour commencer.</p>
+    <button class="primary" (click)="nouvelleDemande()">
+      Faire une demande
+    </button>
+  </div> -->
+</section>

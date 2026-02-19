@@ -1,3 +1,4 @@
+import { BoutiqueBoutiqueComponent } from './components/boutique/pages/boutique-boutique.component/boutique-boutique.component';
 import { authBoutiqueGuard } from './guards/boutique/auth-boutique-guard';
 import { LoginComponent } from './components/auth/login.component/login.component';
 import { Routes } from '@angular/router';
@@ -22,6 +23,12 @@ import { AnnouncementsComponent } from './components/acheteur/pages/announcement
 import { ShopsComponent } from './components/acheteur/pages/shops.component/shops.component';
 import { ShopDetailComponent } from './components/acheteur/pages/shop-detail.component/shop-detail.component';
 import { CartComponent } from './components/acheteur/pages/cart.component/cart.component';
+import { NouvelleBoutiqueComponent } from './components/admin/pages/nouvelle-boutique.component/nouvelle-boutique.component';
+import { DemandeLocationComponent } from './components/admin/pages/demande-location.component/demande-location.component';
+import { MesBoutiquesComponent } from './components/boutique/pages/mes-boutiques.component/mes-boutiques.component';
+import { GererBoutiqueComponent } from './components/boutique/pages/gerer-boutique.component/gerer-boutique.component';
+import { AdminBoutiqueComponent } from './components/admin/pages/admin-boutique.component/admin-boutique.component';
+import { DetailBoutiqueComponent } from './components/admin/pages/detail-boutique.component/detail-boutique.component';
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -37,7 +44,11 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'annonces', pathMatch: 'full' },
       { path: 'annonces', component: AdminAnnoncesComponent },
+      { path: 'boutiques', component: AdminBoutiqueComponent },
+      { path: 'boutiques/:id', component: DetailBoutiqueComponent },
       { path: 'users', component: AdminUsersComponent },
+      { path: 'demande-location', component: DemandeLocationComponent },
+      { path: 'boutiques/nouveau', component: NouvelleBoutiqueComponent },
     ],
   },
 
@@ -48,6 +59,9 @@ export const routes: Routes = [
     canMatch: [authBoutiqueGuard],
     children: [
       { path: '', redirectTo: 'annonces', pathMatch: 'full' },
+      { path: 'list', component: BoutiqueBoutiqueComponent },
+      { path: 'mes-boutiques', component: MesBoutiquesComponent },
+      { path: 'mes-boutiques/:id', component: GererBoutiqueComponent },
       { path: 'annonces', component: BoutiqueAnnonceComponent },
     ],
   },
@@ -63,8 +77,8 @@ export const routes: Routes = [
       { path: 'annonces', component: AnnouncementsComponent },
       { path: 'boutiques', component: ShopsComponent },
       { path: 'boutiques/:id', component: ShopDetailComponent },
-      { path: 'cart', component: CartComponent }
-    ]
+      { path: 'cart', component: CartComponent },
+    ],
   },
 
   // TEMPLATE
@@ -75,10 +89,10 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminBoutiqueDashboardComponent },
       { path: 'inputs', component: AdminBoutiqueInputsComponent },
-      { path: 'shops', component: AdminBoutiqueShopsComponent },
+      { path: 'boutiques', component: AdminBoutiqueShopsComponent },
     ],
   },
 
-  { path: '', redirectTo: 'login/acheteur', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  // { path: '', redirectTo: 'login/acheteur', pathMatch: 'full' },
+  // { path: '**', redirectTo: 'login/acheteur', pathMatch: 'full' },
 ];

@@ -25,6 +25,14 @@
   font-weight: 600;
 }
 
+/* Effet au survol */
+.primary:hover:not(:disabled) {
+  background: #13ac9c; /* plus foncé */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -102,4 +110,191 @@
   .metrics {
     grid-template-columns: 1fr;
   }
+}
+
+.shop-card {
+  position: relative;
+}
+
+.location-dropdown {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--bg-alt);
+  box-shadow: var(--shadow);
+}
+
+.info-message {
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: rgba(19, 172, 156, 0.08);
+  border-radius: 12px;
+  border-left: 4px solid var(--brand);
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  color: var(--ink);
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(19, 172, 156, 0.15);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1.75rem;
+}
+
+button.primary,
+button.secondary,
+button.ghost {
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+button.primary {
+  background: var(--brand);
+  color: white;
+  border: none;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #13ac9c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(19, 172, 156, 0.25);
+}
+
+button.primary:disabled {
+  background: #94a3b8;
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+button.secondary {
+  background: #ffffff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #13ac9c;
+  transform: translateY(-1px);
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--brand);
+  border: 1px solid var(--brand);
+}
+
+button.ghost:hover:not(:disabled) {
+  background: rgba(19, 172, 156, 0.08);
+  transform: translateY(-1px);
+}
+
+.required {
+  color: #ef4444;
+  margin-left: 3px;
+  font-size: 1.1rem;
+}
+
+.hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.375rem;
+  font-style: italic;
+}
+
+/* Style pour l'input url */
+input[type="url"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  background: #ffffff;
+  color: var(--ink);
+}
+
+input[type="url"]:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(19, 172, 156, 0.15);
+}
+
+/* Animation du dropdown */
+.location-dropdown {
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Style pour le texte du dropdown */
+.location-dropdown .form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Amélioration de l'apparence des champs requis */
+.form-group label .required {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Style pour le message d'information */
+.info-message::before {
+  content: "ℹ️";
+  margin-right: 8px;
+  font-size: 1rem;
 }

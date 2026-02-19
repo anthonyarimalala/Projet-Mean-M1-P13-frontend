@@ -1,0 +1,345 @@
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.page-head h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
+
+.page-head p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.head-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.primary {
+  border: none;
+  background: var(--brand);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary:hover {
+  background: #13ac9c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(19, 172, 156, 0.25);
+}
+
+.primary svg {
+  stroke: #ffffff;
+}
+
+/* Grille des cartes */
+.shops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+/* Carte boutique */
+.shop-card {
+  background: var(--bg-alt);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shop-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  border-color: rgba(19, 172, 156, 0.3);
+}
+
+.shop-card.pending {
+  opacity: 0.9;
+  background: linear-gradient(to bottom, var(--bg-alt), #fafafa);
+}
+
+/* En-tête de carte */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.shop-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(19, 172, 156, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.shop-icon.pending {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.shop-title {
+  flex: 1;
+}
+
+.shop-title h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.shop-type {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.menu-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #4b5563;
+}
+
+/* Détails de la boutique */
+.shop-details {
+  display: grid;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14px;
+}
+
+.detail-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.detail-value {
+  font-weight: 500;
+  color: var(--ink);
+  text-align: right;
+}
+
+.detail-value.floor {
+  background: rgba(19, 172, 156, 0.1);
+  color: var(--brand);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.detail-value.price {
+  font-weight: 700;
+  color: var(--brand);
+  font-size: 15px;
+}
+
+/* Pied de carte */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: rgba(34, 197, 94, 0.1);
+  color: #15803d;
+}
+
+.status-pending {
+  background: rgba(245, 158, 11, 0.1);
+  color: #b45309;
+}
+
+.manage-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--brand);
+  color: white;
+}
+
+.manage-btn:hover:not(:disabled) {
+  background: #13ac9c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(19, 172, 156, 0.2);
+}
+
+.manage-btn.pending {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.manage-btn.pending:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.manage-btn svg {
+  stroke: white;
+}
+
+/* État vide */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--bg-alt);
+  border-radius: 24px;
+  border: 2px dashed var(--line);
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.empty-state p {
+  margin: 0 0 24px;
+  color: var(--muted);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .head-actions {
+    width: 100%;
+  }
+
+  .primary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .shops-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-card {
+    padding: 16px;
+  }
+
+  .detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .detail-value {
+    text-align: left;
+    width: 100%;
+  }
+
+  .card-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .status-container {
+    justify-content: center;
+  }
+
+  .manage-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Animation d'entrée des cartes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.shop-card {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Stagger animation */
+.shop-card:nth-child(1) { animation-delay: 0.05s; }
+.shop-card:nth-child(2) { animation-delay: 0.1s; }
+.shop-card:nth-child(3) { animation-delay: 0.15s; }
+.shop-card:nth-child(4) { animation-delay: 0.2s; }

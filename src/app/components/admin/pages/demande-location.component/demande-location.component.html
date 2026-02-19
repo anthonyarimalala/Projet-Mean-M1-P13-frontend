@@ -1,0 +1,277 @@
+<section class="page-head">
+  <div>
+    <h1>Demandes de location</h1>
+    <p>Gérez les demandes de location des boutiques.</p>
+  </div>
+  <div class="head-actions">
+    <!-- Actions futures -->
+  </div>
+</section>
+
+<section class="summary">
+  <article>
+    <h3>Total demandes</h3>
+    <strong>24</strong>
+  </article>
+  <article>
+    <h3>En attente</h3>
+    <strong>12</strong>
+  </article>
+  <article>
+    <h3>Ce mois</h3>
+    <strong>8</strong>
+  </article>
+</section>
+
+<section class="filters-section">
+  <div class="filters-bar">
+    <div class="search-wrapper">
+      <input
+        type="search"
+        class="search-input"
+        placeholder="Rechercher une demande..."
+      />
+      <svg
+        class="search-icon"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+
+    <div class="filters-group">
+      <select class="filter-select">
+        <option value="">Tous les statuts</option>
+        <option value="en_attente">En attente</option>
+        <option value="approuvee">Approuvée</option>
+        <option value="refusee">Refusée</option>
+      </select>
+
+      <div class="date-filters">
+        <input
+          type="date"
+          class="date-input"
+          placeholder="Date début"
+        />
+        <span class="date-separator">-</span>
+        <input
+          type="date"
+          class="date-input"
+          placeholder="Date fin"
+        />
+      </div>
+
+      <button class="clear-filters">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+        Effacer
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="table">
+    <div class="row header">
+      <span>Demandeur</span>
+      <span>Boutique</span>
+      <span>Étage</span>
+      <span>Catégories</span>
+      <span>Site web</span>
+      <span>Date demande</span>
+      <span>Statut</span>
+      <span>Actions</span>
+    </div>
+
+    <!-- Demande 1 -->
+    <div class="row" data-message="Je souhaite ouvrir une boutique d'électronique haut de gamme avec une sélection de produits innovants. J'ai 8 ans d'expérience dans le secteur et je souhaite me lancer à mon compte.">
+      <div class="user">
+        <div class="avatar">JD</div>
+        <div>
+          <strong>Jean Dupont</strong>
+          <small>jean.dupont&#64;email.com</small>
+        </div>
+      </div>
+      <div>
+        <strong>A12 : Tech World</strong>
+        <small class="shop-ref">Boutique A12</small>
+      </div>
+      <div>
+        <span class="floor-badge">1er étage</span>
+      </div>
+      <div>
+        <span class="categories">
+          Électronique, Informatique
+        </span>
+      </div>
+      <div>
+        <a href="#" class="website-link">tech-world.com</a>
+      </div>
+      <div>15 Fév 2026, 14:30</div>
+      <div>
+        <span class="status-badge status-pending">En attente</span>
+      </div>
+      <div class="actions">
+        <button class="icon-btn approve" title="Approuver">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
+        <button class="icon-btn reject" title="Refuser">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <button class="icon-btn view" title="Voir détails">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Demande 2 -->
+    <div class="row" data-message="Bonjour, je suis styliste depuis 10 ans et je souhaite ouvrir ma première boutique. Je propose des vêtements éco-responsables et des accessoires artisanaux. J'ai déjà une clientèle fidèle en ligne.">
+      <div class="user">
+        <div class="avatar alt">ML</div>
+        <div>
+          <strong>Marie Laurent</strong>
+          <small>marie.l&#64;gmail.com</small>
+        </div>
+      </div>
+      <div>
+        <strong>B4 : Fashion Style</strong>
+        <small class="shop-ref">Boutique B4</small>
+      </div>
+      <div>
+        <span class="floor-badge">2ème étage</span>
+      </div>
+      <div>
+        <span class="categories">
+          Mode, Accessoires, Luxe
+        </span>
+      </div>
+      <div>
+        <a href="#" class="website-link">fashion-style.com</a>
+      </div>
+      <div>14 Fév 2026, 09:15</div>
+      <div>
+        <span class="status-badge status-approved">Approuvée</span>
+      </div>
+      <div class="actions">
+        <button class="icon-btn view" title="Voir détails">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Demande 3 -->
+    <div class="row" data-message="Je suis un artisan torréfacteur depuis 5 ans. Je veux ouvrir mon premier café pour partager ma passion du café de spécialité. Je propose également des pâtisseries maison.">
+      <div class="user">
+        <div class="avatar">PB</div>
+        <div>
+          <strong>Pierre Bernard</strong>
+          <small>pierre.b&#64;yahoo.fr</small>
+        </div>
+      </div>
+      <div>
+        <strong>C7 : Café Gourmet</strong>
+        <small class="shop-ref">Boutique C7</small>
+      </div>
+      <div>
+        <span class="floor-badge">Rez-de-chaussée</span>
+      </div>
+      <div>
+        <span class="categories">
+          Restauration, Café
+        </span>
+      </div>
+      <div>
+        <span class="no-website">Non fourni</span>
+      </div>
+      <div>10 Fév 2026, 11:45</div>
+      <div>
+        <span class="status-badge status-rejected">Refusée</span>
+      </div>
+      <div class="actions">
+        <button class="icon-btn view" title="Voir détails">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Demande 4 -->
+    <div class="row" data-message="Ancienne athlète de haut niveau, je veux créer un espace dédié au sport avec des équipements de qualité et des conseils personnalisés. Je propose aussi des vêtements techniques.">
+      <div class="user">
+        <div class="avatar alt">SD</div>
+        <div>
+          <strong>Sophie Dubois</strong>
+          <small>s.dubois&#64;outlook.com</small>
+        </div>
+      </div>
+      <div>
+        <strong>E2 : Sport Plus</strong>
+        <small class="shop-ref">Boutique E2</small>
+      </div>
+      <div>
+        <span class="floor-badge">3ème étage</span>
+      </div>
+      <div>
+        <span class="categories">
+          Sport, Fitness, Vêtements sport
+        </span>
+      </div>
+      <div>
+        <a href="#" class="website-link">sport-plus.fr</a>
+      </div>
+      <div>08 Fév 2026, 16:20</div>
+      <div>
+        <span class="status-badge status-pending">En attente</span>
+      </div>
+      <div class="actions">
+        <button class="icon-btn approve" title="Approuver">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
+        <button class="icon-btn reject" title="Refuser">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <button class="icon-btn view" title="Voir détails">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    @if (false) {
+    <div class="no-results">
+      <p>Aucune demande trouvée avec les filtres sélectionnés</p>
+    </div>
+    }
+  </div>
+</section>
+
+<!-- Tooltip pour afficher le message -->
+<div class="message-tooltip" id="messageTooltip"></div>

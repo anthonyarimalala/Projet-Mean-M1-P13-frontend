@@ -28,17 +28,19 @@ export class AdminBoutiqueLayoutComponent {
     const adminMenu = [
       { label: 'Dashboard', link: '/template/dashboard' },
       { label: 'Annonces', link: '/admin/annonces' },
+      { label: 'Boutiques', link: '/admin/boutiques' },
+      { label: 'Demande Location', link: '/admin/demande-location' },
+      { label: 'Utilisateurs', link: '/admin/users' },
       { label: 'Inputs', link: '/template/inputs' },
-      { label: 'Users', link: '/admin/users' },
-      { label: 'Shops', link: '/template/shops' },
     ];
 
     const boutiqueMenu = [
       { label: 'Dashboard', link: '/template/dashboard' },
       { label: 'Annonces', link: '/boutique/annonces' },
+      { label: 'Boutiques', link: '/boutique/list' },
+      { label: 'Mes Boutiques', link: '/boutique/mes-boutiques' },
       { label: 'Inputs', link: '/template/inputs' },
       // { label: 'Users', link: '/template/users' },
-      { label: 'Shops', link: '/template/shops' },
     ];
 
     return role === 'ADMIN' ? adminMenu : boutiqueMenu;

@@ -3,82 +3,120 @@
     <h1>Boutiques</h1>
     <p>Suivi des boutiques, localisation et performance.</p>
   </div>
-  <button class="primary">Nouvelle boutique</button>
+  @if (userRole() === 'ADMIN') {
+  <button class="primary" (click)="onNouvelleBoutique()">Nouvelle boutique</button>
+  }
 </section>
 
 <section class="cards">
+  <!-- Première boutique - Dispo -->
   <article class="shop-card">
     <div class="card-head">
       <div>
-        <h3>Atlas Central</h3>
-        <span>Antananarivo</span>
+        <h3>A12 : Tech World</h3>
+        <span>Catég 1, Catég 2,...</span>
       </div>
-      <span class="badge">Active</span>
+      <span class="badge">Dispo</span>
     </div>
     <div class="metrics">
       <div>
-        <strong>92k €</strong>
-        <small>Ventes Q1</small>
+        <strong>1</strong>
+        <small>Etage</small>
       </div>
       <div>
-        <strong>4.8</strong>
-        <small>Note clients</small>
-      </div>
-      <div>
-        <strong>18</strong>
-        <small>Employes</small>
+        <strong>8.9M AR</strong>
+        <small>Prix mensuel</small>
       </div>
     </div>
-    <button class="ghost">Voir les details</button>
+
+    @if (userRole() === 'ADMIN') {
+      <button class="ghost" (click)="voirDetails('A12')">Voir les details</button>
+    } @else {
+      <button class="ghost" (click)="toggleDemandeLocation('A12')">Demander la location</button>
+    }
+
+    <!-- Dropdown demande de location -->
+    @if (demandeOuverte() === 'A12') {
+      <div class="location-dropdown">
+        <p class="info-message">Avant votre demande, nous voulons quelques informations sur la boutique que vous voulez mettre</p>
+
+        <form (ngSubmit)="soumettreDemande('A12')">
+          <div class="form-group">
+            <label for="nomBoutique">Nom de la boutique <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nomBoutique"
+              [(ngModel)]="formData.nomBoutique"
+              name="nomBoutique"
+              placeholder="Ex: Tech World"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="categories">Catégories <span class="required">*</span></label>
+            <input
+              type="text"
+              id="categories"
+              [(ngModel)]="formData.categories"
+              name="categories"
+              placeholder="Ex: Electronique, Informatique, Accessoires"
+              required>
+            <small class="hint">Séparez les catégories par des virgules</small>
+          </div>
+
+          <div class="form-group">
+            <label for="siteWeb">Lien du site web</label>
+            <input
+              type="url"
+              id="siteWeb"
+              [(ngModel)]="formData.siteWeb"
+              name="siteWeb"
+              placeholder="https://www.example.com">
+            <small class="hint">Optionnel - Lien vers votre site existant</small>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message de demande</label>
+            <textarea
+              id="message"
+              [(ngModel)]="formData.message"
+              name="message"
+              rows="3"
+              placeholder="Expliquez brièvement votre projet... (optionnel)"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="secondary" (click)="annulerDemande()">Annuler</button>
+            <button type="submit" class="primary" [disabled]="!formValide()">Valider la demande</button>
+          </div>
+        </form>
+      </div>
+    }
   </article>
 
+  <!-- Deuxième boutique - Non-Dispo -->
   <article class="shop-card">
     <div class="card-head">
       <div>
-        <h3>Oceanic Market</h3>
-        <span>Toamasina</span>
+        <h3>A12 : Tech World</h3>
+        <span>Catég 1, Catég 2,...</span>
       </div>
-      <span class="badge warn">A surveiller</span>
+      <span class="badge warn">Non-Dispo</span>
     </div>
     <div class="metrics">
       <div>
-        <strong>54k €</strong>
-        <small>Ventes Q1</small>
+        <strong>1</strong>
+        <small>Etage</small>
       </div>
+      @if (userRole() === 'ADMIN') {
       <div>
-        <strong>4.2</strong>
-        <small>Note clients</small>
+        <strong>8.9M AR</strong>
+        <small>Prix mensuel</small>
       </div>
-      <div>
-        <strong>11</strong>
-        <small>Employes</small>
-      </div>
+      }
     </div>
-    <button class="ghost">Voir les details</button>
-  </article>
-
-  <article class="shop-card">
-    <div class="card-head">
-      <div>
-        <h3>Nordik Store</h3>
-        <span>Majunga</span>
-      </div>
-      <span class="badge">Active</span>
-    </div>
-    <div class="metrics">
-      <div>
-        <strong>71k €</strong>
-        <small>Ventes Q1</small>
-      </div>
-      <div>
-        <strong>4.6</strong>
-        <small>Note clients</small>
-      </div>
-      <div>
-        <strong>14</strong>
-        <small>Employes</small>
-      </div>
-    </div>
-    <button class="ghost">Voir les details</button>
+    @if (userRole() === 'ADMIN') {
+      <button class="ghost" [routerLink]="['/boutiques/A12']">Voir les details</button>
+    }
   </article>
 </section>
