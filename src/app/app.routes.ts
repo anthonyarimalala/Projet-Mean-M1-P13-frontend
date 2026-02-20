@@ -29,6 +29,7 @@ import { MesBoutiquesComponent } from './components/boutique/pages/mes-boutiques
 import { GererBoutiqueComponent } from './components/boutique/pages/gerer-boutique.component/gerer-boutique.component';
 import { AdminBoutiqueComponent } from './components/admin/pages/admin-boutique.component/admin-boutique.component';
 import { DetailBoutiqueComponent } from './components/admin/pages/detail-boutique.component/detail-boutique.component';
+import { ModifierMaBoutiqueComponent } from './components/boutique/pages/modifier-ma-boutique.component/modifier-ma-boutique.component';
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -62,6 +63,7 @@ export const routes: Routes = [
       { path: 'list', component: BoutiqueBoutiqueComponent },
       { path: 'mes-boutiques', component: MesBoutiquesComponent },
       { path: 'mes-boutiques/:id', component: GererBoutiqueComponent },
+      { path: 'mes-boutiques/:id/modifier', component: ModifierMaBoutiqueComponent },
       { path: 'annonces', component: BoutiqueAnnonceComponent },
     ],
   },

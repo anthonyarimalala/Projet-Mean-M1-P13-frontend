@@ -1,0 +1,86 @@
+/* Messages d'erreur */
+.error-message {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.error-message small {
+  display: block;
+}
+
+/* Indices et aides */
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Grille des catégories */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* Champs invalides */
+.field input.ng-invalid.ng-touched,
+.field select.ng-invalid.ng-touched,
+.field textarea.ng-invalid.ng-touched {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+/* Switch */
+.switch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Actions du formulaire (mobile) */
+.form-actions {
+  display: none;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  width: 100%;
+}
+
+/* Message de succès */
+.success-message {
+  background: #d1fae5;
+  border-color: #10b981;
+  animation: slideDown 0.3s ease;
+  margin-top: 16px;
+}
+
+.success-message p {
+  color: #065f46;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-actions {
+    display: block;
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+}

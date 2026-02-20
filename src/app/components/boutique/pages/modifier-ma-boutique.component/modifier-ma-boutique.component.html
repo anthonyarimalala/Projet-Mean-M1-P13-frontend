@@ -1,0 +1,166 @@
+<!-- En-tête de la page -->
+<div class="page-head">
+  <div>
+    <h1>Modifier la boutique</h1>
+    <p>Mettez à jour les informations de votre boutique</p>
+  </div>
+  <button class="primary" type="submit" form="shopForm">Enregistrer</button>
+</div>
+
+<!-- Formulaire principal -->
+<form id="shopForm" class="panel" (ngSubmit)="onSubmit()" #shopForm="ngForm">
+  <!-- SECTION 1 : INFORMATIONS GÉNÉRALES -->
+  <h2>Informations générales</h2>
+
+  <div class="form-grid">
+    <!-- Champ : Nom de la boutique -->
+    <div class="field">
+      <label for="nom_boutique">Nom de la boutique *</label>
+      <input
+        type="text"
+        id="nom_boutique"
+        name="nom_boutique"
+        [(ngModel)]="shopData.nom_boutique"
+        #nomBoutique="ngModel"
+        required
+        minlength="3"
+        placeholder="Ex: Fashion World"
+      />
+
+      @if (nomBoutique.invalid && nomBoutique.touched) {
+      <div class="error-message">
+        @if (nomBoutique.errors?.['required']) {
+        <small>Le nom est requis</small>
+        } @if (nomBoutique.errors?.['minlength']) {
+        <small>Minimum 3 caractères</small>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Champ : Lien du site web -->
+    <div class="field">
+      <label for="lien_site_web">Lien du site web *</label>
+      <input
+        type="url"
+        id="lien_site_web"
+        name="lien_site_web"
+        [(ngModel)]="shopData.lien_site_web"
+        #lienSite="ngModel"
+        required
+        pattern="https?://.+"
+        placeholder="Ex: https://fashion-world.com"
+      />
+
+      @if (lienSite.invalid && lienSite.touched) {
+      <div class="error-message">
+        @if (lienSite.errors?.['required']) {
+        <small>Le lien est requis</small>
+        } @if (lienSite.errors?.['pattern']) {
+        <small>Format: http:// ou https://</small>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Champ : Email de contact -->
+    <div class="field">
+      <label for="email">Email de contact</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="shopData.email"
+        #email="ngModel"
+        email
+        placeholder="contact@boutique.com"
+      />
+
+      @if (email.invalid && email.touched) {
+      <div class="error-message">
+        @if (email.errors?.['email']) {
+        <small>Format d'email invalide</small>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- SECTION 2 : CATÉGORIES -->
+  <h2>Catégories</h2>
+
+  <fieldset class="field">
+    <legend>Catégories de la boutique *</legend>
+
+    <!-- Liste des catégories -->
+    <div class="categories-grid">
+      @for (category of availableCategories; track category.code) {
+      <div class="option">
+        <input
+          type="checkbox"
+          [id]="'cat_' + category.code"
+          [value]="category.code"
+          (change)="onCategoryChange($event)"
+          [checked]="isCategorySelected(category.code)"
+        />
+        <label [for]="'cat_' + category.code">{{ category.label }}</label>
+      </div>
+      }
+    </div>
+
+    <!-- Switch pour tout sélectionner -->
+    <div class="field switch">
+      <label for="selectAll">Tout sélectionner</label>
+      <div class="switch-wrapper">
+        <input
+          type="checkbox"
+          id="selectAll"
+          (change)="toggleAllCategories($event)"
+          [checked]="areAllCategoriesSelected()"
+        />
+        <span class="track"></span>
+      </div>
+    </div>
+
+    <!-- Message d'erreur catégories -->
+    @if (selectedCategories.length === 0 && shopForm.submitted) {
+    <div class="error-message">
+      <small>Sélectionnez au moins une catégorie</small>
+    </div>
+    }
+
+    <!-- Compteur de catégories sélectionnées -->
+    <small class="hint"> {{ selectedCategories.length }} catégorie(s) sélectionnée(s) </small>
+  </fieldset>
+
+  <!-- SECTION 3 : DESCRIPTION -->
+  <h2>Description</h2>
+
+  <div class="field">
+    <label for="description">Description de la boutique</label>
+    <textarea
+      id="description"
+      name="description"
+      rows="4"
+      [(ngModel)]="shopData.description"
+      #description="ngModel"
+      maxlength="500"
+      placeholder="Décrivez votre boutique..."
+    ></textarea>
+    <small class="hint">{{ shopData.description.length || 0 }}/500 caractères</small>
+  </div>
+
+  <!-- Bouton de soumission (mobile) -->
+  <div class="form-actions">
+    <button class="primary" type="submit" [disabled]="shopForm.invalid">
+      Enregistrer les modifications
+    </button>
+  </div>
+</form>
+
+<!-- Message de succès -->
+@if (showSuccessMessage) {
+<div class="panel success-message">
+  <p>✓ Boutique mise à jour avec succès !</p>
+</div>
+}
