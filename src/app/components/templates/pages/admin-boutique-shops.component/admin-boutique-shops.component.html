@@ -10,40 +10,41 @@
 
 <section class="cards">
   <!-- Première boutique - Dispo -->
+  @for(boutique of boutiques(); track boutique._id) {
   <article class="shop-card">
     <div class="card-head">
       <div>
-        <h3>A12 : Tech World</h3>
+        <h3>{{ boutique.numero }} : {{ boutique.nom_boutique }}</h3>
         <span>Catég 1, Catég 2,...</span>
       </div>
       <span class="badge">Dispo</span>
     </div>
     <div class="metrics">
       <div>
-        <strong>1</strong>
+        <strong>{{ boutique.etage }}</strong>
         <small>Etage</small>
       </div>
       <div>
-        <strong>8.9M AR</strong>
-        <small>Prix mensuel</small>
+        <strong>{{ boutique.prix | number }}</strong>
+        <small>Prix mensuel (MGA)</small>
       </div>
     </div>
 
     @if (userRole() === 'ADMIN') {
-    <button class="ghost" [routerLink]="['/admin/boutiques/A12']">Voir les details</button>
+    <button class="ghost" [routerLink]="['/admin/boutiques', boutique._id]">Voir les details</button>
     } @else {
-    <button class="ghost" (click)="toggleDemandeLocation('A12')">Demander la location</button>
+    <button class="ghost" (click)="toggleDemandeLocation(boutique._id)">Demander la location</button>
     }
 
     <!-- Dropdown demande de location -->
-    @if (demandeOuverte() === 'A12') {
+    @if (demandeOuverte() === boutique._id) {
     <div class="location-dropdown">
       <p class="info-message">
         Avant votre demande, nous voulons quelques informations sur la boutique que vous voulez
         mettre
       </p>
 
-      <form (ngSubmit)="soumettreDemande('A12')">
+      <form (ngSubmit)="soumettreDemande(boutique._id)">
         <div class="form-group">
           <label for="nomBoutique">Nom de la boutique <span class="required">*</span></label>
           <input
@@ -102,9 +103,10 @@
     </div>
     }
   </article>
+  }
 
   <!-- Deuxième boutique - Non-Dispo -->
-  <article class="shop-card">
+  <!-- <article class="shop-card">
     <div class="card-head">
       <div>
         <h3>A12 : Tech World</h3>
@@ -127,5 +129,5 @@
     @if (userRole() === 'ADMIN') {
     <button class="ghost" [routerLink]="['/admin/boutiques/A12']">Voir les details</button>
     }
-  </article>
+  </article> -->
 </section>
