@@ -1,14 +1,41 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { ReadBoutique } from '../../../../models/anthony/ABoutique';
+import { AboutiqueService } from '../../../../services/anthony/aboutique.service';
+import { AuthService } from '../../../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mes-boutiques.component',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './mes-boutiques.component.html',
   styleUrl: './mes-boutiques.component.css',
 })
 export class MesBoutiquesComponent {
-  constructor(private router: Router) {}
+  boutiques = signal<ReadBoutique[]>([]);
+
+  constructor(
+    private boutiqueService: AboutiqueService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.chargerBoutiquesLocataire();
+  }
+
+  chargerBoutiquesLocataire() {
+    this.boutiqueService.getBoutiquesByLocataire(this.authService.getId() ?? '').subscribe({
+      next: (boutiques) => {
+        this.boutiques.set(boutiques);
+        console.log('Boutiques du locataire chargées:', boutiques);
+      },
+      error: (erreur) => {
+        console.error('Erreur lors du chargement des boutiques:', erreur);
+        // Gérer l'erreur (afficher un message à l'utilisateur, etc.)
+      },
+    });
+  }
 
   gererBoutique(shopId: string) {
     console.log('Gérer boutique:', shopId);

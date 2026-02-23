@@ -21,4 +21,9 @@ export class AboutiqueService {
   getBoutiqueById(id: string): Observable<ReadBoutique> {
     return this.http.get<ReadBoutique>(`${this.apiUrl}/${id}`);
   }
+
+  /** Récupère toutes les boutiques d'un locataire spécifique */
+  getBoutiquesByLocataire(locataireId: string): Observable<ReadBoutique[]> {
+    return this.http.get<ReadBoutique[]>(`${this.apiUrl}/locataire/${locataireId}`);
+  }
 }
