@@ -29,6 +29,7 @@ import { MesBoutiquesComponent } from './components/boutique/pages/mes-boutiques
 import { GererBoutiqueComponent } from './components/boutique/pages/gerer-boutique.component/gerer-boutique.component';
 import { AdminBoutiqueComponent } from './components/admin/pages/admin-boutique.component/admin-boutique.component';
 import { DetailBoutiqueComponent } from './components/admin/pages/detail-boutique.component/detail-boutique.component';
+import { ModifSuiviPaiementDateComponent } from './components/templates/components/modif-suivi-paiement-date.component/modif-suivi-paiement-date.component';
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -47,6 +48,7 @@ export const routes: Routes = [
       { path: 'boutiques', component: AdminBoutiqueComponent },
       { path: 'boutique/nouveau', component: NouvelleBoutiqueComponent },
       { path: 'boutiques/:id', component: DetailBoutiqueComponent },
+      { path: 'boutiques/:id/modif-paiement', component: ModifSuiviPaiementDateComponent },
       { path: 'users', component: AdminUsersComponent },
       { path: 'demande-location', component: DemandeLocationComponent },
     ],

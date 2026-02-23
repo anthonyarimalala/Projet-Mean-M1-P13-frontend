@@ -17,7 +17,11 @@
         <h3>{{ boutique.numero }} : {{ boutique.nom_boutique }}</h3>
         <span>Catég 1, Catég 2,...</span>
       </div>
-      <span class="badge">Dispo</span>
+      @if(boutique.is_disponible){
+        <span class="badge">Dispo</span>
+      }@else {
+        <span class="badge warn">Non-Dispo</span>
+      }
     </div>
     <div class="metrics">
       <div>

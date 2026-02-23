@@ -3,6 +3,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+export interface CreatePaiement {
+  boutique_id: string;
+  locataire_id: string;
+  montant: number;
+  date_prevue: string;
+  statut: 'EN_ATTENTE' | 'PAYE' | 'ANNULE';
+  show_to_user: boolean;
+  created_at: string;
+}
+
 // Importer ton modèle TypeScript pour le frontend
 export interface HistoriquePaiement {
   _id: string;
@@ -37,8 +47,8 @@ export class HistoriquePaiementService {
   constructor(private http: HttpClient) {}
 
   /** Créer un paiement */
-  createPaiement(payload: Partial<HistoriquePaiement>): Observable<HistoriquePaiement> {
-    return this.http.post<HistoriquePaiement>(this.apiUrl, payload);
+  createPaiement(payload: Partial<CreatePaiement>): Observable<CreatePaiement> {
+    return this.http.post<CreatePaiement>(this.apiUrl, payload);
   }
 
   /** Mettre à jour un paiement */

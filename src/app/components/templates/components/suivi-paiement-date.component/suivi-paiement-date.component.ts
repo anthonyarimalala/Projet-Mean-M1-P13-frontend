@@ -1,6 +1,7 @@
+import { CreatePaiement } from './../../../../services/paiement/historique-paiement.service';
 import { Component, signal, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   HistoriquePaiement,
   HistoriquePaiementService,
@@ -35,13 +36,23 @@ export class SuiviPaiementDateComponent implements OnInit {
   totalItems = 0;
   totalPages = 0;
 
-  constructor(private paiementService: HistoriquePaiementService, private authService: AuthService) {}
+  constructor(
+    private paiementService: HistoriquePaiementService,
+    private authService: AuthService,
+    private router : Router
+  ) {}
 
   ngOnInit() {
     this.userRole.set(this.authService.getRole() ?? '');
     this.chargerProchainPaiement();
     if (this.isOpen()) {
       this.chargerPaiements();
+    }
+  }
+
+  onDetailClick(id: string) {
+    if (this.authService.getRole() === 'ADMIN') {
+      this.router.navigateByUrl(`/admin/boutiques/${id}/modif-paiement`);
     }
   }
 
@@ -53,6 +64,7 @@ export class SuiviPaiementDateComponent implements OnInit {
     } else {
       this.prochainPaiementDate.set(null);
     }
+    //console.log("this.prochainPaiementDate: ",this.prochainPaiementDate());
     // Effacer le message de confirmation précédent
     this.messageConfirmation.set(null);
   }
@@ -70,6 +82,27 @@ export class SuiviPaiementDateComponent implements OnInit {
     // TODO: Implémenter l'appel API pour sauvegarder la date du prochain paiement
     // Vous devrez probablement créer une nouvelle méthode dans votre service
     // ou utiliser une API existante pour mettre à jour la boutique/locataire
+    const createPaiement: CreatePaiement = {
+      boutique_id: this.boutique?._id ?? '',
+      locataire_id: this.boutique?.locataire_id ?? '',
+      montant: this.boutique?.prix ?? 0,
+      date_prevue: this.prochainPaiementDate()!.toISOString(),
+      statut: 'EN_ATTENTE',
+      show_to_user: true,
+      created_at: new Date().toISOString(),
+    };
+    this.paiementService.createPaiement(createPaiement).subscribe({
+      next: (response) => {
+        this.sauvegardeEnCours.set(false);
+        this.messageConfirmation.set('Date du prochain paiement enregistrée avec succès');
+        setTimeout(() => this.messageConfirmation.set(null), 3000);
+      },
+      error: (err) => {
+        console.error("Erreur lors de l'enregistrement du paiement:", err);
+        this.sauvegardeEnCours.set(false);
+        this.messageConfirmation.set("Erreur lors de l'enregistrement du paiement");
+      },
+    });
 
     // Simulation pour le développement
     setTimeout(() => {

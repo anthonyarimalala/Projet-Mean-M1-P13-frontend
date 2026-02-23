@@ -5,7 +5,6 @@
 
   
     @if(userRole() === 'ADMIN') {
-
     <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
       <label for="prochainPaiement" style="font-weight: 600; color: #1f2937; font-size: 14px">
         📅 Date du prochain paiement :
@@ -179,7 +178,7 @@
           </thead>
           <tbody>
             @for (p of paiements; track p._id) {
-            <tr [class.en-retard]="isEnRetard(p)">
+            <tr [class.en-retard]="isEnRetard(p)" (click)="onDetailClick(p._id)">
               <td>{{ p.date_prevue | date : 'dd/MM/yyyy' }}</td>
               <td>
                 @if (p.date_paiement) {
