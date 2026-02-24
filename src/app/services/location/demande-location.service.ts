@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import {
-  DemandeLocation,
-  DemandeLocationDTO,
-  DemandeResponse,
+import { map } from 'rxjs/operators';
+import { 
+  DemandeLocation, 
+  DemandeLocationDTO, 
+  DemandeResponse, 
   DemandeStats,
   StatutUpdateDTO,
   AnnulationDTO,
-  DemandeUpdateDTO,
-  DemandeStatut,
+  DemandeUpdateDTO 
 } from '../../models/demande-location';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class DemandeLocationService {
   private apiUrl = `${environment.apiUrl}/demandes`;
@@ -24,13 +24,11 @@ export class DemandeLocationService {
   /**
    * GET / - Récupérer toutes les demandes avec pagination et filtre
    */
-  getAllDemandes(
-    page: number = 1,
-    limit: number = 10,
-    statut?: string
-  ): Observable<DemandeResponse> {
-    let params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
-
+  getAllDemandes(page: number = 1, limit: number = 10, statut?: string): Observable<DemandeResponse> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
+    
     if (statut) {
       params = params.set('statut', statut);
     }
@@ -42,7 +40,9 @@ export class DemandeLocationService {
    * GET /en-attente - Récupérer les demandes en attente
    */
   getDemandesEnAttente(page: number = 1, limit: number = 10): Observable<DemandeResponse> {
-    const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
 
     return this.http.get<DemandeResponse>(`${this.apiUrl}/en-attente`, { params });
   }
@@ -57,12 +57,10 @@ export class DemandeLocationService {
   /**
    * GET /utilisateur/:userId - Récupérer les demandes d'un utilisateur
    */
-  getDemandesByUtilisateur(
-    userId: string,
-    page: number = 1,
-    limit: number = 10
-  ): Observable<DemandeResponse> {
-    const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
+  getDemandesByUtilisateur(userId: string, page: number = 1, limit: number = 10): Observable<DemandeResponse> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
 
     return this.http.get<DemandeResponse>(`${this.apiUrl}/utilisateur/${userId}`, { params });
   }
@@ -70,12 +68,10 @@ export class DemandeLocationService {
   /**
    * GET /boutique/:boutiqueId - Récupérer les demandes d'une boutique
    */
-  getDemandesByBoutique(
-    boutiqueId: string,
-    page: number = 1,
-    limit: number = 10
-  ): Observable<DemandeResponse> {
-    const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
+  getDemandesByBoutique(boutiqueId: string, page: number = 1, limit: number = 10): Observable<DemandeResponse> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('limit', limit.toString());
 
     return this.http.get<DemandeResponse>(`${this.apiUrl}/boutique/${boutiqueId}`, { params });
   }
@@ -104,14 +100,8 @@ export class DemandeLocationService {
   /**
    * PUT /:id/annuler - Annuler une demande (par le demandeur)
    */
-  annulerDemande(
-    id: string,
-    annulation: AnnulationDTO
-  ): Observable<{ message: string; demande: DemandeLocation }> {
-    return this.http.put<{ message: string; demande: DemandeLocation }>(
-      `${this.apiUrl}/${id}/annuler`,
-      annulation
-    );
+  annulerDemande(id: string, annulation: AnnulationDTO): Observable<{ message: string; demande: DemandeLocation }> {
+    return this.http.put<{ message: string; demande: DemandeLocation }>(`${this.apiUrl}/${id}/annuler`, annulation);
   }
 
   /**
@@ -126,47 +116,5 @@ export class DemandeLocationService {
    */
   deleteDemande(id: string): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
-  }
-
-  // Méthodes utilitaires
-
-  /**
-   * Vérifier si une demande peut être modifiée (en attente uniquement)
-   */
-  peutEtreModifiee(demande: DemandeLocation): boolean {
-    return demande.statut === 'EN_ATTENTE';
-  }
-
-  /**
-   * Vérifier si une demande peut être annulée (en attente uniquement)
-   */
-  peutEtreAnnulee(demande: DemandeLocation): boolean {
-    return demande.statut === 'EN_ATTENTE';
-  }
-
-  /**
-   * Obtenir le libellé du statut en français
-   */
-  getStatutLibelle(statut: DemandeStatut): string {
-    const libelles: Record<DemandeStatut, string> = {
-      EN_ATTENTE: 'En attente',
-      APPROUVEE: 'Approuvée',
-      REJETEE: 'Rejetée',
-      ANNULEE: 'Annulée',
-    };
-    return libelles[statut];
-  }
-
-  /**
-   * Obtenir la couleur du badge pour le statut
-   */
-  getStatutBadgeClass(statut: DemandeStatut): string {
-    const classes: Record<DemandeStatut, string> = {
-      EN_ATTENTE: 'badge-warning',
-      APPROUVEE: 'badge-success',
-      REJETEE: 'badge-danger',
-      ANNULEE: 'badge-secondary',
-    };
-    return classes[statut];
   }
 }

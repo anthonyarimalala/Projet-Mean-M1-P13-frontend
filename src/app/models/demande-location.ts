@@ -1,11 +1,26 @@
-// models/demande-location.model.ts
+// models/demande-location.ts
 
 export type DemandeStatut = 'EN_ATTENTE' | 'APPROUVEE' | 'REJETEE' | 'ANNULEE';
+
+export interface BoutiqueInfo {
+  _id: string;
+  numero: string;
+  etage: number;
+  is_disponible: boolean;
+  prix: number;
+}
+
+export interface DemandeurInfo {
+  _id: string;
+  nom: string;
+  telephone?: string;
+  email?: string;
+}
 
 export interface DemandeLocation {
   _id: string;
   boutique: {
-    boutique_id: string;
+    boutique_id: BoutiqueInfo;  // C'est un objet complet
     numero: string;
     nom_demande: string;
   };
@@ -13,18 +28,19 @@ export interface DemandeLocation {
   site_web: string | null;
   message: string | null;
   demandeur: {
-    user_id: string;
+    user_id: DemandeurInfo;  // C'est un objet complet
     nom: string;
+  };
+  traitement?: {
+    date_traitement: Date | string | null;
+    traite_par: string | null;
+    notes_admin: string | null;
   };
   statut: DemandeStatut;
   date_demande: Date | string;
-  traitee_par?: {
-    admin_id: string;
-    date: Date | string;
-    notes?: string;
-  };
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  created_at?: Date | string;
+  updated_at?: Date | string;
+  __v?: number;
 }
 
 export interface DemandeLocationDTO {
@@ -48,10 +64,10 @@ export interface DemandeStats {
 }
 
 export interface DemandeResponse {
-  demandes: DemandeLocation[];
+  items: DemandeLocation[];  // Note: c'est "items" pas "demandes"
   total: number;
   page: number;
-  pages: number;
+  totalPages: number;
 }
 
 export interface StatutUpdateDTO {
