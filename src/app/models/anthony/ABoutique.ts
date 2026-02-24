@@ -19,3 +19,12 @@ export interface ReadBoutique {
   created_at: Date;
   updated_at: Date;
 }
+
+export interface CreateBoutique {
+  numero: string;
+  etage: number;
+  is_disponible: boolean;
+  prix: number;
+  promotion: Promotion;
+  nom_boutique: string;
+}

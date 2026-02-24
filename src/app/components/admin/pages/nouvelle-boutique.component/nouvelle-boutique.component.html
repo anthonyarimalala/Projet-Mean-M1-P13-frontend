@@ -4,22 +4,52 @@
     <p>Créez un nouveau local commercial</p>
   </div>
   <div class="actions">
-    <button class="primary" (click)="onSubmit()">Enregistrer</button>
+    <button
+      class="primary"
+      (click)="onSubmit()"
+      [disabled]="isLoading"
+    >
+      <span *ngIf="!isLoading">Enregistrer</span>
+      <span *ngIf="isLoading" class="spinner"></span>
+      <span *ngIf="isLoading" style="margin-left: 8px;">Enregistrement...</span>
+    </button>
   </div>
 </section>
 
+<!-- Messages de notification -->
+<div class="notification-container">
+  <div *ngIf="successMessage" class="notification success">
+    <span class="notification-icon">✓</span>
+    <span>{{ successMessage }}</span>
+    <button class="notification-close" (click)="successMessage = null">×</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="notification error">
+    <span class="notification-icon">⚠</span>
+    <span>{{ errorMessage }}</span>
+    <button class="notification-close" (click)="errorMessage = null">×</button>
+  </div>
+</div>
+
 <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+  <!-- Le reste du formulaire reste identique -->
   <section class="panel">
     <h2>Informations générales</h2>
     <div class="form-grid">
       <label class="field">
         <span>Numéro du local</span>
         <input type="text" formControlName="numero" placeholder="Ex: A12" />
+        <span *ngIf="createForm.get('numero')?.touched && createForm.get('numero')?.errors" class="field-error">
+          Ce champ est requis
+        </span>
       </label>
 
       <label class="field">
         <span>Étage</span>
         <input type="number" formControlName="etage" min="0" max="10" />
+        <span *ngIf="createForm.get('etage')?.touched && createForm.get('etage')?.errors" class="field-error">
+          L'étage est requis et doit être ≥ 0
+        </span>
       </label>
 
       <label class="field switch">
@@ -31,6 +61,9 @@
       <label class="field">
         <span>Prix (Ar)</span>
         <input type="number" formControlName="prix" min="0" step="1000" placeholder="8 900 000" />
+        <span *ngIf="createForm.get('prix')?.touched && createForm.get('prix')?.errors" class="field-error">
+          Le prix doit être ≥ 0
+        </span>
       </label>
     </div>
   </section>
@@ -47,6 +80,9 @@
       <label class="field">
         <span>Taux de promotion (%)</span>
         <input type="number" formControlName="promotionTaux" min="0" max="100" step="1" />
+        <span *ngIf="createForm.get('promotionTaux')?.touched && createForm.get('promotionTaux')?.errors" class="field-error">
+          Le taux doit être entre 0 et 100
+        </span>
       </label>
     </div>
   </section>
@@ -57,21 +93,6 @@
       <label class="field">
         <span>Nom de la boutique</span>
         <input type="text" formControlName="nom_boutique" placeholder="Tech World" />
-      </label>
-
-      <label class="field">
-        <span>Lien site web</span>
-        <input type="url" formControlName="lien_site_web" placeholder="https://" />
-      </label>
-
-      <label class="field">
-        <span>ID Locataire</span>
-        <input type="text" formControlName="locataire_id" placeholder="USR_045" />
-      </label>
-
-      <label class="field">
-        <span>Date prochain paiement</span>
-        <input type="datetime-local" formControlName="date_prochain_paiement" />
       </label>
     </div>
   </section>
