@@ -9,51 +9,55 @@
 
 <div class="announcements-layout">
   <div class="announcements">
-    @for (announcement of announcements; track announcement.id) {
-      <article class="announcement-card">
-        <header>
-          <div>
-            <h3>{{ announcement.title }}</h3>
-            <p class="date">{{ announcement.date }}</p>
-          </div>
-          <span class="chip">Nouveaute</span>
-        </header>
-        <p class="content">{{ announcement.content }}</p>
-        @if (announcement.imageUrls?.length) {
-          <div class="announcement-gallery">
-            @for (image of announcement.imageUrls; track image) {
-              <img [src]="image" [alt]="announcement.title" />
-            }
-          </div>
+    @for (annonce of annonces(); track annonce._id) {
+    <article class="announcement-card">
+      <header>
+        <div>
+          <h3>{{ annonce.titre }}</h3>
+          <p class="date">{{ annonce.created_at | date }}</p>
+        </div>
+        <span class="chip">Nouveaute</span>
+      </header>
+      <p class="content">{{ annonce.description }}</p>
+      @if (annonce.images.length) {
+      <div class="announcement-gallery">
+        @for (image of annonce.images; track image) {
+        <img [src]="image.url" [alt]="annonce.titre" />
         }
+      </div>
+      }
 
-        <div class="comments">
-          <h4>Commentaires</h4>
-          <div class="comment-list">
-            @if (getComments(announcement.id).length === 0) {
-              <p class="empty">Aucun commentaire pour le moment.</p>
-            }
-            @for (comment of getComments(announcement.id); track comment.id) {
-              <div class="comment-item">
-                <div>
-                  <strong>{{ comment.author }}</strong>
-                  <span class="date">{{ comment.date }}</span>
-                </div>
-                <p>{{ comment.content }}</p>
-              </div>
-            }
+      <div class="comments">
+        <h4>Commentaires</h4>
+        <!-- <div class="comment-list">
+          @if (getComments(annonce._id).length === 0) {
+          <p class="empty">Aucun commentaire pour le moment.</p>
+          } @for (comment of getComments(annonce.id); track comment.id) {
+          <div class="comment-item">
+            <div>
+              <strong>{{ comment.author }}</strong>
+              <span class="date">{{ comment.date }}</span>
+            </div>
+            <p>{{ comment.content }}</p>
           </div>
-        <form class="comment-form" (ngSubmit)="addComment(announcement.id)">
+          }
+        </div> -->
+        <form class="comment-form">
+          <!-- <textarea
+            rows="2"
+            placeholder="Votre commentaire"
+            [(ngModel)]="commentContent[annonce._id]"
+            name="content-{{ annonce._id }}"
+          ></textarea> -->
           <textarea
             rows="2"
             placeholder="Votre commentaire"
-            [(ngModel)]="commentContent[announcement.id]"
-            name="content-{{ announcement.id }}"
-            ></textarea>
-            <button type="submit">Ajouter</button>
-          </form>
-        </div>
-      </article>
+            name="content-{{ annonce._id }}"
+          ></textarea>
+          <button type="submit">Ajouter</button>
+        </form>
+      </div>
+    </article>
     }
   </div>
 
@@ -64,19 +68,19 @@
     </div>
     <div class="shop-list">
       @for (shop of shops; track shop.id) {
-        <a class="shop-row" [routerLink]="['/acheteur/boutiques', shop.id]">
-          <div class="shop-avatar">
-            @if (shop.imageUrl) {
-              <img [src]="shop.imageUrl" [alt]="shop.name" />
-            } @else {
-              <span>{{ shop.name.charAt(0) }}</span>
-            }
-          </div>
-          <div>
-            <p class="shop-name">{{ shop.name }}</p>
-            <p class="shop-meta">{{ shop.category }}</p>
-          </div>
-        </a>
+      <a class="shop-row" [routerLink]="['/acheteur/boutiques', shop.id]">
+        <div class="shop-avatar">
+          @if (shop.imageUrl) {
+          <img [src]="shop.imageUrl" [alt]="shop.name" />
+          } @else {
+          <span>{{ shop.name.charAt(0) }}</span>
+          }
+        </div>
+        <div>
+          <p class="shop-name">{{ shop.name }}</p>
+          <p class="shop-meta">{{ shop.category }}</p>
+        </div>
+      </a>
       }
     </div>
     <div class="panel-footer">
