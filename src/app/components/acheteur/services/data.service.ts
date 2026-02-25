@@ -29,11 +29,11 @@ export class DataService {
     return this.articles();
   }
 
-  getShopById(id: number) {
-    return this.shops().find((shop) => shop.id === id);
+  getShopById(id: string) {
+    return this.shops().find((shop) => shop._id === id);
   }
 
-  getArticlesByShop(shopId: number) {
+  getArticlesByShop(shopId: string) {
     return this.articles().filter((article) => article.shopId === shopId);
   }
 
@@ -41,7 +41,7 @@ export class DataService {
     return this.comments().filter((comment) => comment.announcementId === announcementId);
   }
 
-  getReviewsByTarget(targetType: ReviewTargetType, targetId: number) {
+  getReviewsByTarget(targetType: ReviewTargetType, targetId: string) {
     return this.reviews().filter(
       (review) => review.targetType === targetType && review.targetId === targetId
     );
@@ -61,7 +61,7 @@ export class DataService {
 
   addReview(
     targetType: ReviewTargetType,
-    targetId: number,
+    targetId: string,
     author: string,
     rating: number,
     comment: string

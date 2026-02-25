@@ -16,7 +16,7 @@ export interface Comment {
 }
 
 export interface Shop {
-  id: number;
+  _id: string;
   name: string;
   category: string;
   location: string;
@@ -26,7 +26,7 @@ export interface Shop {
 
 export interface Article {
   id: number;
-  shopId: number;
+  shopId: string;
   name: string;
   categories: string[];
   price: number;
@@ -39,7 +39,7 @@ export type ReviewTargetType = 'shop' | 'article';
 export interface Review {
   id: number;
   targetType: ReviewTargetType;
-  targetId: number;
+  targetId: string;
   author: string;
   rating: number;
   comment: string;

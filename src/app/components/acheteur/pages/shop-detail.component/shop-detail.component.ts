@@ -23,18 +23,21 @@ export class ShopDetailComponent {
   reviewRatingShop = 5;
   reviewCommentShop = '';
 
-  reviewAuthorArticle: Record<number, string> = {};
-  reviewRatingArticle: Record<number, number> = {};
-  reviewCommentArticle: Record<number, string> = {};
+  reviewAuthorArticle: Record<string, string> = {};  // Modifié : number → string
+  reviewRatingArticle: Record<string, number> = {};  // Modifié : number → string
+  reviewCommentArticle: Record<string, string> = {}; // Modifié : number → string
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly dataService: DataService,
     private readonly cartService: CartService
   ) {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.shop = this.dataService.getShopById(id);
-    this.articles = this.shop ? this.dataService.getArticlesByShop(this.shop.id) : [];
+    const id = this.route.snapshot.paramMap.get('id'); // Modifié : plus de Number()
+    if (id) {
+      this.shop = this.dataService.getShopById(id);
+      this.articles = this.shop ? this.dataService.getArticlesByShop(this.shop._id) : []; // Modifié : shop.id → shop._id
+    }
+    console.log('accueil');
   }
 
   get filteredArticles() {
@@ -53,10 +56,10 @@ export class ShopDetailComponent {
   }
 
   getShopReviews(): Review[] {
-    return this.shop ? this.dataService.getReviewsByTarget('shop', this.shop.id) : [];
+    return this.shop ? this.dataService.getReviewsByTarget('shop', this.shop._id) : []; // Modifié : shop.id → shop._id
   }
 
-  getArticleReviews(articleId: number): Review[] {
+  getArticleReviews(articleId: string): Review[] { // Modifié : number → string
     return this.dataService.getReviewsByTarget('article', articleId);
   }
 
@@ -72,12 +75,12 @@ export class ShopDetailComponent {
     if (!comment) {
       return;
     }
-    this.dataService.addReview('shop', this.shop.id, 'Acheteur', this.reviewRatingShop, comment);
+    this.dataService.addReview('shop', this.shop._id, 'Acheteur', this.reviewRatingShop, comment); // Modifié : shop.id → shop._id
     this.reviewRatingShop = 5;
     this.reviewCommentShop = '';
   }
 
-  addArticleReview(articleId: number) {
+  addArticleReview(articleId: string) { // Modifié : number → string
     const author = (this.reviewAuthorArticle[articleId] || '').trim();
     const comment = (this.reviewCommentArticle[articleId] || '').trim();
     const rating = this.reviewRatingArticle[articleId] || 5;

@@ -16,20 +16,21 @@
 </div>
 
 <div class="shop-grid">
-  @for (shop of filteredShops; track shop.id) {
-    <a class="shop-card" [routerLink]="[shop.id]">
+  @for (boutique of boutiques(); track boutique._id) {
+    <a class="shop-card" [routerLink]="[boutique._id]">
       <div class="shop-image">
-        @if (shop.imageUrl) {
-          <img [src]="shop.imageUrl" [alt]="shop.name" />
+        <!-- @if (boutique.imageUrl) {
+          <img [src]="boutique.imageUrl" [alt]="boutique.name" />
         } @else {
-          <span>{{ shop.name.charAt(0) }}</span>
-        }
+          <span>{{ boutique.name.charAt(0) }}</span>
+        } -->
+        <span>{{ boutique.nom_boutique.charAt(0) }}</span>
       </div>
       <div>
-        <h3>{{ shop.name }}</h3>
-        <p class="category">{{ shop.category }}</p>
-        <p class="location">{{ shop.location }}</p>
-        <p class="description">{{ shop.description }}</p>
+        <h3>{{ boutique.nom_boutique }}</h3>
+        <p class="category">{{ boutique.categories }}</p>
+        <p class="location">Etage: {{ boutique.etage }}</p>
+        <p class="description">{{ boutique.lien_site_web }}</p>
       </div>
     </a>
   }
