@@ -2,18 +2,18 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data.service';
-import { Announcement, Comment, Shop } from '../../models/buyer-models';
+import { Comment, Shop } from '../../models/buyer-models';
 import { AuthService } from '../../../../services/auth.service';
 import { AnnonceService } from '../../../../services/annonces/annonce.service';
 import { Annonce, AnnoncesResponse } from '../../../../models/Annonce';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { AnnonceCommentaireService } from '../../../../services/annonces/annonce-commentaire.service';
+import { AnnonceCommentaireComponent } from "../../components/annonce-commentaire.component/annonce-commentaire.component";
 
 @Component({
   selector: 'app-announcements',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule, AnnonceCommentaireComponent],
   templateUrl: './announcements.component.html',
   styleUrls: ['./announcements.component.css', '../../styles.css']
 })

@@ -26,37 +26,7 @@
         }
       </div>
       }
-
-      <div class="comments">
-        <h4>Commentaires</h4>
-        <!-- <div class="comment-list">
-          @if (getComments(annonce._id).length === 0) {
-          <p class="empty">Aucun commentaire pour le moment.</p>
-          } @for (comment of getComments(annonce.id); track comment.id) {
-          <div class="comment-item">
-            <div>
-              <strong>{{ comment.author }}</strong>
-              <span class="date">{{ comment.date }}</span>
-            </div>
-            <p>{{ comment.content }}</p>
-          </div>
-          }
-        </div> -->
-        <form class="comment-form">
-          <!-- <textarea
-            rows="2"
-            placeholder="Votre commentaire"
-            [(ngModel)]="commentContent[annonce._id]"
-            name="content-{{ annonce._id }}"
-          ></textarea> -->
-          <textarea
-            rows="2"
-            placeholder="Votre commentaire"
-            name="content-{{ annonce._id }}"
-          ></textarea>
-          <button type="submit">Ajouter</button>
-        </form>
-      </div>
+      <app-annonce-commentaire [annonceId]="annonce._id"></app-annonce-commentaire>
     </article>
     }
   </div>
