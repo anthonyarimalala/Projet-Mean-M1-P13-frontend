@@ -12,18 +12,11 @@
   <article class="shop-card">
     <div class="card-header">
       <div class="shop-icon">🛍️</div>
-    
       <div class="shop-title">
         <h3>{{ boutique.numero }} : {{ boutique.nom_boutique }}</h3>
         <span class="shop-type">{{ boutique.categories.join(', ') }}</span>
       </div>
-    
-      <!-- Bouton 3 points -->
-      <button
-        class="menu-btn"
-        title="Plus d'options"
-        (click)="toggleMenu(boutique._id)"
-      >
+      <button class="menu-btn" title="Plus d'options">
         <svg
           width="18"
           height="18"
@@ -37,18 +30,6 @@
           <circle cx="12" cy="19" r="1"></circle>
         </svg>
       </button>
-    
-      <!-- Menu dropdown -->
-      <div
-        class="dropdown-menu"
-        *ngIf="openMenuId === boutique._id"
-      >
-        <button (click)="modifier(boutique._id)">✏️ Modifier</button>
-        <button (click)="voirDetails(boutique._id)">👁️ Voir</button>
-        <button class="danger" (click)="supprimer(boutique._id)">
-          🗑️ Supprimer
-        </button>
-      </div>
     </div>
 
     <div class="shop-details">

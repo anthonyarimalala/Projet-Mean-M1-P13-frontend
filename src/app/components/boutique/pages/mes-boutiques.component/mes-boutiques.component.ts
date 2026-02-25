@@ -47,26 +47,4 @@ export class MesBoutiquesComponent {
     console.log('Nouvelle demande');
     this.router.navigate(['/boutiques/demande']);
   }
-
-  openMenuId: string | null = null;
-
-toggleMenu(id: string) {
-  this.openMenuId = this.openMenuId === id ? null : id;
-}
-
-modifier(id: string) {
-  this.openMenuId = null;
-
-  this.router.navigate(['/boutique/modifications', id]);
-}
-
-voirDetails(id: string) {
-  console.log("Voir", id);
-  this.openMenuId = null;
-}
-
-supprimer(id: string) {
-  console.log("Supprimer", id);
-  this.openMenuId = null;
-}
 }
