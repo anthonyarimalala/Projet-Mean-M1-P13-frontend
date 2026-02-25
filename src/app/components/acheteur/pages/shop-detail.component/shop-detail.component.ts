@@ -5,10 +5,11 @@ import { DataService } from '../../services/data.service';
 import { CartService } from '../../services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ShopAvisComponent } from '../shop-avis.component/shop-avis.component';
 
 @Component({
   selector: 'app-shop-detail',
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule, ShopAvisComponent],
   templateUrl: './shop-detail.component.html',
   styleUrls: ['./shop-detail.component.css', '../../styles.css'],
 })
@@ -20,24 +21,20 @@ export class ShopDetailComponent {
   categoryFilter = '';
   maxPrice?: number;
 
-  reviewRatingShop = 5;
-  reviewCommentShop = '';
-
-  reviewAuthorArticle: Record<string, string> = {};  // Modifié : number → string
-  reviewRatingArticle: Record<string, number> = {};  // Modifié : number → string
-  reviewCommentArticle: Record<string, string> = {}; // Modifié : number → string
+  reviewAuthorArticle: Record<string, string> = {};
+  reviewRatingArticle: Record<string, number> = {};
+  reviewCommentArticle: Record<string, string> = {};
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly dataService: DataService,
     private readonly cartService: CartService
   ) {
-    const id = this.route.snapshot.paramMap.get('id'); // Modifié : plus de Number()
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.shop = this.dataService.getShopById(id);
-      this.articles = this.shop ? this.dataService.getArticlesByShop(this.shop._id) : []; // Modifié : shop.id → shop._id
+      this.articles = this.shop ? this.dataService.getArticlesByShop(this.shop._id) : [];
     }
-    console.log('accueil');
   }
 
   get filteredArticles() {
@@ -55,11 +52,7 @@ export class ShopDetailComponent {
     });
   }
 
-  getShopReviews(): Review[] {
-    return this.shop ? this.dataService.getReviewsByTarget('shop', this.shop._id) : []; // Modifié : shop.id → shop._id
-  }
-
-  getArticleReviews(articleId: string): Review[] { // Modifié : number → string
+  getArticleReviews(articleId: string): Review[] {
     return this.dataService.getReviewsByTarget('article', articleId);
   }
 
@@ -67,20 +60,12 @@ export class ShopDetailComponent {
     this.cartService.addToCart(article);
   }
 
-  addShopReview() {
-    if (!this.shop) {
-      return;
-    }
-    const comment = this.reviewCommentShop.trim();
-    if (!comment) {
-      return;
-    }
-    this.dataService.addReview('shop', this.shop._id, 'Acheteur', this.reviewRatingShop, comment); // Modifié : shop.id → shop._id
-    this.reviewRatingShop = 5;
-    this.reviewCommentShop = '';
+  onReviewAdded() {
+    // Optionally refresh data or show notification
+    console.log('Review added successfully');
   }
 
-  addArticleReview(articleId: string) { // Modifié : number → string
+  addArticleReview(articleId: string) {
     const author = (this.reviewAuthorArticle[articleId] || '').trim();
     const comment = (this.reviewCommentArticle[articleId] || '').trim();
     const rating = this.reviewRatingArticle[articleId] || 5;

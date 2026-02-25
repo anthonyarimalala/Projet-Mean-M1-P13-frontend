@@ -86,7 +86,7 @@ export const ARTICLES: Article[] = [
     description: 'Ecran 6.5, double SIM, batterie longue duree.',
     imageUrls: [
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80',
-      'https://images.unsplash.com/photo-1510557880182-3de5b7b1114f?auto=format&fit=crop&w=700&q=80'
+      'https://www.bing.com/th/id/OIP.w6-KvfhX9-q9soqhPcK9GgHaMc?w=160&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2'
     ]
   },
   {
