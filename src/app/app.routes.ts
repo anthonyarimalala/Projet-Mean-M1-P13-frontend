@@ -16,9 +16,27 @@ import { AdminBoutiqueDashboardComponent } from './components/templates/pages/ad
 import { AdminBoutiqueInputsComponent } from './components/templates/pages/admin-boutique-inputs.component/admin-boutique-inputs.component';
 import { AdminBoutiqueUsersComponent } from './components/templates/pages/admin-boutique-users.component/admin-boutique-users.component';
 import { AdminBoutiqueShopsComponent } from './components/templates/pages/admin-boutique-shops.component/admin-boutique-shops.component';
+<<<<<<< Updated upstream
 import { AdminBoutiqueTestComponent } from './components/templates/pages/admin-boutique-test.component/admin-boutique-test.component';
 import { BoutiqueLayoutComponent } from './components/boutique/boutique-layout.component/boutique-layout.component';
 import { BoutiqueFormComponent } from './components/boutique/pages/boutique-forms.component/boutique-forms.component';
+=======
+import { BoutiqueAnnonceComponent } from './components/boutique/pages/boutique-annonce.component/boutique-annonce.component';
+import { AdminUsersComponent } from './components/admin/pages/users/admin-users.component/admin-users.component';
+import { AcheteurLayoutComponent } from './components/acheteur/acheteur-layout.component/acheteur-layout.component';
+import { AnnouncementsComponent } from './components/acheteur/pages/announcements.component/announcements.component';
+import { ShopsComponent } from './components/acheteur/pages/shops.component/shops.component';
+import { ShopDetailComponent } from './components/acheteur/pages/shop-detail.component/shop-detail.component';
+import { CartComponent } from './components/acheteur/pages/cart.component/cart.component';
+import { NouvelleBoutiqueComponent } from './components/admin/pages/nouvelle-boutique.component/nouvelle-boutique.component';
+import { DemandeLocationComponent } from './components/admin/pages/demande-location.component/demande-location.component';
+import { MesBoutiquesComponent } from './components/boutique/pages/mes-boutiques.component/mes-boutiques.component';
+import { GererBoutiqueComponent } from './components/boutique/pages/gerer-boutique.component/gerer-boutique.component';
+import { AdminBoutiqueComponent } from './components/admin/pages/admin-boutique.component/admin-boutique.component';
+import { DetailBoutiqueComponent } from './components/admin/pages/detail-boutique.component/detail-boutique.component';
+import { ModifSuiviPaiementDateComponent } from './components/templates/components/modif-suivi-paiement-date.component/modif-suivi-paiement-date.component';
+import { BoutiqueModificationInfosComponent } from './components/boutique/pages/boutique-modification-infos.component/boutique-modification-infos.component';
+>>>>>>> Stashed changes
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -38,6 +56,7 @@ export const routes: Routes = [
   },
 
   // BOUTIQUE
+<<<<<<< Updated upstream
   // {
   //   path: 'boutique',
   //   component: BoutiqueComponent,
@@ -48,6 +67,21 @@ export const routes: Routes = [
   // },
 
   { path: 'boutique', component: BoutiqueComponent, canActivate: [authBoutiqueGuard] },
+=======
+  {
+    path: 'boutique',
+    component: BoutiqueComponent,
+    canMatch: [authBoutiqueGuard],
+    children: [
+      { path: '', redirectTo: 'annonces', pathMatch: 'full' },
+      { path: 'list', component: BoutiqueBoutiqueComponent },
+      { path: 'mes-boutiques', component: MesBoutiquesComponent },
+      { path: 'mes-boutiques/:id', component: GererBoutiqueComponent },
+      { path: 'annonces', component: BoutiqueAnnonceComponent },
+      { path: 'modifications/:id', component: BoutiqueModificationInfosComponent }
+    ],
+  },
+>>>>>>> Stashed changes
 
   // ACHETEUR
   { path: 'acheteur', component: AcheteurComponent, canActivate: [authAcheteurGuard] },
