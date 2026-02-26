@@ -14,12 +14,12 @@
     <div class="card-head">
       <div>
         <h3>{{ boutique.numero }} : {{ boutique.nom_boutique }}</h3>
-        <span>Catég 1, Catég 2,...</span>
+        <span>{{ boutique.categories }}</span>
       </div>
       @if(boutique.is_disponible){
-        <span class="badge">Dispo</span>
+      <span class="badge">Dispo</span>
       }@else {
-        <span class="badge warn">Non-Dispo</span>
+      <span class="badge warn">Non-Dispo</span>
       }
     </div>
     <div class="metrics">
@@ -34,9 +34,13 @@
     </div>
 
     @if (userRole() === 'ADMIN') {
-    <button class="ghost" [routerLink]="['/admin/boutiques', boutique._id]">Voir les details</button>
+    <button class="ghost" [routerLink]="['/admin/boutiques', boutique._id]">
+      Voir les details
+    </button>
     } @else {
-    <button class="ghost" (click)="toggleDemandeLocation(boutique._id)">Demander la location</button>
+    <button class="ghost" (click)="toggleDemandeLocation(boutique._id)">
+      Demander la location
+    </button>
     }
 
     <!-- Dropdown demande de location -->
