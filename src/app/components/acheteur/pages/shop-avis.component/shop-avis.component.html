@@ -1,26 +1,42 @@
+<!-- Messages d'erreur -->
+@if (errorMessage) {
+  <div class="alert alert-error">
+    {{ errorMessage }}
+    <button class="close-btn" (click)="errorMessage = ''">×</button>
+  </div>
+}
+
+<!-- Panneau des avis -->
 <section class="shop-reviews-panel">
   <div class="panel-header">
     <h4>Avis boutique</h4>
-    <span class="count">{{ getShopReviews().length }}</span>
+    <span class="count">{{ avis().length }}</span>
   </div>
+
   <div class="review-list">
-    @if (getShopReviews().length === 0) {
+    @if (avis().length === 0 && !isLoading) {
       <p class="empty">Aucun avis pour le moment.</p>
     }
-    @for (review of getShopReviews(); track review.id) {
+
+    @if (isLoading) {
+      <p class="loading">Chargement...</p>
+    }
+
+    @for (review of avis(); track review._id) {
       <div class="review-item">
-        <strong>{{ review.author }}</strong>
-        <span class="rating">{{ review.rating }}/5</span>
-        <p>{{ review.comment }}</p>
-        <span class="date">{{ review.date | date:'dd/MM/yyyy' }}</span>
+        <strong>{{ review.user?.nom || review.user?.prenom || 'Anonyme' }}</strong>
+        <span class="rating">{{ review.note }}/5</span>
+        <p>{{ review.avis }}</p>  <!-- CORRIGÉ: review.avis au lieu de review.note -->
+        <span class="date">{{ review.created_at | date:'dd/MM/yyyy' }}</span>
       </div>
     }
   </div>
 </section>
 
+<!-- Formulaire d'avis -->
 <section class="reviews">
   <h3>Ajouter un avis</h3>
-  <form class="review-form" (ngSubmit)="addShopReview()">
+  <form class="review-form" (ngSubmit)="onSubmit()">  <!-- CORRIGÉ: plus de (click) sur le bouton -->
     <div class="rating-stars" aria-label="Note">
       @for (star of [5, 4, 3, 2, 1]; track star) {
         <input
@@ -29,16 +45,23 @@
           name="reviewRatingShop"
           [value]="star"
           [(ngModel)]="reviewRatingShop"
+          [disabled]="isLoading"
         />
         <label [for]="'star-' + star" [title]="star.toString()">★</label>
       }
     </div>
+
     <textarea
       rows="2"
       placeholder="Votre avis"
       [(ngModel)]="reviewCommentShop"
       name="reviewCommentShop"
+      [disabled]="isLoading"
+      required
     ></textarea>
-    <button type="submit">Envoyer</button>
+
+    <button type="submit" [disabled]="isLoading || !reviewCommentShop.trim()">
+      {{ isLoading ? 'Envoi...' : 'Envoyer' }}
+    </button>
   </form>
 </section>

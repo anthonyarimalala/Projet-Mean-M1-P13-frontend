@@ -9,11 +9,12 @@ import { Annonce, AnnoncesResponse } from '../../../../models/Annonce';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AnnonceCommentaireComponent } from "../../components/annonce-commentaire.component/annonce-commentaire.component";
+import { Nl2brPipe } from '../../../../pipes/nl2br-pipe';
 
 @Component({
   selector: 'app-announcements',
   standalone: true,
-  imports: [FormsModule, RouterLink, CommonModule, AnnonceCommentaireComponent],
+  imports: [FormsModule, RouterLink, CommonModule, AnnonceCommentaireComponent, Nl2brPipe ],
   templateUrl: './announcements.component.html',
   styleUrls: ['./announcements.component.css', '../../styles.css']
 })

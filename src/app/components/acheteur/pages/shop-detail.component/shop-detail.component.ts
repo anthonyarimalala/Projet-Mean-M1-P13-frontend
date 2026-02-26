@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Article, Review, Shop } from '../../models/buyer-models';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
@@ -24,6 +24,9 @@ export class ShopDetailComponent {
   reviewAuthorArticle: Record<string, string> = {};
   reviewRatingArticle: Record<string, number> = {};
   reviewCommentArticle: Record<string, string> = {};
+
+  // ID de l'utilisateur connecté (à adapter selon votre système d'auth)
+  private currentUserId = 'user123'; // Exemple statique, à remplacer par la vraie valeur
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -61,8 +64,8 @@ export class ShopDetailComponent {
   }
 
   onReviewAdded() {
-    // Optionally refresh data or show notification
     console.log('Review added successfully');
+    // Vous pouvez ajouter ici une logique de rafraîchissement si nécessaire
   }
 
   addArticleReview(articleId: string) {
@@ -76,5 +79,15 @@ export class ShopDetailComponent {
     this.reviewAuthorArticle[articleId] = '';
     this.reviewRatingArticle[articleId] = 5;
     this.reviewCommentArticle[articleId] = '';
+  }
+
+  // Méthode pour obtenir l'ID de l'utilisateur connecté
+  getCurrentUserId(): string {
+    // À implémenter selon votre système d'authentification
+    // Par exemple, si vous avez un AuthService :
+    // return this.authService.getCurrentUser()?.id || '';
+
+    // Pour l'instant, on retourne une valeur par défaut
+    return this.currentUserId;
   }
 }

@@ -18,7 +18,7 @@
         </div>
         <span class="chip">Nouveaute</span>
       </header>
-      <p class="content">{{ annonce.description }}</p>
+      <p class="content" [innerHTML]="annonce.description | nl2br"></p>
       @if (annonce.images.length) {
       <div class="announcement-gallery">
         @for (image of annonce.images; track image) {
@@ -37,8 +37,8 @@
       <span class="count">{{ shops.length }}</span>
     </div>
     <div class="shop-list">
-      @for (shop of shops; track shop.id) {
-      <a class="shop-row" [routerLink]="['/acheteur/boutiques', shop.id]">
+      @for (shop of shops; track shop._id) {
+      <a class="shop-row" [routerLink]="['/acheteur/boutiques', shop._id]">
         <div class="shop-avatar">
           @if (shop.imageUrl) {
           <img [src]="shop.imageUrl" [alt]="shop.name" />
