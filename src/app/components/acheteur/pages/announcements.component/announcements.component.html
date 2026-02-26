@@ -34,21 +34,22 @@
   <aside class="shops-panel">
     <div class="panel-header">
       <h3>Vos boutiques recents</h3>
-      <span class="count">{{ shops.length }}</span>
+      <span class="count">{{ boutiquesRecentes().length }}</span>
     </div>
     <div class="shop-list">
-      @for (shop of shops; track shop._id) {
+      @for (shop of boutiquesRecentes(); track shop._id) {
       <a class="shop-row" [routerLink]="['/acheteur/boutiques', shop._id]">
         <div class="shop-avatar">
-          @if (shop.imageUrl) {
+          <!-- @if (shop.imageUrl) {
           <img [src]="shop.imageUrl" [alt]="shop.name" />
           } @else {
           <span>{{ shop.name.charAt(0) }}</span>
-          }
+          } -->
+          <span>{{ shop.nom_boutique.charAt(0) }}</span>
         </div>
         <div>
-          <p class="shop-name">{{ shop.name }}</p>
-          <p class="shop-meta">{{ shop.category }}</p>
+          <p class="shop-name">{{ shop.nom_boutique }}</p>
+          <p class="shop-meta">{{ shop.categories.join(', ') }}</p>
         </div>
       </a>
       }

@@ -1,14 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { Shop } from '../../models/buyer-models';
 import { DataService } from '../../services/data.service';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ReadBoutique } from '../../../../models/anthony/ABoutique';
 import { AboutiqueService } from '../../../../services/anthony/aboutique.service';
+import { BoutiqueRecentesService } from '../../../../services/boutique-recentes/boutique-recentes.service';
 
 @Component({
   selector: 'app-shops',
-  imports: [RouterLink, FormsModule],
+  imports: [FormsModule],
   templateUrl: './shops.component.html',
   styleUrls: ['./shops.component.css', '../../styles.css'],
 })
@@ -17,12 +18,22 @@ export class ShopsComponent {
   categoryFilter = '';
   boutiques = signal<ReadBoutique[]>([]);
 
-  constructor(private readonly dataService: DataService, private aboutiqueService: AboutiqueService) {
+  constructor(
+    private readonly dataService: DataService,
+    private aboutiqueService: AboutiqueService,
+    private readonly router: Router,
+    private boutiquesRecentesService: BoutiqueRecentesService
+  ) {
     this.shops = this.dataService.getShops();
   }
 
   ngOnInit() {
     this.loadBoutiques();
+  }
+
+  goToBoutique(boutique: ReadBoutique) {
+    this.boutiquesRecentesService.ajouterBoutiqueRecente(boutique);
+    this.router.navigate([`/acheteur/boutiques/${boutique._id}`]);
   }
 
   loadBoutiques() {
@@ -43,7 +54,7 @@ export class ShopsComponent {
           console.error('Erreur chargement boutiques:', err);
           alert('Erreur lors du chargement des boutiques. Veuillez réessayer.');
           this.boutiques.set([]);
-        }
+        },
       });
     } else if (Array.isArray(data)) {
       this.boutiques.set(data);

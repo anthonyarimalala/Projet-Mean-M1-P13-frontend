@@ -17,7 +17,8 @@
 
 <div class="shop-grid">
   @for (boutique of boutiques(); track boutique._id) {
-    <a class="shop-card" [routerLink]="[boutique._id]">
+    <!-- <a class="shop-card" [routerLink]="[boutique._id]"> -->
+    <a class="shop-card" (click)="goToBoutique(boutique)">
       <div class="shop-image">
         <!-- @if (boutique.imageUrl) {
           <img [src]="boutique.imageUrl" [alt]="boutique.name" />
