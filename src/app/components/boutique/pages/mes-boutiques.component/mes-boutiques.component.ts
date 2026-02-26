@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class MesBoutiquesComponent {
   boutiques = signal<ReadBoutique[]>([]);
+  openMenuId: string | null = null;
 
   constructor(
     private boutiqueService: AboutiqueService,
@@ -23,6 +24,8 @@ export class MesBoutiquesComponent {
   ngOnInit() {
     this.chargerBoutiquesLocataire();
   }
+
+  
 
   chargerBoutiquesLocataire() {
     this.boutiqueService.getBoutiquesByLocataire(this.authService.getId() ?? '').subscribe({
@@ -47,4 +50,27 @@ export class MesBoutiquesComponent {
     console.log('Nouvelle demande');
     this.router.navigate(['/boutiques/demande']);
   }
+
+  toggleMenu(id: string, event: Event) {
+    event.stopPropagation(); // évite fermeture immédiate
+    this.openMenuId = this.openMenuId === id ? null : id;
+  }
+
+  voirDetails(id: string) {
+  alert(id);
 }
+
+modifier(id: string) {
+  alert(id);
+}
+
+ajouterProduit(id: string) {
+  this.router.navigate(['/boutique/ajout', id]);
+}
+
+gererStock(id: string) {
+  this.router.navigate(['/boutique/stock', id]);
+}
+
+}
+
