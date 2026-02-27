@@ -1,0 +1,53 @@
+<div class="stats-section">
+  <h3 class="section-title">Utilisateurs</h3>
+
+  <div class="stats-grid">
+    <div class="stat-card total">
+      <div class="stat-icon">👥</div>
+      <div class="stat-content">
+        <span class="stat-label">Total</span>
+        <span class="stat-value">{{ stats.total }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card boutique">
+      <div class="stat-icon">🏪</div>
+      <div class="stat-content">
+        <span class="stat-label">Boutiques</span>
+        <span class="stat-value">{{ stats.boutiques }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card acheteur">
+      <div class="stat-icon">🛒</div>
+      <div class="stat-content">
+        <span class="stat-label">Acheteurs</span>
+        <span class="stat-value">{{ stats.acheteurs }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="recent-users">
+    <h4 class="sub-title">Derniers inscrits</h4>
+    <div class="users-list">
+      @for (user of stats.derniersInscrits; track user.id) {
+        <div class="user-item">
+          <div class="user-avatar">{{ user.nom.charAt(0) }}</div>
+          <div class="user-info">
+            <span class="user-name">{{ user.nom }}</span>
+            <span class="user-email">{{ user.email }}</span>
+          </div>
+          <span class="user-role"
+                [class.role-boutique]="user.role === 'BOUTIQUE'"
+                [class.role-acheteur]="user.role === 'ACHETEUR'">
+            {{ user.role }}
+          </span>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          Aucun utilisateur récent
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="stats-section">
+  <h3 class="section-title">Annonces</h3>
+
+  <div class="stats-grid">
+    <div class="stat-card total">
+      <div class="stat-icon">📢</div>
+      <div class="stat-content">
+        <span class="stat-label">Total annonces</span>
+        <span class="stat-value">{{ stats.total }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h4 class="sub-title">Annonces par jour</h4>
+    <div class="bar-chart">
+      @for (item of stats.parDate; track item.date) {
+        <div class="bar-container">
+          <div class="bar" [style.height]="getBarHeight(item.count)">
+            <span class="bar-value">{{ item.count }}</span>
+          </div>
+          <span class="bar-label">{{ formatDate(item.date) }}</span>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          Aucune donnée disponible
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="recent-annonces">
+    <h4 class="sub-title">Aperçu des annonces récentes</h4>
+    <div class="stats-summary">
+      <div class="summary-item">
+        <span class="summary-label">Moyenne par jour</span>
+        <span class="summary-value">{{ (stats.total / 20).toFixed(1) }}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Jour le plus actif</span>
+        @if (stats.parDate.length > 0) {
+          <span class="summary-value">
+            {{ formatDate(stats.parDate[0].date) }} ({{ stats.parDate[0].count }})
+          </span>
+        } @else {
+          <span class="summary-value">-</span>
+        }
+      </div>
+    </div>
+  </div>
+</div>

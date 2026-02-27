@@ -1,0 +1,12 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>Tableau de bord Admin</h1>
+    <p class="welcome-message">Bienvenue sur votre espace d'administration</p>
+  </header>
+
+  <div class="dashboard-content">
+    <app-stats-boutiques [stats]="statsBoutiques"></app-stats-boutiques>
+    <app-stats-utilisateurs [stats]="statsUtilisateurs"></app-stats-utilisateurs>
+    <app-stats-annonces [stats]="statsAnnonces"></app-stats-annonces>
+  </div>
+</div>

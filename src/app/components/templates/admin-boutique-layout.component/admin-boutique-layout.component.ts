@@ -26,7 +26,7 @@ export class AdminBoutiqueLayoutComponent {
     const role = this.role();
 
     const adminMenu = [
-      { label: 'Dashboard', link: '/template/dashboard' },
+      { label: 'Dashboard', link: '/admin/dashboard' },
       { label: 'Annonces', link: '/admin/annonces' },
       { label: 'Boutiques', link: '/admin/boutiques' },
       { label: 'Demande Location', link: '/admin/demande-location' },

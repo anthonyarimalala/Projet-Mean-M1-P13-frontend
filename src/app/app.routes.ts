@@ -30,6 +30,7 @@ import { GererBoutiqueComponent } from './components/boutique/pages/gerer-boutiq
 import { AdminBoutiqueComponent } from './components/admin/pages/admin-boutique.component/admin-boutique.component';
 import { DetailBoutiqueComponent } from './components/admin/pages/detail-boutique.component/detail-boutique.component';
 import { ModifSuiviPaiementDateComponent } from './components/templates/components/modif-suivi-paiement-date.component/modif-suivi-paiement-date.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard-component/dashboard-component';
 
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
@@ -44,6 +45,7 @@ export const routes: Routes = [
     canMatch: [authAdminGuard],
     children: [
       { path: '', redirectTo: 'annonces', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'annonces', component: AdminAnnoncesComponent },
       { path: 'boutiques', component: AdminBoutiqueComponent },
       { path: 'boutique/nouveau', component: NouvelleBoutiqueComponent },
