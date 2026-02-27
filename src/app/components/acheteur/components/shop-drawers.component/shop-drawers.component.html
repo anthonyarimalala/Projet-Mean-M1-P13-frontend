@@ -21,8 +21,8 @@
         />
       </div>
       <div class="shop-list">
-        @for (shop of filteredShops; track shop.id) {
-          <a class="shop-row" routerLink="acheteur/annonces/{{ shop.id }}" (click)="close.emit()">
+        @for (shop of filteredShops; track shop._id) {
+          <a class="shop-row" routerLink="acheteur/annonces/{{ shop._id }}" (click)="close.emit()">
             <div class="shop-avatar">
               @if (shop.imageUrl) {
                 <img [src]="shop.imageUrl" [alt]="shop.name" />
