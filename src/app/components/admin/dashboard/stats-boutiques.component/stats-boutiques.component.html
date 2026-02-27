@@ -41,4 +41,36 @@
       </div>
     </div>
   </div>
+
+  <div class="boutiques-chart">
+    <h4 class="sub-title">Repartition</h4>
+    <div class="pie-layout">
+      <div class="pie-chart" [style.background]="pieBackground">
+        <div class="pie-center">
+          <span class="pie-total">{{ totalBoutiques }}</span>
+          <span class="pie-label">Total</span>
+        </div>
+      </div>
+      <div class="pie-legend">
+        <div class="legend-item">
+          <span class="legend-dot disponible"></span>
+          <span class="legend-text">Disponibles</span>
+          <span class="legend-value">{{ stats.disponibles }}</span>
+          <span class="legend-percent">{{ disponiblesPercent }}%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot non-disponible"></span>
+          <span class="legend-text">Non disponibles</span>
+          <span class="legend-value">{{ stats.nonDisponibles }}</span>
+          <span class="legend-percent">{{ nonDisponiblesPercent }}%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot autres"></span>
+          <span class="legend-text">Autres</span>
+          <span class="legend-value">{{ totalBoutiques - (stats.disponibles + stats.nonDisponibles) }}</span>
+          <span class="legend-percent">{{ autresPercent }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

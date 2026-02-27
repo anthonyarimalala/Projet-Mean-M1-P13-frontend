@@ -1,28 +1,32 @@
 <div class="stats-section">
-  <h3 class="section-title">Utilisateurs</h3>
-
-  <div class="stats-grid">
-    <div class="stat-card total">
-      <div class="stat-icon">👥</div>
-      <div class="stat-content">
-        <span class="stat-label">Total</span>
-        <span class="stat-value">{{ stats.total }}</span>
+  <h3 class="section-title">Utilisateurs</h3>\r\n\r\n  <div class="user-chart">
+    <h4 class="sub-title">Repartition</h4>
+    <div class="pie-layout">
+      <div class="pie-chart" [style.background]="pieBackground">
+        <div class="pie-center">
+          <span class="pie-total">{{ totalUsers }}</span>
+          <span class="pie-label">Total</span>
+        </div>
       </div>
-    </div>
-
-    <div class="stat-card boutique">
-      <div class="stat-icon">🏪</div>
-      <div class="stat-content">
-        <span class="stat-label">Boutiques</span>
-        <span class="stat-value">{{ stats.boutiques }}</span>
-      </div>
-    </div>
-
-    <div class="stat-card acheteur">
-      <div class="stat-icon">🛒</div>
-      <div class="stat-content">
-        <span class="stat-label">Acheteurs</span>
-        <span class="stat-value">{{ stats.acheteurs }}</span>
+      <div class="pie-legend">
+        <div class="legend-item">
+          <span class="legend-dot boutique"></span>
+          <span class="legend-text">Boutiques</span>
+          <span class="legend-value">{{ stats.boutiques }}</span>
+          <span class="legend-percent">{{ boutiquesPercent }}%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot acheteur"></span>
+          <span class="legend-text">Acheteurs</span>
+          <span class="legend-value">{{ stats.acheteurs }}</span>
+          <span class="legend-percent">{{ acheteursPercent }}%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot autres"></span>
+          <span class="legend-text">Autres</span>
+          <span class="legend-value">{{ totalUsers - (stats.boutiques + stats.acheteurs) }}</span>
+          <span class="legend-percent">{{ autresPercent }}%</span>
+        </div>
       </div>
     </div>
   </div>
@@ -51,3 +55,6 @@
     </div>
   </div>
 </div>
+
+
+
