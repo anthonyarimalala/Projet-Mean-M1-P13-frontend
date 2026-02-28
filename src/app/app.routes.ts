@@ -44,7 +44,7 @@ export const routes: Routes = [
     component: AdminComponent,
     canMatch: [authAdminGuard],
     children: [
-      { path: '', redirectTo: 'annonces', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'annonces', component: AdminAnnoncesComponent },
       { path: 'boutiques', component: AdminBoutiqueComponent },

@@ -1,8 +1,12 @@
-import { Component, OnInit, signal, computed, effect } from '@angular/core';
+import { Component, OnInit, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AnalyticAnnonceStats, AnalyticsService } from '../../../../services/analytics/analytics-service';
 
 @Component({
   selector: 'app-stats-annonces',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './stats-annonces.component.html',
   styleUrls: ['./stats-annonces.component.css']
 })
@@ -55,19 +59,19 @@ export class StatsAnnoncesComponent implements OnInit {
   readonly annoncesMensuelles = computed(() => {
     const stats = this.annonceStatsSignal();
     if (!stats) return 0;
-    return stats.statsMensuelles.totalMois;
+    return stats.statsMensuelles?.totalMois ?? 0;
   });
 
   readonly publiees = computed(() => {
     const stats = this.annonceStatsSignal();
     if (!stats) return 0;
-    return stats.statsMensuelles.publiees;
+    return stats.statsMensuelles?.publiees ?? 0;
   });
 
   readonly repartitionParRole = computed(() => {
     const stats = this.annonceStatsSignal();
     if (!stats) return null;
-    return stats.statsMensuelles.repartitionRoleEmetteur;
+    return stats.statsMensuelles?.repartitionRoleEmetteur ?? null;
   });
 
   readonly moisLePlusActif = computed(() => {
@@ -81,10 +85,19 @@ export class StatsAnnoncesComponent implements OnInit {
     };
   });
 
+  readonly selectedMonthLabel = computed(() => {
+    const month = this.months.find(m => m.value === this.selectedMonthSignal());
+    return month?.label ?? '';
+  });
+
   constructor(private analyticsService: AnalyticsService) {}
 
   ngOnInit(): void {
-    // Ne pas charger automatiquement, attendre le clic sur l'œil
+    // Chargement par défaut avec le mois et l'année d'aujourd'hui
+    const now = new Date();
+    this.selectedMonthSignal.set(now.getMonth() + 1);
+    this.selectedYearSignal.set(now.getFullYear());
+    this.loadStatsForMonth(this.selectedMonthSignal(), this.selectedYearSignal());
   }
 
   loadStatsForMonth(month: number, year: number): void {
@@ -102,16 +115,6 @@ export class StatsAnnoncesComponent implements OnInit {
         this.loadingSignal.set(false);
       }
     });
-  }
-
-  onMonthChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedMonthSignal.set(parseInt(select.value, 10));
-  }
-
-  onYearChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    this.selectedYearSignal.set(parseInt(select.value, 10));
   }
 
   onValidate(): void {

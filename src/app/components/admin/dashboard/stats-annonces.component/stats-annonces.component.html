@@ -6,29 +6,31 @@
     <div class="period-selector">
       <select
         class="month-select"
-        [value]="selectedMonth()"
-        (change)="onMonthChange($event)"
+        [ngModel]="selectedMonth()"
+        (ngModelChange)="selectedMonthSignal.set($event); onValidate()"
         [disabled]="loading()"
       >
         @for (month of months; track month.value) {
-          <option [value]="month.value">{{ month.label }}</option>
+          <option [ngValue]="month.value">
+            {{ month.label }}
+          </option>
         }
       </select>
 
       <select
         class="year-select"
-        [value]="selectedYear()"
-        (change)="onYearChange($event)"
+        [ngModel]="selectedYear()"
+        (ngModelChange)="selectedYearSignal.set($event); onValidate()"
         [disabled]="loading()"
       >
         @for (year of years(); track year) {
-          <option [value]="year">{{ year }}</option>
+          <option [ngValue]="year">
+            {{ year }}
+          </option>
         }
       </select>
 
-      <button class="validate-btn" (click)="onValidate()" [disabled]="loading()" title="Valider le filtre">
-        <span class="validate-icon">👁️</span>
-      </button>
+      <!-- Recherche automatique: pas de bouton -->
     </div>
   </div>
 
@@ -79,7 +81,7 @@
 
     <!-- Stats summary -->
     <div class="recent-annonces">
-      <h4 class="sub-title">Aperçu des statistiques</h4>
+      <h4 class="sub-title">Aperçu des statistiques le mois de {{ selectedMonthLabel() }} {{ selectedYear() }}</h4>
       <div class="stats-summary">
         <div class="summary-item">
           <span class="summary-label">Moyenne par mois</span>

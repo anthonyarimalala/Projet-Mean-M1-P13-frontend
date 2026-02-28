@@ -35,7 +35,7 @@ export class AdminBoutiqueLayoutComponent {
     ];
 
     const boutiqueMenu = [
-      { label: 'Dashboard', link: '/template/dashboard' },
+      // { label: 'Dashboard', link: '/template/dashboard' },
       { label: 'Annonces', link: '/boutique/annonces' },
       { label: 'Boutiques', link: '/boutique/list' },
       { label: 'Mes Boutiques', link: '/boutique/mes-boutiques' },
