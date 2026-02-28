@@ -1,60 +1,130 @@
 <div class="stats-section">
-  <h3 class="section-title">Utilisateurs</h3>\r\n\r\n  <div class="user-chart">
-    <h4 class="sub-title">Repartition</h4>
-    <div class="pie-layout">
-      <div class="pie-chart" [style.background]="pieBackground">
-        <div class="pie-center">
-          <span class="pie-total">{{ totalUsers }}</span>
-          <span class="pie-label">Total</span>
-        </div>
-      </div>
-      <div class="pie-legend">
-        <div class="legend-item">
-          <span class="legend-dot boutique"></span>
-          <span class="legend-text">Boutiques</span>
-          <span class="legend-value">{{ stats.boutiques }}</span>
-          <span class="legend-percent">{{ boutiquesPercent }}%</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot acheteur"></span>
-          <span class="legend-text">Acheteurs</span>
-          <span class="legend-value">{{ stats.acheteurs }}</span>
-          <span class="legend-percent">{{ acheteursPercent }}%</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot autres"></span>
-          <span class="legend-text">Autres</span>
-          <span class="legend-value">{{ totalUsers - (stats.boutiques + stats.acheteurs) }}</span>
-          <span class="legend-percent">{{ autresPercent }}%</span>
-        </div>
-      </div>
-    </div>
+  <div class="section-header">
+    <h3 class="section-title">Utilisateurs</h3>
+    <button class="refresh-btn" (click)="refresh()" [disabled]="loading()">
+      <span class="refresh-icon">↻</span>
+    </button>
   </div>
 
-  <div class="recent-users">
-    <h4 class="sub-title">Derniers inscrits</h4>
-    <div class="users-list">
-      @for (user of stats.derniersInscrits; track user.id) {
-        <div class="user-item">
-          <div class="user-avatar">{{ user.nom.charAt(0) }}</div>
-          <div class="user-info">
-            <span class="user-name">{{ user.nom }}</span>
-            <span class="user-email">{{ user.email }}</span>
-          </div>
-          <span class="user-role"
-                [class.role-boutique]="user.role === 'BOUTIQUE'"
-                [class.role-acheteur]="user.role === 'ACHETEUR'">
-            {{ user.role }}
-          </span>
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des statistiques utilisateurs...</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (error(); as errorMessage) {
+    <div class="error-state">
+      <p class="error-message">{{ errorMessage }}</p>
+      <button class="retry-btn" (click)="refresh()">Réessayer</button>
+    </div>
+  }
+
+  <!-- Data display -->
+  @if (!loading() && !error() && statsData(); as stats) {
+    <!-- Stats cards -->
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon">👥</div>
+        <div class="stat-content">
+          <span class="stat-label">Total utilisateurs</span>
+          <span class="stat-value">{{ stats.total }}</span>
         </div>
-      } @empty {
-        <div class="empty-state">
-          Aucun utilisateur récent
+      </div>
+
+      @if (stats.boutiques > 0) {
+        <div class="stat-card boutique">
+          <div class="stat-icon">🏪</div>
+          <div class="stat-content">
+            <span class="stat-label">Boutiques</span>
+            <span class="stat-value">{{ stats.boutiques }}</span>
+          </div>
+        </div>
+      }
+
+      @if (stats.acheteurs > 0) {
+        <div class="stat-card acheteur">
+          <div class="stat-icon">🛍️</div>
+          <div class="stat-content">
+            <span class="stat-label">Acheteurs</span>
+            <span class="stat-value">{{ stats.acheteurs }}</span>
+          </div>
+        </div>
+      }
+
+      @if (stats.admins > 0) {
+        <div class="stat-card admin">
+          <div class="stat-icon">👑</div>
+          <div class="stat-content">
+            <span class="stat-label">Administrateurs</span>
+            <span class="stat-value">{{ stats.admins }}</span>
+          </div>
         </div>
       }
     </div>
-  </div>
+
+    <!-- Pie chart -->
+    <div class="user-chart">
+      <h4 class="sub-title">Répartition</h4>
+      <div class="pie-layout">
+        <div class="pie-chart" [style.background]="pieBackground()">
+          <div class="pie-center">
+            <span class="pie-total">{{ stats.total }}</span>
+            <span class="pie-label">Total</span>
+          </div>
+        </div>
+        <div class="pie-legend">
+          @for (item of legendItems(); track item.label) {
+            <div class="legend-item">
+              <span class="legend-dot" [class]="item.dotClass"></span>
+              <span class="legend-text">{{ item.label }}</span>
+              <span class="legend-value">{{ item.value }}</span>
+              <span class="legend-percent">{{ item.percent }}%</span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent users -->
+    <div class="recent-users">
+      <h4 class="sub-title">Derniers inscrits</h4>
+      <div class="users-list">
+        @for (user of stats.derniersInscrits; track user._id) {
+          <div class="user-item">
+            <div class="user-avatar">{{ getInitial(user.nom, user.prenom) }}</div>
+            <div class="user-info">
+              <span class="user-name">{{ user.prenom }} {{ user.nom }}</span>
+              <span class="user-email">{{ user.email }}</span>
+            </div>
+            <span
+              class="user-role"
+              [class.role-boutique]="user.role === 'BOUTIQUE'"
+              [class.role-acheteur]="user.role === 'ACHETEUR'"
+              [class.role-admin]="user.role === 'ADMIN'"
+            >
+              @switch (user.role) {
+                @case ('BOUTIQUE') {
+                  <span>Boutique</span>
+                }
+                @case ('ACHETEUR') {
+                  <span>Acheteur</span>
+                }
+                @case ('ADMIN') {
+                  <span>Admin</span>
+                }
+                @default {
+                  <span>{{ user.role }}</span>
+                }
+              }
+            </span>
+          </div>
+        } @empty {
+          <div class="empty-state">Aucun utilisateur récent</div>
+        }
+      </div>
+    </div>
+  }
 </div>
-
-
-

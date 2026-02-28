@@ -4,6 +4,9 @@
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 1.5rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .section-title {
@@ -36,6 +39,7 @@
   grid-template-columns: 180px 1fr;
   gap: 1.5rem;
   align-items: center;
+  max-width: 100%;
 }
 
 .pie-chart {
@@ -79,16 +83,25 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-width: 0;
 }
 
 .legend-item {
   display: grid;
-  grid-template-columns: 12px 1fr auto auto;
+  grid-template-columns: 12px minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   background: #f8f9fa;
+  min-width: 0;
+}
+
+.legend-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .legend-dot {
@@ -136,6 +149,30 @@
 
   .pie-legend {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-section {
+    padding: 1rem;
+  }
+
+  .pie-chart {
+    width: 150px;
+    height: 150px;
+  }
+
+  .pie-center {
+    width: 90px;
+    height: 90px;
+  }
+
+  .legend-item {
+    grid-template-columns: 10px minmax(0, 1fr) auto;
+  }
+
+  .legend-percent {
+    display: none;
   }
 }
 
@@ -263,4 +300,107 @@
   font-style: italic;
   background: #f8f9fa;
   border-radius: 8px;
+}
+
+
+/* Section header avec bouton refresh */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.refresh-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: #718096;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+  color: #2d3748;
+  transform: rotate(180deg);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.refresh-icon {
+  font-size: 1.2rem;
+  display: inline-block;
+}
+
+/* Loading state */
+.loading-state {
+  text-align: center;
+  padding: 2rem;
+  color: #718096;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #5faee3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error state */
+.error-state {
+  text-align: center;
+  padding: 2rem;
+  color: #f14668;
+}
+
+.error-message {
+  margin-bottom: 1rem;
+}
+
+.retry-btn {
+  background: #5faee3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.retry-btn:hover {
+  background: #2d7ac9;
+}
+
+/* Admin card */
+.stat-card.admin {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: white;
+}
+
+/* Admin role style */
+.user-role.role-admin {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Legend dot for admin */
+.legend-dot.admin {
+  background: #fbbf24;
 }

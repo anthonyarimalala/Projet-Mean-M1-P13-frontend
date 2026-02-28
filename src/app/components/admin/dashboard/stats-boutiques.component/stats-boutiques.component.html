@@ -1,76 +1,109 @@
 <div class="stats-section">
-  <h3 class="section-title">Boutiques</h3>
-  <div class="stats-grid">
-    <div class="stat-card total">
-      <div class="stat-icon">🏪</div>
-      <div class="stat-content">
-        <span class="stat-label">Total</span>
-        <span class="stat-value">{{ stats.total }}</span>
-      </div>
-    </div>
-
-    <div class="stat-card disponible">
-      <div class="stat-icon">✅</div>
-      <div class="stat-content">
-        <span class="stat-label">Disponibles</span>
-        <span class="stat-value">{{ stats.disponibles }}</span>
-      </div>
-    </div>
-
-    <div class="stat-card non-disponible">
-      <div class="stat-icon">❌</div>
-      <div class="stat-content">
-        <span class="stat-label">Non disponibles</span>
-        <span class="stat-value">{{ stats.nonDisponibles }}</span>
-      </div>
-    </div>
-
-    <div class="stat-card en-attente">
-      <div class="stat-icon">⏳</div>
-      <div class="stat-content">
-        <span class="stat-label">En attente</span>
-        <span class="stat-value">{{ stats.enAttente }}</span>
-      </div>
-    </div>
-
-    <div class="stat-card validee">
-      <div class="stat-icon">✓</div>
-      <div class="stat-content">
-        <span class="stat-label">Validées</span>
-        <span class="stat-value">{{ stats.validees }}</span>
-      </div>
-    </div>
+  <div class="section-header">
+    <h3 class="section-title">Boutiques</h3>
+    <button class="refresh-btn" (click)="refresh()" [disabled]="loading()">
+      <span class="refresh-icon">↻</span>
+    </button>
   </div>
 
-  <div class="boutiques-chart">
-    <h4 class="sub-title">Repartition</h4>
-    <div class="pie-layout">
-      <div class="pie-chart" [style.background]="pieBackground">
-        <div class="pie-center">
-          <span class="pie-total">{{ totalBoutiques }}</span>
-          <span class="pie-label">Total</span>
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des statistiques...</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (error(); as errorMessage) {
+    <div class="error-state">
+      <p class="error-message">{{ errorMessage }}</p>
+      <button class="retry-btn" (click)="refresh()">Réessayer</button>
+    </div>
+  }
+
+  <!-- Data display -->
+  @if (!loading() && !error() && stats(); as statsData) {
+    <div class="boutiques-chart">
+      <h4 class="sub-title">Répartition</h4>
+      <div class="pie-layout">
+        <div class="pie-chart" [style.background]="pieBackground()">
+          <div class="pie-center">
+            <span class="pie-total">{{ statsData.totalBoutiques }}</span>
+            <span class="pie-label">Total</span>
+          </div>
         </div>
-      </div>
-      <div class="pie-legend">
-        <div class="legend-item">
-          <span class="legend-dot disponible"></span>
-          <span class="legend-text">Disponibles</span>
-          <span class="legend-value">{{ stats.disponibles }}</span>
-          <span class="legend-percent">{{ disponiblesPercent }}%</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot non-disponible"></span>
-          <span class="legend-text">Non disponibles</span>
-          <span class="legend-value">{{ stats.nonDisponibles }}</span>
-          <span class="legend-percent">{{ nonDisponiblesPercent }}%</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot autres"></span>
-          <span class="legend-text">Autres</span>
-          <span class="legend-value">{{ totalBoutiques - (stats.disponibles + stats.nonDisponibles) }}</span>
-          <span class="legend-percent">{{ autresPercent }}%</span>
+        <div class="pie-legend">
+          <!-- Légende avec @for -->
+          @for (item of [
+            {
+              dotClass: 'disponible',
+              label: 'Disponibles',
+              value: statsData.disponibles,
+              percent: disponiblesPercent()
+            },
+            {
+              dotClass: 'non-disponible',
+              label: 'Non disponibles',
+              value: statsData.nonDisponibles,
+              percent: nonDisponiblesPercent()
+            },
+            {
+              dotClass: 'autres',
+              label: 'Autres',
+              value: autresCount(),
+              percent: autresPercent()
+            }
+          ]; track item.label) {
+            <div class="legend-item">
+              <span class="legend-dot" [class]="item.dotClass"></span>
+              <span class="legend-text">{{ item.label }}</span>
+              <span class="legend-value">{{ item.value }}</span>
+              <span class="legend-percent">{{ item.percent }}%</span>
+            </div>
+          }
         </div>
       </div>
     </div>
-  </div>
+
+    <br>
+
+    <div class="stats-grid">
+      <!-- Carte demandes en attente -->
+      <div class="stat-card validee">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-content">
+          <span class="stat-label">Demandes de boutiques en attente</span>
+          <span class="stat-value">{{ demandesEnAttente() }}</span>
+        </div>
+      </div>
+
+      <!-- Carte prix moyen -->
+      <div class="stat-card prix-moyen">
+        <div class="stat-icon">💰</div>
+        <div class="stat-content">
+          <span class="stat-label">Prix moyen</span>
+          <span class="stat-value">{{ statsData.prixMoyen | number }}</span>
+        </div>
+      </div>
+
+      <!-- Carte promotions -->
+      <div class="stat-card promotions">
+        <div class="stat-icon">🏷️</div>
+        <div class="stat-content">
+          <span class="stat-label">Avec promotion</span>
+          <span class="stat-value">{{ statsData.avecPromotion }}</span>
+        </div>
+      </div>
+
+      <!-- Carte taux d'occupation -->
+      <div class="stat-card taux-occupation">
+        <div class="stat-icon">📊</div>
+        <div class="stat-content">
+          <span class="stat-label">Taux d'occupation</span>
+          <span class="stat-value">{{ statsData.tauxOccupation }}%</span>
+        </div>
+      </div>
+    </div>
+  }
 </div>
