@@ -1,0 +1,246 @@
+/* ========== COMPOSANT COMMENTAIRES ========== */
+:host {
+  display: block;
+  margin-top: 18px;
+}
+
+.comments {
+  width: 100%;
+}
+
+.comments h4 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.comment-list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.comment-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.comment-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.comment-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.comment-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.comment-item {
+  padding: 12px;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  transition: background 0.2s ease;
+}
+
+.comment-item:hover {
+  background: #f8fafc;
+}
+
+.comment-item > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.comment-item strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b1020;
+}
+
+.comment-item .date {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.comment-item p {
+  margin: 6px 0 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #334155;
+  word-break: break-word;
+}
+
+.empty {
+  color: #94a3b8;
+  font-style: italic;
+  text-align: center;
+  padding: 16px;
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.comment-form {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.comment-form textarea:focus {
+  outline: none;
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+}
+
+.comment-form textarea::placeholder {
+  color: #94a3b8;
+}
+
+.comment-form button {
+  justify-self: start;
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: none;
+  background: #0b1020;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  will-change: background, transform;
+}
+
+.comment-form button:hover {
+  background: #1e293b;
+}
+
+.comment-form button:active {
+  transform: scale(0.98);
+}
+
+.comment-form button:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Animation d'apparition des nouveaux commentaires */
+@keyframes commentAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comment-item {
+  animation: commentAppear 0.3s ease;
+}
+
+/* Version mobile */
+@media (max-width: 640px) {
+  .comment-list {
+    max-height: 250px;
+  }
+
+  .comment-form button {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+
+/* Ajout des styles supplémentaires */
+.load-more-btn {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0 16px;
+  background: transparent;
+  border: 1px dashed #94a3b8;
+  border-radius: 20px;
+  color: #64748b;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.load-more-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #64748b;
+  color: #334155;
+}
+
+.load-more-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  padding: 10px;
+  margin-bottom: 12px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #b91c1c;
+  font-size: 14px;
+  text-align: center;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 16px;
+  color: #64748b;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* Animation pour les nouveaux commentaires */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.comment-item:first-child {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Style pour le textarea désactivé */
+.comment-form textarea:disabled {
+  background: #f1f5f9;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

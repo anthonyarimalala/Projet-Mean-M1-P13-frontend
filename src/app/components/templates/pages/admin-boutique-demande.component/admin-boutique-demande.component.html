@@ -1,0 +1,75 @@
+<div class="location-dropdown">
+  <p class="info-message">
+    Avant votre demande, nous voulons quelques informations sur la boutique que vous voulez mettre
+  </p>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nomBoutique">Nom de la boutique <span class="required">*</span></label>
+      <input
+        type="text"
+        id="nomBoutique"
+        [(ngModel)]="formData.nomBoutique"
+        name="nomBoutique"
+        placeholder="Ex: Tech World"
+        required
+        [disabled]="isSubmitting()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="categories">Catégories <span class="required">*</span></label>
+      <input
+        type="text"
+        id="categories"
+        [(ngModel)]="formData.categories"
+        name="categories"
+        placeholder="Ex: Electronique, Informatique, Accessoires"
+        required
+        [disabled]="isSubmitting()"
+      />
+      <small class="hint">Séparez les catégories par des virgules</small>
+    </div>
+
+    <div class="form-group">
+      <label for="siteWeb">Lien du site web</label>
+      <input
+        type="url"
+        id="siteWeb"
+        [(ngModel)]="formData.siteWeb"
+        name="siteWeb"
+        placeholder="https://www.example.com"
+        [disabled]="isSubmitting()"
+      />
+      <small class="hint">Optionnel - Lien vers votre site existant</small>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message de demande</label>
+      <textarea
+        id="message"
+        [(ngModel)]="formData.message"
+        name="message"
+        rows="3"
+        placeholder="Expliquez brièvement votre projet... (optionnel)"
+        [disabled]="isSubmitting()"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="secondary" 
+        (click)="onCancel()"
+        [disabled]="isSubmitting()">
+        Annuler
+      </button>
+      <button 
+        type="submit" 
+        class="primary" 
+        [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Envoi en cours...' : 'Valider la demande' }}
+      </button>
+    </div>
+  </form>
+</div>

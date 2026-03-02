@@ -27,6 +27,11 @@ export class AboutiqueService {
     return this.http.get<ReadBoutique[]>(`${this.apiUrl}/locataire/${locataireId}`);
   }
 
+  /** Récupère toutes les boutiques qui ont un propriétaire */
+  getBoutiquesOuvert(): Observable<ReadBoutique[]> {
+    return this.http.get<ReadBoutique[]>(`${this.apiUrl}/disponible/non`);
+  }
+
   createBoutique(data: CreateBoutique): Observable<ReadBoutique> {
     return this.http.post<ReadBoutique>(this.apiUrl, data);
   }

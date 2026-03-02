@@ -1,0 +1,61 @@
+<div class="comments">
+  <h4>Commentaires</h4>
+
+  <!-- Message d'erreur -->
+  @if (error) {
+    <div class="error-message">{{ error }}</div>
+  }
+
+  <!-- Liste des commentaires -->
+  <div class="comment-list">
+    @if (commentaires().length === 0 && !loading) {
+      <p class="empty">Aucun commentaire pour le moment.</p>
+    }
+    @for (comment of commentaires(); track comment._id) {
+      <div class="comment-item">
+        <div>
+          <strong>{{ comment.auteur.prenom }} {{ comment.auteur.nom }}</strong>
+          <span class="date">{{ comment.created_at | date: 'short' }}</span>
+        </div>
+        <p>{{ comment.contenu }}</p>
+      </div>
+    }
+
+    <!-- Indicateur de chargement -->
+    @if (loading) {
+      <div class="loading-indicator">Chargement des commentaires...</div>
+    }
+  </div>
+
+  <!-- Bouton "Voir plus" -->
+  @if (hasMore && commentaires().length > 0) {
+    <button
+      class="load-more-btn"
+      (click)="chargerPlusDeCommentaires()"
+      [disabled]="loading">
+      Voir plus de commentaires
+    </button>
+  }
+
+  <!-- Formulaire d'ajout de commentaire -->
+  <form class="comment-form" (ngSubmit)="ajouterCommentaire()">
+    <textarea
+      rows="3"
+      placeholder="Votre commentaire"
+      [(ngModel)]="nouveauCommentaire"
+      name="nouveauCommentaire"
+      [disabled]="loadingPublication"
+      required
+    ></textarea>
+
+    <button
+      type="submit"
+      [disabled]="!nouveauCommentaire.trim() || loadingPublication">
+      @if (loadingPublication) {
+        Publication en cours...
+      } @else {
+        Ajouter
+      }
+    </button>
+  </form>
+</div>

@@ -1,30 +1,21 @@
-import { AboutiqueService } from './../../../../services/anthony/aboutique.service';
 import { Component, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { AboutiqueService } from './../../../../services/anthony/aboutique.service';
 import { ReadBoutique } from '../../../../models/anthony/ABoutique';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
+import { AdminBoutiqueDemandeComponent } from '../admin-boutique-demande.component/admin-boutique-demande.component';
 
 @Component({
   selector: 'app-admin-boutique-shops',
-  imports: [FormsModule, RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, AdminBoutiqueDemandeComponent],
   templateUrl: './admin-boutique-shops.component.html',
-  styleUrl: './admin-boutique-shops.component.css',
+  styleUrl: './admin-boutique-shops.component.css'
 })
 export class AdminBoutiqueShopsComponent {
   userRole = signal<string>('');
   demandeOuverte = signal<string | null>(null);
-
   boutiques = signal<ReadBoutique[]>([]);
-
-  formData = {
-    nomBoutique: '',
-    categories: '',
-    siteWeb: '',
-    message: '',
-  };
 
   constructor(
     private router: Router,
@@ -35,28 +26,35 @@ export class AdminBoutiqueShopsComponent {
   }
 
   ngOnInit() {
-    // Assurez-vous que ceci retourne bien un tableau
+    this.loadBoutiques();
+  }
+
+  loadBoutiques() {
     const data = this.aboutiqueService.getBoutiques();
 
-    // Si c'est un observable
     if (data && typeof (data as any).subscribe === 'function') {
-      (data as any).subscribe((result: any) => {
-        if (Array.isArray(result)) {
-          this.boutiques.set(result);
-        } else {
-          console.error('Pas un tableau:', result);
+      (data as any).subscribe({
+        next: (result: any) => {
+          if (Array.isArray(result)) {
+            this.boutiques.set(result);
+          } else {
+            console.error('Pas un tableau:', result);
+            alert('Erreur: Le format des données est incorrect');
+            this.boutiques.set([]);
+          }
+        },
+        error: (err: any) => {
+          console.error('Erreur chargement boutiques:', err);
+          alert('Erreur lors du chargement des boutiques. Veuillez réessayer.');
           this.boutiques.set([]);
         }
       });
-    }
-    // Si c'est déjà un tableau
-    else if (Array.isArray(data)) {
+    } else if (Array.isArray(data)) {
       this.boutiques.set(data);
+    } else {
+      console.error('Type de données inattendu:', data);
+      this.boutiques.set([]);
     }
-  }
-
-  onNouvelleBoutique() {
-    // this.router.navigate(['/admin/boutiques/nouveau']);
   }
 
   toggleDemandeLocation(shopId: string) {
@@ -64,44 +62,19 @@ export class AdminBoutiqueShopsComponent {
       this.annulerDemande();
     } else {
       this.demandeOuverte.set(shopId);
-      this.resetForm();
     }
   }
 
   annulerDemande() {
     this.demandeOuverte.set(null);
-    this.resetForm();
   }
 
-  resetForm() {
-    this.formData = {
-      nomBoutique: '',
-      categories: '',
-      siteWeb: '',
-      message: '',
-    };
+  onDemandeSuccess() {
+    alert('✅ Demande envoyée avec succès !');
   }
 
-  formValide(): boolean {
-    // Seuls nomBoutique et categories sont requis
-    return this.formData.nomBoutique.trim() !== '' && this.formData.categories.trim() !== '';
-    // siteWeb et message sont optionnels
-  }
-
-  soumettreDemande(shopId: string) {
-    if (this.formValide()) {
-      const demandeData = {
-        shopId: shopId,
-        ...this.formData,
-        dateDemande: new Date().toISOString(),
-      };
-
-      console.log('Demande pour la boutique:', demandeData);
-
-      // Ici, vous appellerez votre service pour envoyer la demande
-      alert('Demande envoyée avec succès !');
-      this.annulerDemande();
-    }
+  onDemandeError(message: string) {
+    alert(`❌ Erreur : ${message}`);
   }
 
   voirDetails(shopId: string) {

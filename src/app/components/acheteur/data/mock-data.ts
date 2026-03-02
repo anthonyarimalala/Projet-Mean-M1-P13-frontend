@@ -53,6 +53,7 @@ export const SHOPS: Shop[] = [
   {
     id: 1,
     mongoId:'T1',
+
     name: 'Tech Avenue',
     category: 'Electronique',
     location: 'Niveau 1 - Aile Nord',
@@ -83,13 +84,14 @@ export const ARTICLES: Article[] = [
   {
     id: '1',
     shopId: '1',
+
     name: 'Smartphone Voa X',
     categories: ['Smartphones', 'Electronique'],
     price: 1250000,
     description: 'Ecran 6.5, double SIM, batterie longue duree.',
     imageUrls: [
       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80',
-      'https://images.unsplash.com/photo-1510557880182-3de5b7b1114f?auto=format&fit=crop&w=700&q=80'
+      'https://www.bing.com/th/id/OIP.w6-KvfhX9-q9soqhPcK9GgHaMc?w=160&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2'
     ]
   },
   {
@@ -103,6 +105,7 @@ export const ARTICLES: Article[] = [
   },
   {
     id: '3',
+
     shopId: '2',
     name: 'Robe Soleil',
     categories: ['Vetements', 'Mode'],
@@ -115,6 +118,7 @@ export const ARTICLES: Article[] = [
   },
   {
     id: '4',
+
     shopId: '2',
     name: 'Sac Cuir Kanto',
     categories: ['Accessoires', 'Mode'],
@@ -124,6 +128,7 @@ export const ARTICLES: Article[] = [
   },
   {
     id: '5',
+
     shopId: '3',
     name: 'Coffret Vanille',
     categories: ['Gourmandises', 'Epicerie fine'],
@@ -146,7 +151,9 @@ export const REVIEWS: Review[] = [
   {
     id: 1,
     targetType: 'shop',
+
     targetId: 't1',
+
     author: 'Tiana',
     rating: 5,
     comment: 'Excellent accueil et bons conseils.',
@@ -155,7 +162,9 @@ export const REVIEWS: Review[] = [
   {
     id: 2,
     targetType: 'article',
+
     targetId: 't1',
+
     author: 'Hery',
     rating: 4,
     comment: 'Bon rapport qualite prix.',
@@ -164,7 +173,8 @@ export const REVIEWS: Review[] = [
   {
     id: 3,
     targetType: 'shop',
-    targetId: 't1',
+
+    targetId: '2',
     author: 'Miora',
     rating: 5,
     comment: 'Large choix et equipe sympa.',
@@ -173,7 +183,8 @@ export const REVIEWS: Review[] = [
   {
     id: 4,
     targetType: 'article',
-    targetId: 't1',
+
+    targetId: '3',
     author: 'Soa',
     rating: 4,
     comment: 'Taille parfaite et tissu confortable.',

@@ -16,6 +16,7 @@ export interface Comment {
 }
 
 export interface Shop {
+
   id: number;
   mongoId: string; 
   name: string;
@@ -26,7 +27,9 @@ export interface Shop {
 }
 
 export interface Article {
+
   id: string;
+
   shopId: string;
   name: string;
   categories: string[];

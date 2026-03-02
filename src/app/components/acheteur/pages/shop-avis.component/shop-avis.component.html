@@ -1,0 +1,67 @@
+<!-- Messages d'erreur -->
+@if (errorMessage) {
+  <div class="alert alert-error">
+    {{ errorMessage }}
+    <button class="close-btn" (click)="errorMessage = ''">×</button>
+  </div>
+}
+
+<!-- Panneau des avis -->
+<section class="shop-reviews-panel">
+  <div class="panel-header">
+    <h4>Avis boutique</h4>
+    <span class="count">{{ avis().length }}</span>
+  </div>
+
+  <div class="review-list">
+    @if (avis().length === 0 && !isLoading) {
+      <p class="empty">Aucun avis pour le moment.</p>
+    }
+
+    @if (isLoading) {
+      <p class="loading">Chargement...</p>
+    }
+
+    @for (review of avis(); track review._id) {
+      <div class="review-item">
+        <strong>{{ review.user?.nom || review.user?.prenom || 'Anonyme' }}</strong>
+        <span class="rating">{{ review.note }}/5</span>
+        <p>{{ review.avis }}</p>  <!-- CORRIGÉ: review.avis au lieu de review.note -->
+        <span class="date">{{ review.created_at | date:'dd/MM/yyyy' }}</span>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Formulaire d'avis -->
+<section class="reviews">
+  <h3>Ajouter un avis</h3>
+  <form class="review-form" (ngSubmit)="onSubmit()">  <!-- CORRIGÉ: plus de (click) sur le bouton -->
+    <div class="rating-stars" aria-label="Note">
+      @for (star of [5, 4, 3, 2, 1]; track star) {
+        <input
+          type="radio"
+          [id]="'star-' + star"
+          name="reviewRatingShop"
+          [value]="star"
+          [(ngModel)]="reviewRatingShop"
+          [disabled]="isLoading"
+        />
+        <label [for]="'star-' + star" [title]="star.toString()">★</label>
+      }
+    </div>
+
+    <textarea
+      rows="2"
+      placeholder="Votre avis"
+      [(ngModel)]="reviewCommentShop"
+      name="reviewCommentShop"
+      [disabled]="isLoading"
+      required
+    ></textarea>
+
+    <button type="submit" [disabled]="isLoading || !reviewCommentShop.trim()">
+      {{ isLoading ? 'Envoi...' : 'Envoyer' }}
+    </button>
+  </form>
+</section>
