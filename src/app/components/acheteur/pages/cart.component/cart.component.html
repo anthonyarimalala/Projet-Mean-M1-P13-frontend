@@ -1,42 +1,62 @@
-@if (!compact) {
-  <section class="page-header">
-    <h2>Panier</h2>
-    <p>Consultez vos articles et finalisez votre selection.</p>
-  </section>
-}
+<!-- Header du panier si compact = false -->
+<section class="page-header" *ngIf="!compact">
+  <h2>Panier</h2>
+  <p>Consultez vos articles et finalisez votre sélection.</p>
+</section>
 
-@if (cartItems().length === 0) {
-  <div class="empty-state">
-    <p>Votre panier est vide.</p>
+<!-- Message si le panier est vide -->
+<div class="empty-state" *ngIf="cartItems.length === 0">
+  <p>Votre panier est vide.</p>
+</div>
+
+<!-- Liste des articles du panier -->
+<div class="cart-grid" *ngIf="cartItems.length > 0">
+  <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByArticleId">
+    <div class="item-info">
+      <h3>{{ item.name }}</h3>
+      <p class="price">{{ item.price | number:'1.0-0' }} MGA</p>
+    </div>
+    <div class="item-actions">
+      <label>
+        Quantité
+        <input
+          type="number"
+          min="1"
+          step="1"
+          [(ngModel)]="item.quantity"
+          (change)="checkStock(item)"
+        />
+      </label>
+      <button type="button" class="remove" (click)="remove(item)">Supprimer</button>
+    </div>
   </div>
-} @else {
-  <div class="cart-grid">
-    @for (item of cartItems(); track item.articleId) {
-      @if (getArticle(item)) {
-        <div class="cart-item">
-          <div class="item-info">
-            <h3>{{ getArticle(item)?.name }}</h3>
-            <p class="category">{{ (getArticle(item)?.categories ?? []).join(', ') }}</p>
-            <p class="price">{{ (getArticle(item)?.price || 0) | number: '1.0-0' }} MGA</p>
-          </div>
-          <div class="item-actions">
-            <label>
-              Quantite
-              <input
-                type="number"
-                min="1"
-                [value]="item.quantity"
-                (input)="updateQuantity(item, $any($event.target).value)"
-              />
-            </label>
-            <button type="button" class="remove" (click)="remove(item)">Supprimer</button>
-          </div>
-        </div>
-      }
-    }
-  </div>
+
+  <!-- Total -->
   <div class="total-card">
     <span>Total</span>
-    <strong>{{ total | number: '1.0-0' }} MGA</strong>
+    <strong>{{ total | number:'1.0-0' }} MGA</strong>
   </div>
-}
+</div>
+
+<!-- Bouton Commander -->
+<div class="checkout" *ngIf="cartItems.length > 0">
+  <button type="button" class="btn-commander" (click)="commander()">
+    Commander
+  </button>
+</div>
+
+<!-- Modal général -->
+<div class="modal-backdrop" *ngIf="modalVisible">
+  <div class="modal">
+    <p>{{ modalMessage }}</p>
+    <button (click)="closeModal()">OK</button>
+  </div>
+</div>
+
+<!-- Modal stock -->
+<div class="modal-backdrop" *ngIf="stockModalVisible">
+  <div class="modal">
+    <p>{{ stockModalMessage }}</p>
+    <button (click)="closeStockModal()">OK</button>
+  </div>
+</div>

@@ -17,6 +17,7 @@ export interface Comment {
 
 export interface Shop {
   id: number;
+  mongoId: string; 
   name: string;
   category: string;
   location: string;
@@ -25,8 +26,8 @@ export interface Shop {
 }
 
 export interface Article {
-  id: number;
-  shopId: number;
+  id: string;
+  shopId: string;
   name: string;
   categories: string[];
   price: number;
@@ -39,7 +40,7 @@ export type ReviewTargetType = 'shop' | 'article';
 export interface Review {
   id: number;
   targetType: ReviewTargetType;
-  targetId: number;
+  targetId: string;
   author: string;
   rating: number;
   comment: string;
@@ -47,6 +48,9 @@ export interface Review {
 }
 
 export interface CartItem {
-  articleId: number;
+  articleId: string;
+  name?: string;   // nom de l'article
+  price?: number;  // prix unitaire
   quantity: number;
+  shopId?: string;
 }

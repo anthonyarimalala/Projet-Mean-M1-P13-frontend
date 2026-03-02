@@ -1,124 +1,48 @@
-@if (!shop) {
-  <div class="empty-state">
-    <p>Boutique introuvable.</p>
-    <a routerLink="/buyer/shops">Retour aux boutiques</a>
+<section class="shop-header">
+  <div>
+    <a class="back-link" routerLink="/acheteur/boutiques">&larr; Retour</a>
+
   </div>
-} @else {
-  <section class="shop-header">
-    <div>
-      <a class="back-link" routerLink="/buyer/shops"><- Retour</a>
-      <h2>{{ shop.name }}</h2>
-      <p class="meta">{{ shop.category }} - {{ shop.location }}</p>
-      <p class="description">{{ shop.description }}</p>
+</section>
+
+<section class="articles">
+  <h3>Articles</h3>
+  <div class="article-grid">
+    <div class="article-card" *ngFor="let article of articles()">
+      <div class="article-image">
+        <ng-template #noImage>
+          <span>{{ article.name.charAt(0) }}</span>
+        </ng-template>
+      </div>
+
+      <div class="article-body">
+        <h4>{{ article.name }}</h4>
+        <p class="price">{{ article.price | number: '1.0-0' }} MGA</p>
+        <p class="description">{{ article.description }}</p>
+
+        <!-- Stock personnalisé -->
+        <p class="stock">
+          <ng-container *ngIf="stockMap()[article.id] !== undefined">
+            <span *ngIf="stockMap()[article.id] > 0">
+              Stock disponible : <strong>{{ stockMap()[article.id] }}</strong>
+            </span>
+            <span *ngIf="stockMap()[article.id] === 0" class="out-of-stock">
+              ❌ Article non disponible
+            </span>
+          </ng-container>
+          <ng-container *ngIf="stockMap()[article.id] === undefined">
+            ⏳ Chargement...
+          </ng-container>
+        </p>
+
+        <button 
+          *ngIf="stockMap()[article.id] > 0" 
+          (click)="addToCart(article)"
+          class="add-to-cart-btn">
+          Ajouter au panier
+        </button>
+      </div>
     </div>
-  </section>
-
-  <div class="article-layout">
-    <section class="filters">
-      <h3>Filtres</h3>
-      <div class="filter-grid">
-        <input
-          type="text"
-          placeholder="Nom de l'article"
-          [(ngModel)]="nameFilter"
-          name="nameFilter"
-        />
-        <input
-          type="text"
-          placeholder="Categorie"
-          [(ngModel)]="categoryFilter"
-          name="categoryFilter"
-        />
-        <input
-          type="number"
-          placeholder="Prix max (MGA)"
-          [(ngModel)]="maxPrice"
-          name="maxPrice"
-        />
-      </div>
-    </section>
-
-    <section class="articles">
-      <div class="section-header">
-        <h3>Articles</h3>
-        <span>{{ filteredArticles.length }} resultat(s)</span>
-      </div>
-      <div class="article-grid">
-        @for (article of filteredArticles; track article.id) {
-          <div class="article-card">
-            <div class="article-image">
-              @if (article.imageUrls?.length) {
-                <img [src]="article.imageUrls?.[0] ?? ''" [alt]="article.name" />
-              } @else {
-                <span>{{ article.name.charAt(0) }}</span>
-              }
-            </div>
-            <div class="article-body">
-              <h4>{{ article.name }}</h4>
-              <div class="category-tags">
-                @for (category of article.categories; track category) {
-                  <span class="tag">{{ category }}</span>
-                }
-              </div>
-              <p class="price">{{ article.price | number: '1.0-0' }} MGA</p>
-              <p class="description">{{ article.description }}</p>
-              @if ((article.imageUrls?.length ?? 0) > 1) {
-                <div class="article-thumbs">
-                  @for (image of article.imageUrls ?? []; track image) {
-                    <img [src]="image" [alt]="article.name" />
-                  }
-                </div>
-              }
-              <button type="button" (click)="addToCart(article)">Ajouter au panier</button>
-            </div>
-          </div>
-        }
-      </div>
-    </section>
-
-    <section class="shop-reviews-panel">
-      <div class="panel-header">
-        <h4>Avis boutique</h4>
-        <span class="count">{{ getShopReviews().length }}</span>
-      </div>
-      <div class="review-list">
-        @if (getShopReviews().length === 0) {
-          <p class="empty">Aucun avis pour le moment.</p>
-        }
-        @for (review of getShopReviews(); track review.id) {
-          <div class="review-item">
-            <strong>{{ review.author }}</strong>
-            <span class="rating">{{ review.rating }}/5</span>
-            <p>{{ review.comment }}</p>
-            <span class="date">{{ review.date }}</span>
-          </div>
-        }
-      </div>
-    </section>
   </div>
+</section>
 
-  <section class="reviews">
-    <h3>Ajouter un avis</h3>
-    <form class="review-form" (ngSubmit)="addShopReview()">
-      <div class="rating-stars" aria-label="Note">
-        @for (star of [5, 4, 3, 2, 1]; track star) {
-          <input
-            type="radio"
-            id="star-{{ star }}"
-            name="reviewRatingShop"
-            [value]="star"
-            [(ngModel)]="reviewRatingShop"
-          />
-          <label for="star-{{ star }}" title="{{ star }}">★</label>
-        }
-      </div>
-      <textarea
-        rows="2"
-        placeholder="Votre avis"
-        [(ngModel)]="reviewCommentShop"
-        name="reviewCommentShop"
-      ></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
-  </section>
-}

@@ -1,0 +1,51 @@
+<section class="page-head">
+    <h1>Commandes de la boutique</h1>
+  </section>
+  
+  <div class="panel">
+    <!-- Loading -->
+    <div *ngIf="loading" class="no-results">Chargement...</div>
+  
+    <!-- Error -->
+    <div *ngIf="errorMessage" class="no-results">❌ {{ errorMessage }}</div>
+  
+    <!-- Empty -->
+    <div *ngIf="!loading && commandes.length === 0" class="no-results">
+      Aucune commande trouvée.
+    </div>
+  
+    <div class="table" *ngIf="commandes.length">
+      <div class="row header">
+        <div>Client</div>
+        <div>Actions</div>
+      </div>
+  
+      <!-- Ligne par client -->
+      <div class="row" *ngFor="let commande of commandes">
+        <div>{{ commande.user_id }}</div>
+        <div>
+          <button class="icon-btn view" (click)="toggleCommande(commande.user_id)">
+            {{ isExpanded(commande.user_id) ? '−' : '+' }}
+          </button>
+        </div>
+  
+        <!-- Sous-tableau produits -->
+        <div *ngIf="isExpanded(commande.user_id)" class="panel" style="margin-top:8px; padding:8px;">
+          <div class="row header" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+            <div>Produit</div>
+            <div>Quantité</div>
+            <div>Prix unitaire</div>
+            <div>Total produit</div>
+          </div>
+  
+          <div class="row" *ngFor="let produit of commande.boutique.produits" 
+               style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+               <div>{{ produit.nom }}</div>
+            <div>{{ produit.quantite }}</div>
+            <div>{{ produit.prix_unitaire | number:'1.0-0' }} MGA</div>
+            <div>{{ produit.total_produit | number:'1.0-0' }} MGA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

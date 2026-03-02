@@ -1,0 +1,71 @@
+<section class="page-head">
+    <div>
+      <h1>Modifier la boutique</h1>
+      <p>Mettre à jour les informations de la boutique sélectionnée.</p>
+    </div>
+  </section>
+  
+  <div *ngIf="errorMessage" class="panel">❌ {{ errorMessage }}</div>
+  
+  <div *ngIf="boutique" class="panel">
+  
+    <!-- Champ ID en lecture seule -->
+    <label class="field">
+      <span>ID</span>
+      <input type="text" [value]="boutique._id" readonly />
+    </label>
+  
+    <!-- Formulaire avec ngSubmit -->
+    <form #boutiqueForm="ngForm" (ngSubmit)="onSubmit(boutiqueForm)">
+  
+      <div class="form-grid">
+  
+        <label class="field">
+          <span>Numéro</span>
+          <input type="text" name="numero" [(ngModel)]="boutique.numero" required />
+        </label>
+  
+        <label class="field">
+          <span>Nom de la boutique</span>
+          <input type="text" name="nom_boutique" [(ngModel)]="boutique.nom_boutique" required />
+        </label>
+  
+        <label class="field">
+          <span>Étage</span>
+          <input type="number" name="etage" [(ngModel)]="boutique.etage" required />
+        </label>
+  
+        <label class="field">
+          <span>Prix (Ar)</span>
+          <input type="number" name="prix" [(ngModel)]="boutique.prix" required />
+        </label>
+  
+        <label class="field switch">
+          <span>Disponible</span>
+          <input type="checkbox" name="is_disponible" [(ngModel)]="boutique.is_disponible" />
+          <div class="track"></div>
+        </label>
+  
+        <label class="field">
+          <span>Catégories (séparées par des virgules)</span>
+          <input type="text" name="categories" [(ngModel)]="categoriesString" />
+        </label>
+  
+        <label class="field switch" *ngIf="boutique.promotion">
+          <span>Promotion active</span>
+          <input type="checkbox" name="promotionActive" [(ngModel)]="boutique.promotion.active" />
+          <div class="track"></div>
+        </label>
+  
+        <label class="field" *ngIf="boutique.promotion?.active">
+          <span>Taux de promotion (%)</span>
+          <input type="number" name="taux" [(ngModel)]="boutique.promotion.taux" />
+        </label>
+  
+      </div>
+  
+      <!-- Bouton à l'intérieur du form -->
+      <button class="primary" type="submit">Modifier</button>
+    </form>
+  
+  </div>

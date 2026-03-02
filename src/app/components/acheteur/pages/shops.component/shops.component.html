@@ -1,11 +1,11 @@
 <section class="page-header">
   <h2>Boutiques</h2>
-  <p>Parcourez les boutiques et decouvrez leurs articles.</p>
+  <p>Parcourez les boutiques et découvrez leurs articles.</p>
 </section>
 
 <div class="shop-filter">
   <label>
-    Filtrer par categorie
+    Filtrer par catégorie
     <input
       type="text"
       placeholder="Ex: Mode, Electronique"
@@ -16,21 +16,24 @@
 </div>
 
 <div class="shop-grid">
-  @for (shop of filteredShops; track shop.id) {
-    <a class="shop-card" [routerLink]="[shop.id]">
-      <div class="shop-image">
-        @if (shop.imageUrl) {
-          <img [src]="shop.imageUrl" [alt]="shop.name" />
-        } @else {
-          <span>{{ shop.name.charAt(0) }}</span>
-        }
-      </div>
-      <div>
-        <h3>{{ shop.name }}</h3>
-        <p class="category">{{ shop.category }}</p>
-        <p class="location">{{ shop.location }}</p>
-        <p class="description">{{ shop.description }}</p>
-      </div>
-    </a>
-  }
+  <a
+    *ngFor="let shop of filteredShops()"
+    class="shop-card"
+    [routerLink]="['/acheteur/boutiques', shop.mongoId]"
+    (click)="onShopClick(shop.mongoId)"
+  >
+    <div class="shop-image">
+      <span>{{ shop.name.charAt(0) }}</span>
+    </div>
+    <div>
+      <h3>{{ shop.name }}</h3>
+      <p class="category">{{ shop.category }}</p>
+      <p class="location">{{ shop.location }}</p>
+      <p class="description">{{ shop.description }}</p>
+    </div>
+  </a>
+
+  <div *ngIf="filteredShops().length === 0" class="no-results">
+    <p>Aucune boutique trouvée</p>
+  </div>
 </div>

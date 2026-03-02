@@ -1,0 +1,70 @@
+<section class="page-head">
+    <div>
+      <h1>Ajouter un produit</h1>
+      <p>Créer un nouveau produit pour cette boutique.</p>
+    </div>
+    <button class="primary" type="submit" form="produitForm">
+      Enregistrer
+    </button>
+  </section>
+  
+  <section class="panel">
+  
+    <form id="produitForm" #produitForm="ngForm" (ngSubmit)="onSubmit(produitForm)">
+  
+      <!-- ID Boutique -->
+      <label class="field">
+        <span>ID Boutique</span>
+        <input type="text" [value]="boutiqueId" readonly />
+      </label>
+  
+      <div class="form-grid">
+  
+        <label class="field">
+          <span>Nom du produit</span>
+          <input type="text" name="nom" [(ngModel)]="produit.nom" placeholder="Sweat Oversize Street V2" required />
+        </label>
+  
+        <label class="field">
+          <span>Description</span>
+          <textarea rows="3" name="description" [(ngModel)]="produit.description"
+            placeholder="Sweat oversize en molleton épais, coupe moderne unisexe"></textarea>
+        </label>
+  
+        <label class="field">
+          <span>Prix de vente (Ar)</span>
+          <input type="number" name="prix_vente" [(ngModel)]="produit.prix_vente" placeholder="85000" required />
+        </label>
+  
+        <label class="field">
+          <span>Prix promotionnel (Ar)</span>
+          <input type="number" name="prix_promo" [(ngModel)]="produit.prix_promo" placeholder="79000" />
+        </label>
+  
+        <label class="field">
+          <span>Catégorie ID</span>
+          <input type="text" name="categorie_id" [(ngModel)]="produit.categorie_id" placeholder="ID_CATEGORIE_STREETWEAR" required />
+        </label>
+  
+        <label class="field">
+          <span>Images (séparées par virgules)</span>
+          <input type="text" name="images" [(ngModel)]="imagesString" placeholder="img1.jpg, img2.png" />
+        </label>
+  
+        <label class="field switch">
+          <span>En vente</span>
+          <input type="checkbox" name="en_vente" [(ngModel)]="produit.en_vente" [checked]="true" />
+          <div class="track"></div>
+        </label>
+  
+        <label class="field switch">
+          <span>Produit actif</span>
+          <input type="checkbox" name="is_active" [(ngModel)]="produit.is_active" [checked]="true" />
+          <div class="track"></div>
+        </label>
+  
+      </div>
+  
+    </form>
+  
+  </section>

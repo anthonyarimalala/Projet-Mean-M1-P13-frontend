@@ -7,7 +7,7 @@
 
 <!-- Section des cartes -->
 <section class="shops-grid">
-  <!-- Boutique 1 - Active -->
+  <!-- Boucle sur les boutiques -->
   @for(boutique of boutiques(); track boutique._id) {
   <article class="shop-card">
     <div class="card-header">
@@ -16,20 +16,27 @@
         <h3>{{ boutique.numero }} : {{ boutique.nom_boutique }}</h3>
         <span class="shop-type">{{ boutique.categories.join(', ') }}</span>
       </div>
-      <button class="menu-btn" title="Plus d'options">
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="12" cy="12" r="1"></circle>
-          <circle cx="12" cy="5" r="1"></circle>
-          <circle cx="12" cy="19" r="1"></circle>
-        </svg>
+
+        <!-- Bouton menu -->
+      <button
+      class="menu-btn"
+      title="Plus d'options"
+      (click)="toggleMenu(boutique._id, $event)"
+      >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="1"></circle>
+        <circle cx="12" cy="5" r="1"></circle>
+        <circle cx="12" cy="19" r="1"></circle>
+      </svg>
       </button>
+
+      <!-- Dropdown -->
+      <div class="dropdown-menu" *ngIf="openMenuId === boutique._id">
+        <button (click)="voirCommandes(boutique._id)">Voir Commandes</button>
+        <button (click)="modifier(boutique._id)">Modifier</button>
+        <button (click)="ajouterProduit(boutique._id)">Ajouter un produit</button>
+        <button (click)="gererStock(boutique._id)">Stock</button>
+      </div>
     </div>
 
     <div class="shop-details">
@@ -56,35 +63,13 @@
         <span class="status-badge status-active">Active</span>
       </div>
       <button class="manage-btn" [routerLink]="['/boutique/mes-boutiques', boutique._id]">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="3"></circle>
-          <path
-            d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"
-          ></path>
+          <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7z"></path>
         </svg>
-
         Gérer
       </button>
     </div>
   </article>
   }
-
-
-
-  <!-- État vide (si pas de boutique) -->
-  <!-- <div class="empty-state">
-    <div class="empty-icon">🏪</div>
-    <h3>Aucune boutique</h3>
-    <p>Vous n'avez pas encore de boutique. Faites une demande de location pour commencer.</p>
-    <button class="primary" (click)="nouvelleDemande()">
-      Faire une demande
-    </button>
-  </div> -->
 </section>

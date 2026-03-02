@@ -31,6 +31,12 @@ import { AdminBoutiqueComponent } from './components/admin/pages/admin-boutique.
 import { DetailBoutiqueComponent } from './components/admin/pages/detail-boutique.component/detail-boutique.component';
 import { ModifSuiviPaiementDateComponent } from './components/templates/components/modif-suivi-paiement-date.component/modif-suivi-paiement-date.component';
 
+import { BoutiqueAjoutProduitComponent } from './components/boutique/pages/boutique-ajout-produit.component/boutique-ajout-produit.component';
+import { BoutiqueGestionStockComponent } from './components/boutique/pages/boutique-gestion-stock.component/boutique-gestion-stock.component';
+import { BoutiqueModificationInfosComponent } from './components/boutique/pages/boutique-modification-infos.component/boutique-modification-infos.component';
+import { BoutiqueCommandesComponent } from './components/boutique/pages/boutique-commandes.component/boutique-commandes.component';
+
+
 export const routes: Routes = [
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
   { path: 'login/:role', component: LoginComponent, canMatch: [noAuthGuard] },
@@ -65,6 +71,13 @@ export const routes: Routes = [
       { path: 'mes-boutiques', component: MesBoutiquesComponent },
       { path: 'mes-boutiques/:id', component: GererBoutiqueComponent },
       { path: 'annonces', component: BoutiqueAnnonceComponent },
+
+      {path: 'ajout/:id', component: BoutiqueAjoutProduitComponent },
+      {path: 'stock/:id', component: BoutiqueGestionStockComponent },
+      
+      { path: 'modifications/:id', component: BoutiqueModificationInfosComponent },
+      {path: 'commandes/:id', component: BoutiqueCommandesComponent}
+
     ],
   },
 

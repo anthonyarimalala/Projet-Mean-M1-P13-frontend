@@ -31,15 +31,27 @@ export class CartService {
       const existing = current.find((item) => item.articleId === article.id);
       if (existing) {
         return current.map((item) =>
-          item.articleId === article.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.articleId === article.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
-      return [...current, { articleId: article.id, quantity: 1 }];
+      // Ajouter nouvel item avec toutes les infos
+      return [
+        ...current,
+        {
+          articleId: article.id,
+          name: article.name,
+          price: article.price,
+          quantity: 1
+        }
+      ];
     });
     this.open.set(true);
   }
 
-  updateQuantity(articleId: number, quantity: number) {
+
+  updateQuantity(articleId: string, quantity: number) {
     if (quantity <= 0) {
       this.removeItem(articleId);
       return;
@@ -49,7 +61,7 @@ export class CartService {
     );
   }
 
-  removeItem(articleId: number) {
+  removeItem(articleId: string) {
     this.items.update((current) => current.filter((item) => item.articleId !== articleId));
   }
 
@@ -57,14 +69,10 @@ export class CartService {
     this.items.set([]);
   }
 
-  getTotal() {
-    const articles = this.dataService.getArticles();
-    return this.items().reduce((total, item) => {
-      const article = articles.find((a) => a.id === item.articleId);
-      if (!article) {
-        return total;
-      }
-      return total + article.price * item.quantity;
-    }, 0);
-  }
+getTotal(): number {
+  return this.items().reduce(
+    (total, item) => total + (item.price || 0) * item.quantity,
+    0
+  );
+}
 }

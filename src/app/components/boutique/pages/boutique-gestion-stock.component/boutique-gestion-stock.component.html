@@ -1,0 +1,54 @@
+<section class="panel">
+    <div class="table">
+      <div class="row header">
+        <span>Produit</span>
+        <span>Description</span>
+        <span>Prix</span>
+        <span>Promo</span>
+        <span>Statut</span>
+        <span>Actions</span>
+      </div>
+  
+      <div *ngFor="let produit of produits" class="row">
+        <div class="product">
+          <div class="avatar">{{ produit.nom[0] }}</div>
+          <div>
+            <strong>{{ produit.nom }}</strong>
+            <small>{{ produit.categorie_id }}</small>
+          </div>
+        </div>
+  
+        <span>{{ produit.description }}</span>
+        <span>{{ produit.prix_vente | number }} Ar</span>
+        <span>{{ produit.prix_promo | number }} Ar</span>
+        <span>
+          <span class="status" [ngClass]="produit.en_vente ? 'online' : 'away'">
+            {{ produit.en_vente ? 'En vente' : 'Non' }}
+          </span>
+        </span>
+  
+        <button class="action-btn" (click)="openStockModal(produit)">
+          Ajouter en stock
+        </button>
+      </div>
+  
+      <div *ngIf="produits.length === 0" class="no-results">
+        <p>Aucun produit trouvé</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="selectedProduit">
+    <div class="modal">
+      <h3>Ajouter en stock : {{ selectedProduit.nom }}</h3>
+      <label>
+        Quantité :
+        <input type="number" [(ngModel)]="stockQuantity" min="1" />
+      </label>
+      <div class="modal-actions">
+        <button class="btn cancel" (click)="closeStockModal()">Annuler</button>
+        <button class="btn confirm" (click)="confirmAddStock()">Confirmer</button>
+      </div>
+    </div>
+  </div>

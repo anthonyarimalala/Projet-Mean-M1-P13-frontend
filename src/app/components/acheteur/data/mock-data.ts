@@ -52,6 +52,7 @@ export const COMMENTS: Comment[] = [
 export const SHOPS: Shop[] = [
   {
     id: 1,
+    mongoId:'T1',
     name: 'Tech Avenue',
     category: 'Electronique',
     location: 'Niveau 1 - Aile Nord',
@@ -60,6 +61,7 @@ export const SHOPS: Shop[] = [
   },
   {
     id: 2,
+    mongoId:'T2',
     name: 'Style & Co',
     category: 'Mode',
     location: 'Niveau 2 - Aile Est',
@@ -68,6 +70,7 @@ export const SHOPS: Shop[] = [
   },
   {
     id: 3,
+    mongoId:'T3',
     name: 'Saveurs Locales',
     category: 'Epicerie fine',
     location: 'Niveau 1 - Aile Sud',
@@ -78,8 +81,8 @@ export const SHOPS: Shop[] = [
 
 export const ARTICLES: Article[] = [
   {
-    id: 1,
-    shopId: 1,
+    id: '1',
+    shopId: '1',
     name: 'Smartphone Voa X',
     categories: ['Smartphones', 'Electronique'],
     price: 1250000,
@@ -90,8 +93,8 @@ export const ARTICLES: Article[] = [
     ]
   },
   {
-    id: 2,
-    shopId: 1,
+    id: '2',
+    shopId: '1',
     name: 'Casque Audio Zina',
     categories: ['Accessoires', 'Audio'],
     price: 180000,
@@ -99,8 +102,8 @@ export const ARTICLES: Article[] = [
     imageUrls: ['https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=700&q=80']
   },
   {
-    id: 3,
-    shopId: 2,
+    id: '3',
+    shopId: '2',
     name: 'Robe Soleil',
     categories: ['Vetements', 'Mode'],
     price: 95000,
@@ -111,8 +114,8 @@ export const ARTICLES: Article[] = [
     ]
   },
   {
-    id: 4,
-    shopId: 2,
+    id: '4',
+    shopId: '2',
     name: 'Sac Cuir Kanto',
     categories: ['Accessoires', 'Mode'],
     price: 210000,
@@ -120,8 +123,8 @@ export const ARTICLES: Article[] = [
     imageUrls: ['https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=700&q=80']
   },
   {
-    id: 5,
-    shopId: 3,
+    id: '5',
+    shopId: '3',
     name: 'Coffret Vanille',
     categories: ['Gourmandises', 'Epicerie fine'],
     price: 65000,
@@ -129,8 +132,8 @@ export const ARTICLES: Article[] = [
     imageUrls: ['https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80']
   },
   {
-    id: 6,
-    shopId: 3,
+    id: '6',
+    shopId: '3',
     name: 'Miel de Litchi',
     categories: ['Gourmandises', 'Produits locaux'],
     price: 42000,
@@ -143,7 +146,7 @@ export const REVIEWS: Review[] = [
   {
     id: 1,
     targetType: 'shop',
-    targetId: 1,
+    targetId: 't1',
     author: 'Tiana',
     rating: 5,
     comment: 'Excellent accueil et bons conseils.',
@@ -152,7 +155,7 @@ export const REVIEWS: Review[] = [
   {
     id: 2,
     targetType: 'article',
-    targetId: 1,
+    targetId: 't1',
     author: 'Hery',
     rating: 4,
     comment: 'Bon rapport qualite prix.',
@@ -161,7 +164,7 @@ export const REVIEWS: Review[] = [
   {
     id: 3,
     targetType: 'shop',
-    targetId: 2,
+    targetId: 't1',
     author: 'Miora',
     rating: 5,
     comment: 'Large choix et equipe sympa.',
@@ -170,7 +173,7 @@ export const REVIEWS: Review[] = [
   {
     id: 4,
     targetType: 'article',
-    targetId: 3,
+    targetId: 't1',
     author: 'Soa',
     rating: 4,
     comment: 'Taille parfaite et tissu confortable.',
