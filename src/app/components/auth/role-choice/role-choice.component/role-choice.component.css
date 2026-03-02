@@ -1,0 +1,100 @@
+:host {
+    display: block;
+    --blue-900: #1e3a8a;
+    --blue-500: #3b82f6;
+    --blue-300: #93c5fd;
+    --accent-600: #c026d3;
+    --bg: #ffffff;
+    --bg-soft: #f8fafc;
+    --text: #1f2937;
+    --text-soft: #4b5563;
+    --shadow: 0 18px 40px rgba(30, 58, 138, 0.12);
+    --radius: 16px;
+  }
+  
+  .page {
+    margin: 0;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, rgba(147, 197, 253, 0.25), rgba(168, 85, 247, 0.08));
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+  
+  .card {
+    width: min(420px, 100%);
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-align: center;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--blue-900);
+    font-size: 20px;
+  }
+  
+  .brand-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: var(--blue-900);
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--blue-900);
+  }
+  
+  p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 14px;
+  }
+  
+  .role-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .role-buttons button {
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--blue-900), var(--accent-600));
+    color: #fff;
+    transition: all 0.2s ease;
+    box-shadow: 0 12px 24px rgba(30, 58, 138, 0.2);
+  }
+  
+  .role-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(30, 58, 138, 0.25);
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      padding: 24px;
+    }
+  
+    .role-buttons {
+      gap: 12px;
+    }
+  }

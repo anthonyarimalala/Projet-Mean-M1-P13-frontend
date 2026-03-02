@@ -35,9 +35,9 @@ import { BoutiqueAjoutProduitComponent } from './components/boutique/pages/bouti
 import { BoutiqueGestionStockComponent } from './components/boutique/pages/boutique-gestion-stock.component/boutique-gestion-stock.component';
 import { BoutiqueModificationInfosComponent } from './components/boutique/pages/boutique-modification-infos.component/boutique-modification-infos.component';
 import { BoutiqueCommandesComponent } from './components/boutique/pages/boutique-commandes.component/boutique-commandes.component';
-
-
+import { RoleChoiceComponent } from './components/auth/role-choice/role-choice.component/role-choice.component';
 export const routes: Routes = [
+  { path: '', component: RoleChoiceComponent },
   { path: 'login', redirectTo: 'login/acheteur', pathMatch: 'full' },
   { path: 'login/:role', component: LoginComponent, canMatch: [noAuthGuard] },
   { path: 'register', component: RegisterComponent, canMatch: [noAuthGuard] },
