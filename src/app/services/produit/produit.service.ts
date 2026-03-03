@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Produit {
   _id: string;
@@ -13,9 +14,9 @@ export interface Produit {
   providedIn: 'root',
 })
 export class ProduitService {
-  private apiUrl = 'http://localhost:5000/api/produits';
-  private stockUrl = 'http://localhost:5000/api/stock';
-  private panierUrl = 'http://localhost:5000/api/panier';
+  private apiUrl = `${environment.apiUrl}/produits`;
+  private stockUrl = `${environment.apiUrl}/stock`;
+  private panierUrl = `${environment.apiUrl}/panier`;
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +30,7 @@ export class ProduitService {
       return this.http.get<any[]>(`${this.apiUrl}/boutique/${boutiqueId}`);
     }
 
-    
+
   // Ajouter ou mettre à jour le stock d’un produit
     addStock(produitId: string, quantite: number): Observable<any> {
       return this.http.post<any>(`${this.stockUrl}/add`, {
