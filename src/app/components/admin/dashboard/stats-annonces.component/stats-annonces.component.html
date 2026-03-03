@@ -1,0 +1,141 @@
+<div class="stats-section">
+  <div class="section-header">
+    <h3 class="section-title">Annonces</h3>
+
+    <!-- Sélecteurs de mois et année avec bouton œil -->
+    <div class="period-selector">
+      <select
+        class="month-select"
+        [ngModel]="selectedMonth()"
+        (ngModelChange)="selectedMonthSignal.set($event); onValidate()"
+        [disabled]="loading()"
+      >
+        @for (month of months; track month.value) {
+          <option [ngValue]="month.value">
+            {{ month.label }}
+          </option>
+        }
+      </select>
+
+      <select
+        class="year-select"
+        [ngModel]="selectedYear()"
+        (ngModelChange)="selectedYearSignal.set($event); onValidate()"
+        [disabled]="loading()"
+      >
+        @for (year of years(); track year) {
+          <option [ngValue]="year">
+            {{ year }}
+          </option>
+        }
+      </select>
+
+      <!-- Recherche automatique: pas de bouton -->
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Chargement des statistiques des annonces...</p>
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (error(); as errorMessage) {
+    <div class="error-state">
+      <p class="error-message">{{ errorMessage }}</p>
+      <button class="retry-btn" (click)="onValidate()">Réessayer</button>
+    </div>
+  }
+
+  <!-- Data display -->
+  @if (!loading() && !error() && statsData(); as stats) {
+    <!-- Stats cards -->
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-icon">📢</div>
+        <div class="stat-content">
+          <span class="stat-label">Total général</span>
+          <span class="stat-value">{{ stats.totalGeneral }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card monthly">
+        <div class="stat-icon">📅</div>
+        <div class="stat-content">
+          <span class="stat-label">{{ selectedMonth() }}/{{ selectedYear() }}</span>
+          <span class="stat-value">{{ annoncesMensuelles() }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card published">
+        <div class="stat-icon">✅</div>
+        <div class="stat-content">
+          <span class="stat-label">Publiées</span>
+          <span class="stat-value">{{ publiees() }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats summary -->
+    <div class="recent-annonces">
+      <h4 class="sub-title">Aperçu des statistiques le mois de {{ selectedMonthLabel() }} {{ selectedYear() }}</h4>
+      <div class="stats-summary">
+        <div class="summary-item">
+          <span class="summary-label">Moyenne par mois</span>
+          <span class="summary-value">{{ stats.moyenneParMois.toFixed(1) }}</span>
+        </div>
+
+        <div class="summary-item">
+          <span class="summary-label">Mois le plus actif</span>
+          @if (moisLePlusActif(); as top) {
+            <span class="summary-value">{{ top.month }} ({{ top.count }})</span>
+          } @else {
+            <span class="summary-value">-</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Répartition par rôle -->
+    @if (repartitionParRole(); as repartition) {
+      <div class="details-section">
+        <h4 class="sub-title">Répartition par rôle émetteur</h4>
+
+        <div class="role-distribution">
+          @if (repartition.ADMIN > 0) {
+            <div class="role-item">
+              <span class="role-label">
+                <span class="role-dot admin"></span>
+                Administrateurs
+              </span>
+              <span class="role-value">{{ repartition.ADMIN }}</span>
+            </div>
+          }
+
+          @if (repartition.BOUTIQUE > 0) {
+            <div class="role-item">
+              <span class="role-label">
+                <span class="role-dot boutique"></span>
+                Boutiques
+              </span>
+              <span class="role-value">{{ repartition.BOUTIQUE }}</span>
+            </div>
+          }
+
+          @if (repartition.ACHETEUR > 0) {
+            <div class="role-item">
+              <span class="role-label">
+                <span class="role-dot acheteur"></span>
+                Acheteurs
+              </span>
+              <span class="role-value">{{ repartition.ACHETEUR }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>
